@@ -45,3 +45,24 @@ Réponses aux ambiguïtés relevées lors du cadrage. Validées le 2026-10-05. E
 - **P4** : les likes obtenus pendant un boost sont exclus du calcul.
 - **P5** : la personne voit son propre niveau dans ses statistiques Premium.
 - **P6** : jamais d'indicateur pour les profils en incognito ; les couples suivent la même règle que les individus.
+
+## Phase 1 (validées le 2026-10-06)
+- Monorepo npm (pas pnpm).
+- Écrans 5 à 8 de l'inscription enregistrés ensemble (`set_my_intent`) car leurs règles se croisent.
+- « Je cherche » (polyamour) à choix multiples.
+- Orientation choisie dans une liste (`orientation_labels`), pas en texte libre.
+- Date de naissance non modifiable une fois saisie.
+- Conditions et confidentialité retirées uniquement par suppression du compte ; retrait du consentement « données sensibles » = effacement de ces données.
+- Pays déterminé côté serveur (géocodage), jamais envoyé par l'appli.
+- Valeurs : `popularity.min_views` 50, `feed.pass_recycle_days` 30, `compliance.minor_trace_retention_days` 365, journal d'accès conservé 1 an.
+
+## Phase 2 (proposées, en attente de validation)
+- **Position demandée juste après l'écran 1** (avant les questions sensibles) : le pays décide quels champs existent (Q21).
+- **Les genres recherchés restent en mémoire jusqu'au consentement** (écran 3) ; si l'appli est fermée entre les deux, l'écran 2 est redemandé. Rien de sensible n'est stocké sur le téléphone.
+- **Changements de boisson libres pendant l'inscription** : le délai de 7 jours ne s'applique qu'après (Q12).
+- **Photos : 2 minimum, 6 maximum** (`photos.min_count`, `photos.max_count`, provisoire). Stockage privé, URL signées.
+- **Selfie pris uniquement avec la caméra frontale**, jamais depuis la galerie ; il passe en « en attente » jusqu'à la phase 5.
+- **Compte couple affiché « bientôt disponible »** jusqu'à la phase 9.
+- **Code de parrainage enregistré tel quel** (`private.signup_referrals`), résolu en phase 7.
+- **Icônes de boissons provisoires** (émojis, avec variante sans alcool) en attendant un jeu d'icônes dessiné.
+- **Libellé Cocktail affiché** : « Rencontre sans engagement ».

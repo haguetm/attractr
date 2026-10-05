@@ -19,6 +19,7 @@ Adult-only (18+) dating app where each profile shows a drink that signals intent
 - Small commits.
 
 ## Layout
+- `apps/mobile` — Expo SDK 57 app (Expo Router in `src/app`, UI strings in `src/i18n/fr.json`). See its AGENTS.md: check versioned Expo docs, install with `npx expo install`
 - `packages/shared` — domain types + UI-side rule mirrors (e.g. `validateIntent`), Vitest
 - `supabase/migrations` — schema, RLS, RPCs (source of truth for business rules)
 - `supabase/tests` — pgTAP tests (rules + RLS)
@@ -35,6 +36,8 @@ Node 22 + npm workspaces. The local stack needs Docker (not available on the wor
 - `npm run db:reset` — apply migrations + seeds
 - `npm run db:test` — run pgTAP tests (after `db:reset`)
 - `npx supabase functions serve` — run Edge Functions locally
+- `npm run functions:test` / `npm run functions:check` — Deno tests / type-check (Deno via npx, nothing to install)
+- `npm run mobile` — start Expo (needs `apps/mobile/.env`, see `.env.example` there)
 
 ## SQL conventions
 - `set search_path = ''` and fully qualified names in every function.

@@ -30,7 +30,7 @@ docs/
 3. **Sensitive fields** (seeking genders, orientation, situation, structure, composition) live in `profile_sensitive`, encrypted with `pgcrypto` (`pgp_sym_encrypt`) using a key stored in Supabase Vault. No client role can read the table; only `SECURITY DEFINER` functions decrypt, and the feed decrypts only after the distance prefilter.
    - Why: the feed must filter in SQL; app-level or Edge-Function encryption would prevent it, and blind indexes on such small value sets leak the values.
    - Protects against: dumps, backups, staff table browsing, read-only leaks. Does not protect against a compromised service role that also has Vault access (to state in the DPIA).
-4. **Location**: the client sends a position, the RPC snaps it to a ~1 km grid before storing. Exact coordinates are never persisted, even privately. Distances are returned as buckets.
+4. **Location**: the client sends a position (or a home city) to the `update-location` Edge Function, which geocodes the country and calls `service_set_location`; the RPC snaps it to a ~1 km grid before storing. Exact coordinates are never persisted, even privately. Distances are returned as buckets.
 5. **Like quota** computed on the fly over a rolling 24 h window (indexed count), no counter to resync.
 6. **Premium**: RevenueCat webhook (Edge Function) feeds `entitlements`; server-side `is_premium(uid)` is authoritative. Referral rewards isolated behind `RewardsProvider`.
 7. **Push**: `notification_outbox` drained by `pg_cron` → Edge Function. Generic texts only, never sensitive data.
