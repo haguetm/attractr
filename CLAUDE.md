@@ -18,5 +18,26 @@ Adult-only (18+) dating app where each profile shows a drink that signals intent
 - No secrets in the repo (`.env.example` only). No sensitive data in PostHog, Sentry, logs or push payloads.
 - Small commits.
 
+## Layout
+- `packages/shared` — domain types + UI-side rule mirrors (e.g. `validateIntent`), Vitest
+- `supabase/migrations` — schema, RLS, RPCs (source of truth for business rules)
+- `supabase/tests` — pgTAP tests (rules + RLS)
+- `supabase/seed` — generator of `supabase/seeds/20_profiles.sql` (100 fictional profiles)
+- `supabase/seeds/00_test_helpers.sql` — `tests.*` helpers, local only
+- `supabase/functions` — Edge Functions (Deno)
+
 ## Commands
-_To be filled in once the repo is scaffolded (Phase 1)._
+Node 22 + npm workspaces. The local stack needs Docker (not available on the work PC: code is written there, run on the personal PC).
+- `npm install` — install workspaces
+- `npm test` / `npm run typecheck` — Vitest + tsc on all workspaces
+- `npm run seed:generate` — regenerate `supabase/seeds/20_profiles.sql` (commit the result)
+- `npm run db:start` — start local Supabase (Docker)
+- `npm run db:reset` — apply migrations + seeds
+- `npm run db:test` — run pgTAP tests (after `db:reset`)
+- `npx supabase functions serve` — run Edge Functions locally
+
+## SQL conventions
+- `set search_path = ''` and fully qualified names in every function.
+- RPCs in `public` are `security definer`, revoked from `public, anon`, granted to `authenticated`.
+- Rule violations: `raise exception '<snake_case_code>'` — the app maps codes to i18n strings.
+- When a SQL rule changes, update its TS mirror in `packages/shared` and both test suites.

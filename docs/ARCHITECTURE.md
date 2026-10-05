@@ -2,7 +2,9 @@
 
 Validated 2026-10-05. Product rules: [SPEC.md](SPEC.md) + [DECISIONS.md](DECISIONS.md).
 
-## Repository (pnpm monorepo)
+## Repository (npm workspaces monorepo)
+
+npm rather than pnpm: Expo/Metro works without extra linker settings, and nothing extra to install on either PC.
 
 ```
 apps/mobile/            Expo + Expo Router + TypeScript (dev build, required by RevenueCat)
@@ -16,7 +18,8 @@ supabase/
   functions/            Edge Functions (Deno)
     _shared/providers/  selfie/, moderation/, ai/, geocoding/, rewards/ -> interface.ts, mock.ts, real.ts
   tests/                pgTAP: SQL business rules + RLS
-  seed/                 TS seed script (100 fictional profiles)
+  seed/                 TS generator -> seeds/20_profiles.sql (100 fictional profiles)
+  seeds/                SQL applied by `supabase db reset` (local only), incl. test helpers
 docs/
 ```
 
