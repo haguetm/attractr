@@ -422,3 +422,67 @@ revoke execute on function public.service_set_location(uuid, double precision, d
   from public, anon, authenticated;
 grant execute on function public.service_set_location(uuid, double precision, double precision, public.location_source, text)
   to service_role;
+
+-- Drink changes during onboarding are all part of the first choice (Q12): no
+-- cooldown, no drinks_changed_at, history reason 'initial'. Otherwise unchanged.
+create or replace function public.set_my_intent(
+  p_situation public.situation,
+  p_drinks public.drink[],
+  p_structure public.relationship_structure default null,
+  p_composition jsonb default null,
+  p_open_to_couples boolean default false
+)
+returns void
+language plpgsql
+security definer
+set search_path = ''
+as $$
+declare
+  uid uuid := private.require_user();
+  prof public.profiles;
+  sw public.country_config;
+  err text;
+  old_drinks public.drink[];
+  new_drinks public.drink[] := array(select distinct d from unnest(p_drinks) d order by d);
+  onboarding boolean;
+begin
+  perform private.require_sensitive_consent(uid);
+  select * into prof from public.profiles where id = uid for update;
+  onboarding := prof.status = 'onboarding';
+  sw := private.country_switches(prof.country_code);
+
+  err := private.validate_intent(p_situation, p_drinks, p_structure, p_composition,
+                                 p_open_to_couples, sw.structure_enabled, sw.composition_enabled);
+  if err is not null then
+    raise exception '%', err;
+  end if;
+
+  select array_agg(drink order by drink) into old_drinks
+    from public.profile_drinks where user_id = uid;
+
+  if old_drinks is distinct from new_drinks then
+    if onboarding or old_drinks is null then
+      insert into private.drink_change_history (user_id, old_drinks, new_drinks, reason)
+        values (uid, old_drinks, new_drinks, 'initial');
+    else
+      if prof.drinks_changed_at is not null
+         and prof.drinks_changed_at > now() - make_interval(days => private.config_int('drinks.change_cooldown_days')) then
+        raise exception 'drink_change_cooldown';
+      end if;
+      insert into private.drink_change_history (user_id, old_drinks, new_drinks, reason)
+        values (uid, old_drinks, new_drinks, 'user');
+      update public.profiles set drinks_changed_at = now() where id = uid;
+    end if;
+    delete from public.profile_drinks where user_id = uid;
+    insert into public.profile_drinks (user_id, drink) select uid, unnest(new_drinks);
+  end if;
+
+  update public.profiles set open_to_couples = p_open_to_couples where id = uid;
+
+  perform private.write_sensitive(uid, jsonb_build_object(
+    'situation', p_situation,
+    'structure', p_structure,
+    'composition', case when p_composition = 'null'::jsonb then null else p_composition end
+  ));
+end;
+$$;

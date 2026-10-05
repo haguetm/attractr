@@ -33,7 +33,8 @@ create or replace function tests.create_onboarded_user(
   p_gender public.gender default 'woman',
   p_seeking public.gender[] default array['man']::public.gender[],
   p_drinks public.drink[] default array['wine']::public.drink[],
-  p_structure public.relationship_structure default 'monogamous'
+  p_structure public.relationship_structure default 'monogamous',
+  p_activate boolean default true  -- false: stay in 'onboarding' (onboarding tests)
 )
 returns uuid
 language plpgsql
@@ -51,6 +52,9 @@ begin
   perform public.set_my_identity('Test', p_gender);
   perform public.set_my_seeking(p_seeking);
   perform public.set_my_intent('single', p_drinks, p_structure);
+  if p_activate then
+    update public.profiles set status = 'active' where id = uid;
+  end if;
   perform set_config('request.jwt.claims', coalesce(previous_claims, ''), true);
   return uid;
 end;

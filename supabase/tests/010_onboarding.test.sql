@@ -1,8 +1,8 @@
 -- Phase 2 onboarding RPCs: answers, referral code, photos, selfie, location, completion.
 begin;
-select plan(26);
+select plan(28);
 
-select tests.create_onboarded_user('33639982601', 'a7000000-0000-4000-8000-000000000001');
+select tests.create_onboarded_user('33639982601', 'a7000000-0000-4000-8000-000000000001', p_activate => false);
 select tests.create_user('33639982602', 'b7000000-0000-4000-8000-000000000002');
 -- Fake uploaded files (the app uploads through the Storage API).
 insert into storage.objects (bucket_id, name, owner_id) values
@@ -17,6 +17,10 @@ select tests.authenticate_as('a7000000-0000-4000-8000-000000000001');
 -- Completion is refused while steps are missing ------------------------------------
 select throws_ok($$ select public.complete_onboarding() $$, 'P0001', 'onboarding_incomplete:prompts',
   'cannot finish without written answers');
+
+-- Drink changes during onboarding are free (Q12) ---------------------------------------
+select lives_ok($$ select public.set_my_intent('single', '{coffee}', 'open_to_explore') $$, 'changing drinks during onboarding');
+select lives_ok($$ select public.set_my_intent('single', '{beer,cocktail}', 'open_to_explore') $$, 'changing again during onboarding has no cooldown');
 
 -- Written answers --------------------------------------------------------------------
 select throws_ok($$ select public.set_my_prompts('[{"question_code":"green_flag","answer":"a"}]') $$,
