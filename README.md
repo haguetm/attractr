@@ -110,6 +110,7 @@ Attractr reprend ce qui fonctionne dans les applis de rencontre et écarte ce qu
 | Statistiques de profil (vues, likes par photo) | | ✅ |
 | Analyse IA | 1 conseil | Complète |
 | Boost | 2 € l'unité | 1 offert par mois |
+| Publicité | Légère et fermable (après le lancement) | Aucune |
 
 **Premium : 7,99 € par mois ou 49,99 € par an**, au même prix pour tout le monde. Résiliation en un clic. Ces prix sont provisoires.
 

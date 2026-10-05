@@ -13,7 +13,7 @@
 
 ## Produit
 
-Chaque utilisateur affiche une boisson qui indique ce qu'il cherche. Le feed ne montre que des profils compatibles. Inscription ouverte au monde entier, test en France. Prix unique pour tous, résiliation en un clic. Publicité : à l'étude, voir DECISIONS.md (Q28). Ce n'est pas un réseau social : pas de fil d'actualité, pas de publications, pas de messages hors match ou hors groupe validé. L'appli est strictement réservée aux adultes (18 ans minimum). Aucun espace pour mineurs.
+Chaque utilisateur affiche une boisson qui indique ce qu'il cherche. Le feed ne montre que des profils compatibles. Inscription ouverte au monde entier, test en France. Prix unique pour tous, résiliation en un clic. Publicité légère et fermable pour les non-abonnés, ajoutée seulement une fois l'appli déployable (DECISIONS.md, Q28). Ce n'est pas un réseau social : pas de fil d'actualité, pas de publications, pas de messages hors match ou hors groupe validé. L'appli est strictement réservée aux adultes (18 ans minimum). Aucun espace pour mineurs.
 
 ## Stack
 

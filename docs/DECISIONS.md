@@ -72,5 +72,8 @@ Réponses aux ambiguïtés relevées lors du cadrage. Validées le 2026-10-05. E
 - **Q25** : V1 centrée sur la France ; aucun pays restreint pour l'instant. La liste sera à établir avant toute ouverture hors de France.
 - **Q27** : seul `Logo.jpg` est utilisé (icône, écran de démarrage, connexion). Source : `docs/brand/logo.jpg`.
 
-## Question ouverte
-- **Q28 – Publicité pour les non-abonnés** (2026-10-07) : la spec disait « aucune publicité » ; une publicité non invasive pour les comptes gratuits est envisagée. À trancher avant toute implémentation (format, emplacements, régie, ciblage). Contrainte déjà posée par la spec : aucune donnée sensible ne sort vers un tiers, ce qui exclut tout ciblage fondé sur le profil.
+## Publicité (Q28, 2026-10-07)
+- **Pas de publicité tant que l'appli n'est pas déployable.** Rien n'est développé d'ici là.
+- Ensuite : publicité **légère et fermable**, pour les **non-abonnés uniquement** (Premium = sans publicité), à plusieurs endroits de l'appli.
+- Ciblage (personnalisé ou non) : **à décider plus tard**. Contrainte déjà posée : aucune donnée sensible ne sort vers un tiers, donc aucun ciblage fondé sur le profil ; un ciblage personnalisé exigerait un consentement dédié (et l'App Tracking Transparency sur iOS).
+- À cadrer avant l'implémentation : emplacements exacts (jamais à l'intérieur d'une conversation ?), régie et contrat de traitement, impact sur l'analyse d'impact RGPD.
