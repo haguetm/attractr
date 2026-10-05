@@ -25,7 +25,7 @@ Chaque utilisateur affiche une boisson qui indique ce qu'il cherche. Le feed ne 
 
 ## 1. Boissons
 
-Vin = relation sérieuse. Café = dating ouvert. Cocktail = rencontre légère. Bière = amitié et activités.
+Vin = relation sérieuse. Cocktail = relation purement sexuelle (« plan cul »). Café = pas encore décidé entre Vin et Cocktail. Bière = amitié uniquement.
 
 - Un profil a une boisson, ou deux à condition que la Bière en fasse partie (Bière+Vin, Bière+Café, Bière+Cocktail). Aucune autre combinaison.
 - Changement limité à une fois tous les 7 jours (historique privé, réservé à la modération).
@@ -129,7 +129,9 @@ Règles :
 
 **Gratuit** : 25 likes par 24 h, chat, matchs, vérification, blocage des contacts du téléphone, mode pause, sorties à plusieurs, déclaration de la composition de polyamour, filtres de base (âge, distance, genre, boisson), nombre de likes reçus flouté, 1 conseil d'analyse IA.
 
-**Premium** (7,99 € par mois ou 49,99 € par an, prix identique pour tous, **provisoire**, configuré dans RevenueCat) : likes illimités, chats de groupe, filtres avancés (études, taille, centres d'intérêt, « actifs récemment », « vérifiés uniquement », composition recherchée), liste complète de « qui t'a liké » (profils vérifiés uniquement), mode incognito (visible seulement par les personnes que tu likes), retour en arrière, passeport, statistiques de profil (vues, likes par photo), analyse IA complète, 1 boost offert par mois.
+**Premium** (7,99 € par mois ou 49,99 € par an, prix identique pour tous, **provisoire**, configuré dans RevenueCat) : likes illimités, chats de groupe, filtres avancés (études, taille, centres d'intérêt, « actifs récemment », « vérifiés uniquement », composition recherchée), liste complète de « qui t'a liké » (profils vérifiés uniquement), mode incognito (visible seulement par les personnes que tu likes), retour en arrière, passeport, statistiques de profil (vues, likes par photo), indicateur de popularité des autres profils (voir ci-dessous), analyse IA complète, 1 boost offert par mois.
+
+**Indicateur de popularité** (Premium) : sur chaque profil du feed, une indication qualitative du volume de likes reçus par ce profil (« reçoit beaucoup de likes » / « reçoit peu de likes »). Jamais de chiffre exact. Seuils et fenêtre de calcul **provisoires**, dans `app_config`.
 
 **Boost** : achat à l'unité à 2 €. Le profil passe en tête de la zone pendant 30 minutes, avec affichage du nombre de vues obtenues.
 
