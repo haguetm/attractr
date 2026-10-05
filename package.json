@@ -2,6 +2,7 @@
   "name": "attractr",
   "private": true,
   "workspaces": [
+    "apps/*",
     "packages/*",
     "supabase/seed"
   ],
@@ -12,7 +13,10 @@
     "db:test": "supabase test db",
     "seed:generate": "npm run generate --workspace @attractr/seed",
     "test": "npm run test --workspaces --if-present",
-    "typecheck": "npm run typecheck --workspaces --if-present"
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "functions:test": "cd supabase/functions && npx --yes deno@2 test --allow-env",
+    "functions:check": "cd supabase/functions && npx --yes deno@2 check update-location/index.ts delete-account/index.ts",
+    "mobile": "npm run start --workspace @attractr/mobile"
   },
   "devDependencies": {
     "supabase": "^2.119.0"

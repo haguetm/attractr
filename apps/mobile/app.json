@@ -1,0 +1,66 @@
+{
+  "expo": {
+    "name": "Attractr",
+    "slug": "attractr",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/icon.png",
+    "scheme": "attractr",
+    "userInterfaceStyle": "light",
+    "ios": {
+      "icon": "./assets/expo.icon",
+      "bundleIdentifier": "app.attractr",
+      "infoPlist": {
+        "NSCameraUsageDescription": "La caméra sert à prendre ton selfie de vérification.",
+        "NSPhotoLibraryUsageDescription": "L'accès à tes photos sert à ajouter des photos à ton profil.",
+        "NSLocationWhenInUseUsageDescription": "Ta position, arrondie à environ 1 km, sert à te montrer des profils proches."
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#FDF5EC",
+        "foregroundImage": "./assets/images/android-icon-foreground.png",
+        "backgroundImage": "./assets/images/android-icon-background.png",
+        "monochromeImage": "./assets/images/android-icon-monochrome.png"
+      },
+      "predictiveBackGestureEnabled": false,
+      "package": "app.attractr",
+      "permissions": [
+        "CAMERA",
+        "ACCESS_COARSE_LOCATION",
+        "ACCESS_FINE_LOCATION"
+      ]
+    },
+    "web": {
+      "output": "static",
+      "favicon": "./assets/images/favicon.png"
+    },
+    "plugins": [
+      "expo-router",
+      [
+        "expo-splash-screen",
+        {
+          "backgroundColor": "#FDF5EC",
+          "image": "./assets/images/splash-icon.png",
+          "imageWidth": 120
+        }
+      ],
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "L'accès à tes photos sert à ajouter des photos à ton profil.",
+          "cameraPermission": "La caméra sert à prendre ton selfie de vérification."
+        }
+      ],
+      [
+        "expo-location",
+        {
+          "locationWhenInUsePermission": "Ta position, arrondie à environ 1 km, sert à te montrer des profils proches."
+        }
+      ]
+    ],
+    "experiments": {
+      "reactCompiler": true
+    }
+  }
+}
