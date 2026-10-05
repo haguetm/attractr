@@ -130,3 +130,37 @@ export function ageOn(birthDate: string, today: Date): number {
 
 export const MIN_AGE = 18;
 export const isAdult = (birthDate: string, today: Date = new Date()) => ageOn(birthDate, today) >= MIN_AGE;
+
+// Resume -----------------------------------------------------------------------
+
+/** What the server knows about an onboarding in progress (from get_my_profile). */
+export interface OnboardingProgress {
+  status: 'onboarding' | 'active' | 'paused' | 'suspended' | 'closed';
+  hasTermsConsent: boolean;
+  birthDate: string | null;
+  hasLocation: boolean;
+  firstName: string | null;
+  hasSensitiveConsent: boolean;
+  hasSeekingGenders: boolean;
+  hasIntent: boolean;
+  promptsCount: number;
+  photosCount: number;
+  minPhotos: number;
+  verificationStatus: 'unverified' | 'pending' | 'verified' | 'rejected';
+}
+
+/** First screen to show when the app reopens, or 'done' once onboarding is over. */
+export function resumeStep(p: OnboardingProgress): OnboardingStep | 'done' {
+  if (p.status !== 'onboarding') return 'done';
+  if (!p.hasTermsConsent || !p.birthDate) return 'age';
+  if (!p.hasLocation) return 'location';
+  if (!p.firstName) return 'identity';
+  if (!p.hasSensitiveConsent) return 'sensitive_consent';
+  // Sought genders are kept in memory until consent: if the app was closed in between, ask again.
+  if (!p.hasSeekingGenders) return 'identity';
+  if (!p.hasIntent) return 'account_type';
+  if (p.promptsCount < 3) return 'prompts';
+  if (p.photosCount < p.minPhotos) return 'photos';
+  if (p.verificationStatus === 'unverified' || p.verificationStatus === 'rejected') return 'selfie';
+  return 'orientation';
+}

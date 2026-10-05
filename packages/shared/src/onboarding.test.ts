@@ -11,6 +11,7 @@ import {
   nextStep,
   parseBirthDate,
   previousStep,
+  resumeStep,
   structureChoices,
   withDrinks,
   withSituation,
@@ -113,5 +114,30 @@ describe('age', () => {
     expect(ageOn('2008-10-06', today)).toBe(17);
     expect(isAdult('2008-10-05', today)).toBe(true);
     expect(isAdult('2008-10-06', today)).toBe(false);
+  });
+});
+
+describe('resumeStep', () => {
+  const base = {
+    status: 'onboarding' as const, hasTermsConsent: true, birthDate: '1995-01-01', hasLocation: true,
+    firstName: 'Léa', hasSensitiveConsent: true, hasSeekingGenders: true, hasIntent: true,
+    promptsCount: 3, photosCount: 2, minPhotos: 2, verificationStatus: 'pending' as const,
+  };
+
+  it('walks the steps in order', () => {
+    expect(resumeStep({ ...base, hasTermsConsent: false })).toBe('age');
+    expect(resumeStep({ ...base, hasLocation: false })).toBe('location');
+    expect(resumeStep({ ...base, firstName: null })).toBe('identity');
+    expect(resumeStep({ ...base, hasSensitiveConsent: false })).toBe('sensitive_consent');
+    expect(resumeStep({ ...base, hasSeekingGenders: false })).toBe('identity');
+    expect(resumeStep({ ...base, hasIntent: false })).toBe('account_type');
+    expect(resumeStep({ ...base, promptsCount: 2 })).toBe('prompts');
+    expect(resumeStep({ ...base, photosCount: 1 })).toBe('photos');
+    expect(resumeStep({ ...base, verificationStatus: 'unverified' })).toBe('selfie');
+    expect(resumeStep(base)).toBe('orientation');
+  });
+
+  it('is done once the profile left onboarding', () => {
+    expect(resumeStep({ ...base, status: 'active', hasLocation: false })).toBe('done');
   });
 });
