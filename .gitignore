@@ -13,3 +13,6 @@ coverage/
 .expo/
 ios/
 android/
+
+# Deno lockfile created by npx deno at the repo root
+/deno.lock
