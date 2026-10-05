@@ -66,3 +66,8 @@ Réponses aux ambiguïtés relevées lors du cadrage. Validées le 2026-10-05. E
 - **Code de parrainage enregistré tel quel** (`private.signup_referrals`), résolu en phase 7.
 - **Icônes de boissons provisoires** (émojis, avec variante sans alcool) en attendant un jeu d'icônes dessiné.
 - **Libellé Cocktail affiché** : « Rencontre sans engagement ».
+
+## Réponses du 2026-10-07
+- **Q24** : réduction de 10 % pour le parrain non abonné (`referral.non_subscriber_referrer_discount_pct`, provisoire).
+- **Q25** : V1 centrée sur la France ; aucun pays restreint pour l'instant. La liste sera à établir avant toute ouverture hors de France.
+- **Q27** : seul `Logo.jpg` est utilisé (icône, écran de démarrage, connexion). Source : `docs/brand/logo.jpg`.
