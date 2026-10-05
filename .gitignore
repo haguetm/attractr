@@ -16,3 +16,6 @@ android/
 
 # Deno lockfile created by npx deno at the repo root
 /deno.lock
+
+# Working copies of logo drafts (the chosen one lives in docs/brand)
+/Logo*.jpg

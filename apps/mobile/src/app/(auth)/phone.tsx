@@ -29,7 +29,7 @@ export default function PhoneScreen() {
       subtitle={t('auth.phoneSubtitle')}
       footer={<Button label={t('auth.sendCode')} onPress={send} loading={busy} disabled={input.trim().length < 6} />}
     >
-      <Image source={require('../../../assets/images/logo.jpg')} style={styles.logo} contentFit="contain" />
+      <Image source={require('../../../assets/images/logo.png')} style={styles.logo} contentFit="contain" />
       <Field
         value={input}
         onChangeText={setInput}

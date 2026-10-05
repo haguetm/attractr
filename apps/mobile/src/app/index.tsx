@@ -36,7 +36,7 @@ export default function Index() {
   if (target) return <Redirect href={target} />;
   return (
     <View style={styles.container}>
-      <Image source={require('../../assets/images/logo.jpg')} style={styles.logo} contentFit="contain" />
+      <Image source={require('../../assets/images/logo.png')} style={styles.logo} contentFit="contain" />
       <ActivityIndicator color={colors.coral} />
     </View>
   );
