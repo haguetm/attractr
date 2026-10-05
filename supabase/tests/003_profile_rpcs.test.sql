@@ -8,13 +8,13 @@ select tests.create_user('33639982002', 'b1000000-0000-4000-8000-000000000002');
 -- Age and identity -----------------------------------------------------------
 select tests.authenticate_as('b1000000-0000-4000-8000-000000000002');
 select throws_ok(
-  format($$ select public.set_my_identity('Bob', %L, 'man') $$, (current_date - interval '17 years')::date),
+  format($$ select public.set_my_birth_date(%L) $$, (current_date - interval '17 years')::date),
   'P0001', 'underage', 'under 18 is rejected');
 select lives_ok(
-  format($$ select public.set_my_identity('Bob', %L, 'man') $$, (current_date - interval '18 years')::date),
+  format($$ select public.set_my_birth_date(%L) $$, (current_date - interval '18 years')::date),
   'exactly 18 is accepted');
 select throws_ok(
-  format($$ select public.set_my_identity('Bob', %L, 'man') $$, (current_date - interval '40 years')::date),
+  format($$ select public.set_my_birth_date(%L) $$, (current_date - interval '40 years')::date),
   'P0001', 'birth_date_locked', 'birth date cannot change once set');
 
 -- Sensitive writes need the separate consent ------------------------------------

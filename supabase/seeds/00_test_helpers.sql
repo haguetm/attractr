@@ -47,7 +47,8 @@ begin
   perform public.grant_consent('terms', 1);
   perform public.grant_consent('privacy', 1);
   perform public.grant_consent('sensitive_data', 1);
-  perform public.set_my_identity('Test', (current_date - interval '30 years')::date, p_gender);
+  perform public.set_my_birth_date((current_date - interval '30 years')::date);
+  perform public.set_my_identity('Test', p_gender);
   perform public.set_my_seeking(p_seeking);
   perform public.set_my_intent('single', p_drinks, p_structure);
   perform set_config('request.jwt.claims', coalesce(previous_claims, ''), true);
