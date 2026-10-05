@@ -35,7 +35,7 @@ Attractr reprend ce qui fonctionne dans les applis de rencontre et écarte ce qu
 | Les questions de profil qui révèlent une personnalité | Les faux profils : **selfie de vérification obligatoire** et contrôle d'âge |
 | Un abonnement Premium qui apporte un vrai confort | Les prix qui changent selon ton âge ou ton profil : **prix unique pour tous** |
 | Des options payantes à l'unité (Boost) | Les abonnements impossibles à quitter : **résiliation en un clic** |
-| Une expérience gratuite réellement utilisable | La publicité : **aucune, jamais** |
+| Une expérience gratuite réellement utilisable | Les formules gratuites bridées au point d'être inutilisables : **chat, matchs et sorties restent gratuits et illimités** |
 | Les profils vérifiés mis en avant | Les notes de beauté et les classements de physique : **interdits**, y compris dans l'analyse IA |
 | La localisation pour trouver des gens près de chez soi | Ta position exacte exposée : **arrondie à environ 1 km**, distances affichées par tranches |
 | Les fonctions d'un réseau social qui servent la rencontre (amis, sorties) | Le reste du réseau social : **pas de fil d'actualité, pas de publications, pas de messages hors match** |
