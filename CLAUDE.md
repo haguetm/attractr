@@ -1,6 +1,6 @@
 # Attractr
 
-Adult-only (18+) dating app where each profile shows a drink that signals intent. Full product spec: [docs/SPEC.md](docs/SPEC.md) — read it before any change. Architecture (once validated): `docs/ARCHITECTURE.md`.
+Adult-only (18+) dating app where each profile shows a drink that signals intent. Full product spec: [docs/SPEC.md](docs/SPEC.md) — read it before any change. Validated decisions that refine it (take precedence): [docs/DECISIONS.md](docs/DECISIONS.md). Architecture: [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
 
 ## Stack
 - Mobile: Expo (React Native) + TypeScript
