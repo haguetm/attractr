@@ -3,16 +3,16 @@
 
 import { DRINKS, type Drink } from '@attractr/shared';
 import { router } from 'expo-router';
-import { type ReactNode, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { DrinkIcon } from '../components/DrinkIcon';
-import { Button, Choice, ErrorText, Note, Screen, Section } from '../components/ui';
+import { Button, Chip, Choice, ErrorText, Note, Screen, Section } from '../components/ui';
 import { useSession } from '../features/session/SessionProvider';
 import { api, type SearchMode, type SearchPreferences } from '../lib/api';
 import { errorMessage } from '../lib/errors';
 import { useSubmit } from '../lib/useSubmit';
-import { colors, font, radius, spacing } from '../theme';
+import { font, spacing } from '../theme';
 
 const RADII = [5, 10, 25, 50, 100, 200, 300];
 const MODES: SearchMode[] = ['radius', 'department', 'region'];
@@ -95,20 +95,6 @@ export default function SearchScreen() {
   );
 }
 
-function Chip(props: { label: string; selected: boolean; onPress: () => void; leading?: ReactNode }) {
-  return (
-    <Pressable
-      accessibilityRole="checkbox"
-      accessibilityState={{ checked: props.selected }}
-      onPress={props.onPress}
-      style={[styles.chip, props.selected && styles.chipSelected]}
-    >
-      {props.leading}
-      <Text style={[styles.chipLabel, props.selected && styles.chipLabelSelected]}>{props.label}</Text>
-    </Pressable>
-  );
-}
-
 function Stepper(props: { value: number; min: number; max: number; onChange: (v: number) => void }) {
   return (
     <View style={styles.stepper}>
@@ -121,10 +107,6 @@ function Stepper(props: { value: number; min: number; max: number; onChange: (v:
 
 const styles = StyleSheet.create({
   chips: { flexDirection: 'row', flexWrap: 'wrap', gap: spacing.sm },
-  chip: { flexDirection: 'row', alignItems: 'center', gap: 6, paddingHorizontal: 14, paddingVertical: 8, borderRadius: radius.pill, borderWidth: 1.5, borderColor: colors.border, backgroundColor: colors.white },
-  chipSelected: { borderColor: colors.coral, backgroundColor: colors.coralSoft },
-  chipLabel: { color: colors.text, fontWeight: '600' },
-  chipLabelSelected: { color: colors.coral },
   stepper: { flexDirection: 'row', alignItems: 'center', gap: spacing.md },
   stepperValue: { minWidth: 32, textAlign: 'center', fontWeight: '700' },
 });

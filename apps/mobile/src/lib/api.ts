@@ -149,6 +149,49 @@ export interface MyBlocks {
   contacts_blocked: boolean;
 }
 
+export interface FriendSummary {
+  id: string;
+  first_name: string;
+  username: string | null;
+}
+
+export interface MyFriends {
+  username: string | null;
+  max: number;
+  friends: FriendSummary[];
+  incoming: FriendSummary[];
+  outgoing: FriendSummary[];
+}
+
+export type OutingStatus = 'planned' | 'past' | 'cancelled';
+
+/** What the matched pair sees of their outing. */
+export interface MatchOuting {
+  id: string;
+  place: string;
+  starts_at: string;
+  status: OutingStatus;
+  created_by_me: boolean;
+  participants: number;
+  min_participants: number;
+  max_participants: number;
+  invitations: { first_name: string; response: 'pending' | 'going' | 'not_going'; mine: boolean; friend_id: string | null }[];
+  my_feedback_given: boolean;
+}
+
+/** What an invited friend sees (spec §7): no profile, drink or like. */
+export interface OutingCard {
+  outing_id: string;
+  place: string;
+  starts_at: string;
+  status: OutingStatus;
+  matched_first_names: [string, string];
+  invited_by: string;
+  response: 'pending' | 'going' | 'not_going';
+  participants: number;
+  my_feedback_given: boolean;
+}
+
 export interface SeedProfileSummary {
   id: string;
   firstName: string;
@@ -290,6 +333,27 @@ export const api = {
   blockContacts: (digests: string[]) => rpc('block_contacts', { p_digests: digests }),
   unblockContacts: () => rpc('unblock_contacts'),
   setPaused: (paused: boolean) => rpc('set_my_paused', { p_paused: paused }),
+
+  setUsername: (username: string) => rpc('set_my_username', { p_username: username }),
+  getMyFriends: () => rpc<MyFriends>('get_my_friends'),
+  requestFriend: (username: string) => rpc('request_friend_by_username', { p_username: username }),
+  respondFriendRequest: (otherId: string, accept: boolean) =>
+    rpc('respond_friend_request', { p_other_id: otherId, p_accept: accept }),
+  createFriendInvite: () => rpc<string>('create_friend_invite'),
+  previewFriendInvite: (code: string) => rpc<{ first_name: string } | null>('preview_friend_invite', { p_code: code }),
+  acceptFriendInvite: (code: string) => rpc('accept_friend_invite', { p_code: code }),
+  removeFriend: (otherId: string) => rpc('remove_friend', { p_other_id: otherId }),
+
+  createOuting: (matchId: string, place: string, startsAt: Date) =>
+    rpc<string>('create_outing', { p_match_id: matchId, p_place: place, p_starts_at: startsAt.toISOString() }),
+  inviteToOuting: (outingId: string, friendIds: string[]) =>
+    rpc('invite_to_outing', { p_outing_id: outingId, p_friend_ids: friendIds }),
+  cancelOuting: (outingId: string) => rpc('cancel_outing', { p_outing_id: outingId }),
+  getMatchOuting: (matchId: string) => rpc<MatchOuting | null>('get_match_outing', { p_match_id: matchId }),
+  getMyOutingInvitations: () => rpc<OutingCard[]>('get_my_outing_invitations'),
+  respondToOuting: (outingId: string, going: boolean) => rpc('respond_to_outing', { p_outing_id: outingId, p_going: going }),
+  giveOutingFeedback: (outingId: string, rating: number, comment: string) =>
+    rpc('give_outing_feedback', { p_outing_id: outingId, p_rating: rating, p_comment: comment.trim() || null }),
 
   registerPushToken: (token: string, platform: 'ios' | 'android' | 'web') =>
     rpc('register_push_token', { p_token: token, p_platform: platform }),

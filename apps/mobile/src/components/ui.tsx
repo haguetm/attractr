@@ -139,6 +139,26 @@ export function Section({ title, children }: { title: string; children: ReactNod
   );
 }
 
+/** Compact selectable pill (filters, day and time choices). */
+export function Chip(props: { label: string; selected: boolean; onPress: () => void; leading?: ReactNode; disabled?: boolean }) {
+  return (
+    <Pressable
+      accessibilityRole="checkbox"
+      accessibilityState={{ checked: props.selected, disabled: !!props.disabled }}
+      onPress={props.onPress}
+      disabled={props.disabled}
+      style={[styles.chip, props.selected && styles.chipSelected, props.disabled && styles.choiceDisabled]}
+    >
+      {props.leading}
+      <Text style={[styles.chipLabel, props.selected && styles.chipLabelSelected]}>{props.label}</Text>
+    </Pressable>
+  );
+}
+
+export function Chips({ children }: { children: ReactNode }) {
+  return <View style={styles.chips}>{children}</View>;
+}
+
 export function Note({ children }: { children: ReactNode }) {
   return <Text style={[font.small, styles.note]}>{children}</Text>;
 }
@@ -183,4 +203,9 @@ const styles = StyleSheet.create({
   error: { color: colors.error, fontSize: 14 },
   section: { gap: spacing.sm, marginTop: spacing.sm },
   note: { fontStyle: 'italic' },
+  chips: { flexDirection: 'row', flexWrap: 'wrap', gap: spacing.sm },
+  chip: { flexDirection: 'row', alignItems: 'center', gap: 6, paddingHorizontal: 14, paddingVertical: 8, borderRadius: radius.pill, borderWidth: 1.5, borderColor: colors.border, backgroundColor: colors.white },
+  chipSelected: { borderColor: colors.coral, backgroundColor: colors.coralSoft },
+  chipLabel: { color: colors.text, fontWeight: '600' },
+  chipLabelSelected: { color: colors.coral },
 });
