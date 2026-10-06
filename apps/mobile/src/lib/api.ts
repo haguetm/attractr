@@ -93,6 +93,41 @@ export interface Feed {
   widened: boolean;
 }
 
+export type LikeTarget = { kind: 'photo' | 'prompt'; ref: string };
+
+export type LikeQuota =
+  | { unlimited: true }
+  | { unlimited: false; limit: number; used: number; remaining: number; next_reset_at: string | null };
+
+export interface LikeResult {
+  matched: boolean;
+  match_id: string | null;
+  conversation_id: string | null;
+  quota: LikeQuota;
+}
+
+export interface MatchSummary {
+  match_id: string;
+  conversation_id: string;
+  created_at: string;
+  matched_drinks: Drink[];
+  /** Set while no message has been sent yet (24 h window). */
+  first_message_deadline: string | null;
+  extensions_left: number;
+  other: { id: string; first_name: string; age: number; verified: boolean; drinks: Drink[]; photo_path: string | null };
+  last_message: { body: string; mine: boolean; created_at: string } | null;
+  unread_count: number;
+  my_turn: boolean;
+}
+
+export interface ChatMessage {
+  id: number;
+  conversation_id: string;
+  sender_id: string;
+  body: string;
+  created_at: string;
+}
+
 export interface SeedProfileSummary {
   id: string;
   firstName: string;
@@ -192,6 +227,34 @@ export const api = {
       p_age_max: p.age_max,
       p_drinks: p.drinks,
     }),
+
+  likeProfile: (targetId: string, target: LikeTarget) =>
+    rpc<LikeResult>('like_profile', { p_target_id: targetId, p_target_kind: target.kind, p_target_ref: target.ref }),
+  getLikeQuota: () => rpc<LikeQuota>('get_like_quota'),
+  getLikesReceivedCount: () => rpc<number>('get_likes_received_count'),
+
+  getMyMatches: () => rpc<MatchSummary[]>('get_my_matches'),
+  getMatchProfile: (matchId: string) => rpc<ProfileCard>('get_match_profile', { p_match_id: matchId }),
+  extendMatch: (matchId: string) => rpc<string>('extend_match', { p_match_id: matchId }),
+  unmatch: (matchId: string) => rpc('unmatch', { p_match_id: matchId }),
+
+  async getMessages(conversationId: string, limit = 100): Promise<ChatMessage[]> {
+    const { data, error } = await supabase
+      .from('messages')
+      .select('id, conversation_id, sender_id, body, created_at')
+      .eq('conversation_id', conversationId)
+      .order('created_at', { ascending: false })
+      .limit(limit);
+    if (error) throw new AppError(errorCode(error));
+    return data as ChatMessage[];
+  },
+  sendMessage: (conversationId: string, body: string) =>
+    rpc<number>('send_message', { p_conversation_id: conversationId, p_body: body }),
+  markRead: (conversationId: string) => rpc('mark_conversation_read', { p_conversation_id: conversationId }),
+
+  registerPushToken: (token: string, platform: 'ios' | 'android' | 'web') =>
+    rpc('register_push_token', { p_token: token, p_platform: platform }),
+  unregisterPushToken: (token: string) => rpc('unregister_push_token', { p_token: token }),
 
   /** Development only ("tester en tant que"); the server refuses it anywhere else. */
   devListSeedProfiles: () => invoke<{ profiles: SeedProfileSummary[] }>('dev-impersonate', { action: 'list' }),

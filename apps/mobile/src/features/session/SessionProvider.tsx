@@ -1,6 +1,7 @@
 import type { Session } from '@supabase/supabase-js';
 import { createContext, type ReactNode, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { api, type MyProfile } from '../../lib/api';
+import { unregisterForPush } from '../../lib/notifications';
 import { supabase } from '../../lib/supabase';
 
 interface SessionState {
@@ -44,6 +45,7 @@ export function SessionProvider({ children }: { children: ReactNode }) {
   }, [refreshProfile]);
 
   const signOut = useCallback(async () => {
+    await unregisterForPush();
     await supabase.auth.signOut();
     setProfile(null);
   }, []);

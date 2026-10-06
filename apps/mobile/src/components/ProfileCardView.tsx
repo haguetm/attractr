@@ -1,71 +1,95 @@
-// A profile as shown in the feed: photos (or an initials avatar), first name, age,
-// drink icons only (spec §1), badges, distance range, answers and bio.
+// A profile as shown in the feed or to a match: photos (or an initials avatar),
+// first name, age, drink icons only (spec §1), badges, distance range, answers and
+// bio. With onLike, a heart on the shown photo and on each answer sends a targeted
+// like (spec §5).
 
 import { Image } from 'expo-image';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
-import type { ProfileCard } from '../lib/api';
+import type { LikeTarget, ProfileCard } from '../lib/api';
 import { supabase } from '../lib/supabase';
 import { colors, font, radius, spacing } from '../theme';
 import { DrinkIcon } from './DrinkIcon';
 
 const AVATAR_COLORS = [colors.coral, colors.navy, '#E0896B', '#4C6A92', '#B85C7A', '#3E7C6F'];
 
-function avatarColor(id: string) {
+export function avatarColor(id: string) {
   let hash = 0;
   for (const ch of id) hash = (hash * 31 + ch.charCodeAt(0)) >>> 0;
   return AVATAR_COLORS[hash % AVATAR_COLORS.length]!;
 }
 
-/** Signed URLs for the card photos; the storage policy allows profiles the feed served. */
-function usePhotoUrls(card: ProfileCard) {
-  const [urls, setUrls] = useState<string[]>([]);
+type ShownPhoto = { id: string; url: string };
+
+/** Signed URLs for the card photos; the storage policy allows served profiles and matches. */
+function useShownPhotos(card: ProfileCard): ShownPhoto[] {
+  const [shown, setShown] = useState<ShownPhoto[]>([]);
   useEffect(() => {
-    setUrls([]);
+    setShown([]);
     if (card.photos.length === 0) return;
     let cancelled = false;
     void supabase.storage
       .from('photos')
       .createSignedUrls(card.photos.map((p) => p.storage_path), 3600)
       .then(({ data }) => {
-        if (!cancelled) setUrls((data ?? []).map((d) => d.signedUrl).filter((u): u is string => !!u));
+        if (cancelled) return;
+        const next: ShownPhoto[] = [];
+        card.photos.forEach((p, i) => {
+          const url = data?.[i]?.signedUrl;
+          if (url) next.push({ id: p.id, url });
+        });
+        setShown(next);
       });
     return () => {
       cancelled = true;
     };
   }, [card]);
-  return urls;
+  return shown;
 }
 
-export function ProfileCardView({ card, alcoholFree }: { card: ProfileCard; alcoholFree: boolean }) {
+export function ProfileCardView(props: {
+  card: ProfileCard;
+  alcoholFree: boolean;
+  onLike?: (target: LikeTarget) => void;
+  likeDisabled?: boolean;
+}) {
+  const { card, alcoholFree, onLike, likeDisabled } = props;
   const { t } = useTranslation();
-  const urls = usePhotoUrls(card);
+  const shown = useShownPhotos(card);
   const [photoIndex, setPhotoIndex] = useState(0);
   useEffect(() => setPhotoIndex(0), [card.id]);
 
+  const current = shown[photoIndex];
   const onlyBeer = card.matched_drinks.length === 1 && card.matched_drinks[0] === 'beer' && card.drinks.length > 1;
-  const initials = card.first_name.slice(0, 1).toUpperCase();
 
   return (
     <View style={styles.card}>
       <Pressable
         accessibilityRole="imagebutton"
-        accessibilityLabel={urls.length ? t('card.photo', { current: photoIndex + 1, total: urls.length }) : card.first_name}
-        onPress={() => urls.length > 1 && setPhotoIndex((photoIndex + 1) % urls.length)}
+        accessibilityLabel={shown.length ? t('card.photo', { current: photoIndex + 1, total: shown.length }) : card.first_name}
+        onPress={() => shown.length > 1 && setPhotoIndex((photoIndex + 1) % shown.length)}
         style={styles.media}
       >
-        {urls[photoIndex] ? (
-          <Image source={{ uri: urls[photoIndex] }} style={StyleSheet.absoluteFill} contentFit="cover" transition={150} />
+        {current ? (
+          <Image source={{ uri: current.url }} style={StyleSheet.absoluteFill} contentFit="cover" transition={150} />
         ) : (
           <View style={[StyleSheet.absoluteFill, styles.avatar, { backgroundColor: avatarColor(card.id) }]}>
-            <Text style={styles.initials}>{initials}</Text>
+            <Text style={styles.initials}>{card.first_name.slice(0, 1).toUpperCase()}</Text>
           </View>
         )}
-        {urls.length > 1 ? (
+        {shown.length > 1 ? (
           <View style={styles.dots}>
-            {urls.map((u, i) => <View key={u} style={[styles.dot, i === photoIndex && styles.dotActive]} />)}
+            {shown.map((s, i) => <View key={s.id} style={[styles.dot, i === photoIndex && styles.dotActive]} />)}
           </View>
+        ) : null}
+        {onLike && current ? (
+          <LikeButton
+            label={t('feed.likePhoto')}
+            disabled={likeDisabled}
+            onPress={() => onLike({ kind: 'photo', ref: current.id })}
+            style={styles.photoLike}
+          />
         ) : null}
         <View style={styles.drinks}>
           {card.drinks.map((d) => (
@@ -94,12 +118,36 @@ export function ProfileCardView({ card, alcoholFree }: { card: ProfileCard; alco
         {card.bio ? <Text style={font.body}>{card.bio}</Text> : null}
         {card.prompts.map((p) => (
           <View key={p.question_code} style={styles.prompt}>
-            <Text style={font.small}>{t(`prompts.questions.${p.question_code}`)}</Text>
-            <Text style={styles.answer}>{p.answer}</Text>
+            <View style={styles.promptText}>
+              <Text style={font.small}>{t(`prompts.questions.${p.question_code}`)}</Text>
+              <Text style={styles.answer}>{p.answer}</Text>
+            </View>
+            {onLike ? (
+              <LikeButton
+                label={t('feed.likeAnswer')}
+                disabled={likeDisabled}
+                onPress={() => onLike({ kind: 'prompt', ref: p.question_code })}
+              />
+            ) : null}
           </View>
         ))}
       </View>
     </View>
+  );
+}
+
+function LikeButton(props: { label: string; onPress: () => void; disabled?: boolean; style?: object }) {
+  return (
+    <Pressable
+      accessibilityRole="button"
+      accessibilityLabel={props.label}
+      disabled={props.disabled}
+      onPress={props.onPress}
+      hitSlop={8}
+      style={[styles.likeButton, props.disabled && styles.likeDisabled, props.style]}
+    >
+      <Text style={styles.likeIcon}>♥</Text>
+    </Pressable>
   );
 }
 
@@ -122,6 +170,11 @@ const styles = StyleSheet.create({
   badgeVerified: { backgroundColor: '#DDF0E4', color: colors.success },
   badgeActive: { backgroundColor: colors.coralSoft, color: colors.coral },
   beerOnly: { fontSize: 13, color: colors.navy, fontWeight: '600' },
-  prompt: { gap: 2, paddingVertical: spacing.sm, borderTopWidth: 1, borderTopColor: colors.border },
+  prompt: { flexDirection: 'row', alignItems: 'center', gap: spacing.sm, paddingVertical: spacing.sm, borderTopWidth: 1, borderTopColor: colors.border },
+  promptText: { flex: 1, gap: 2 },
   answer: { fontSize: 17, fontWeight: '600', color: colors.text },
+  likeButton: { width: 44, height: 44, borderRadius: 22, alignItems: 'center', justifyContent: 'center', backgroundColor: colors.white, borderWidth: 1.5, borderColor: colors.coral },
+  likeDisabled: { opacity: 0.4 },
+  likeIcon: { color: colors.coral, fontSize: 22 },
+  photoLike: { position: 'absolute', bottom: spacing.sm, left: spacing.sm },
 });

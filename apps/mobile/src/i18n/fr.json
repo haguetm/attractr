@@ -263,7 +263,19 @@
     "not_a_seed_profile": "Ce profil n'est pas un profil de test.",
     "seed_user_without_email": "Ce profil de test est incomplet. Relance npm run db:reset.",
     "link_failed": "Connexion impossible.",
-    "list_failed": "Chargement impossible."
+    "list_failed": "Chargement impossible.",
+    "profile_unavailable": "Ce profil n'est plus disponible.",
+    "invalid_like_target": "Ce contenu n'est plus disponible.",
+    "already_liked": "Tu as déjà liké ce profil.",
+    "like_quota_reached": "Tu as utilisé tous tes likes pour le moment.",
+    "match_not_found": "Ce match n'existe plus.",
+    "match_extension_unavailable": "Le délai ne peut plus être prolongé.",
+    "conversation_not_found": "Cette conversation n'existe plus.",
+    "message_length": "Ton message est vide ou trop long.",
+    "match_expired": "Le délai pour envoyer le premier message est dépassé.",
+    "match_closed": "Cette conversation est fermée.",
+    "queue_read_failed": "Erreur interne.",
+    "settle_failed": "Erreur interne."
   },
   "settings": {
     "title": "Réglages",
@@ -282,14 +294,20 @@
     "settings": "Réglages",
     "pass": "Passer",
     "like": "J'aime",
-    "likeSoon": "Les likes arrivent bientôt.",
     "widened": "Peu de profils près de toi : on a élargi la recherche à {{km}} km.",
     "waitingTitle": "On cherche pour toi",
     "waitingBody": "Pas encore de profil compatible autour de toi. De nouvelles personnes s'inscrivent chaque jour : reviens un peu plus tard.",
     "refresh": "Actualiser",
     "disclaimer": "Les boissons sont des symboles, pas des invitations à boire.",
     "testBanner": "Mode test : connecté·e en tant que {{name}}",
-    "switchProfile": "Changer"
+    "switchProfile": "Changer",
+    "matches": "Matchs",
+    "likePhoto": "J'aime cette photo",
+    "likeAnswer": "J'aime cette réponse",
+    "likesLeft_one": "{{count}} like restant aujourd'hui",
+    "likesLeft_other": "{{count}} likes restants aujourd'hui",
+    "quotaReached": "Tu as utilisé tes likes. Les prochains reviennent dans {{hours}} h {{minutes}} min.",
+    "quotaPremium": "Likes illimités avec Premium (bientôt)."
   },
   "card": {
     "age": "{{age}} ans",
@@ -327,5 +345,38 @@
     "unavailable": "Outil indisponible : il faut le Supabase local, APP_ENV=development et le drapeau dev.impersonation_enabled.",
     "verified": "vérifié",
     "pending": "en attente"
+  },
+  "match": {
+    "title": "C'est un match !",
+    "subtitle": "Vous avez 24 h pour vous écrire. N'importe lequel de vous deux peut commencer.",
+    "write": "Écrire",
+    "later": "Plus tard",
+    "profile": "Voir le profil"
+  },
+  "matches": {
+    "title": "Matchs",
+    "empty": "Pas encore de match. Les likes, c'est par ici.",
+    "backToFeed": "Retour aux profils",
+    "likesReceived": "Des personnes t'ont liké",
+    "likesReceivedHint": "Découvre qui avec Premium (bientôt). En attendant, elles apparaissent dans tes profils.",
+    "newMatch": "Nouveau match : envoie le premier message",
+    "timeLeft": "Plus que {{hours}} h {{minutes}} min pour écrire",
+    "yourTurn": "À ton tour",
+    "you": "Toi : {{body}}",
+    "unread_one": "{{count}} non lu",
+    "unread_other": "{{count}} non lus"
+  },
+  "chat": {
+    "placeholder": "Ton message",
+    "send": "Envoyer",
+    "firstMessageBanner": "Plus que {{hours}} h {{minutes}} min pour envoyer le premier message.",
+    "extend": "Prolonger de 24 h",
+    "extended": "Délai prolongé.",
+    "unmatch": "Ne plus matcher",
+    "unmatchConfirm": "La conversation sera fermée pour vous deux. Continuer ?",
+    "confirm": "Confirmer",
+    "cancel": "Annuler",
+    "empty": "Lance la conversation : un détail de son profil fait souvent un bon début.",
+    "closed": "Cette conversation est fermée."
   }
 }

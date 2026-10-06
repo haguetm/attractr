@@ -54,6 +54,12 @@
         {
           "locationWhenInUsePermission": "Ta position, arrondie à environ 1 km, sert à te montrer des profils proches."
         }
+      ],
+      [
+        "expo-notifications",
+        {
+          "color": "#F25459"
+        }
       ]
     ],
     "experiments": {
