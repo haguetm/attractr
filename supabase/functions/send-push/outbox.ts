@@ -13,7 +13,9 @@ export type NotificationKind =
   | 'friend_request'
   | 'outing_invitation'
   | 'outing_cancelled'
-  | 'outing_feedback';
+  | 'outing_feedback'
+  | 'group_invitation'
+  | 'group_vote';
 
 export interface OutboxRow {
   id: number;
@@ -33,10 +35,12 @@ export const TEXTS: Record<NotificationKind, { title: string; body: string }> = 
   outing_invitation: { title: 'Invitation à une sortie', body: "Un ami t'invite à une sortie. Tu viens ?" },
   outing_cancelled: { title: 'Sortie annulée', body: 'Une sortie à laquelle tu étais invité·e est annulée.' },
   outing_feedback: { title: "Comment c'était ?", body: 'Donne ton avis sur la sortie, il reste privé.' },
+  group_invitation: { title: 'Invitation dans un groupe', body: 'Un de tes matchs t\'invite dans un groupe.' },
+  group_vote: { title: 'Nouvelle personne proposée', body: 'Ton groupe doit décider : ouvre Attractr.' },
 };
 
 /** Only ids travel in the payload. */
-const ALLOWED_DATA = ['match_id', 'conversation_id', 'outing_id'];
+const ALLOWED_DATA = ['match_id', 'conversation_id', 'outing_id', 'group_id'];
 
 export interface Planned {
   messages: PushMessage[];

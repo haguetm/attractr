@@ -15,13 +15,14 @@ select is_empty($$ select 1 from public.consents where user_id = 'a6000000-0000-
 select is_empty($$ select 1 from private.profile_sensitive where user_id = 'a6000000-0000-4000-8000-000000000001' $$, 'sensitive fields erased');
 select is_empty($$ select 1 from private.drink_change_history where user_id = 'a6000000-0000-4000-8000-000000000001' $$, 'drink history erased');
 
--- Guard for future migrations: every FK to profiles/auth.users must cascade.
+-- Guard for future migrations: every FK to profiles/auth.users must cascade, or be set to
+-- null when a shared row outlives the person (e.g. a group they created).
 select is_empty(
   $$ select conrelid::regclass::text from pg_constraint
      where contype = 'f' and confrelid in ('public.profiles'::regclass, 'auth.users'::regclass)
-       and confdeltype <> 'c'
+       and confdeltype not in ('c', 'n')
        and connamespace in ('public'::regnamespace, 'private'::regnamespace) $$,
-  'all foreign keys to a user cascade on delete');
+  'every foreign key to a user is erased with the account');
 
 select * from finish();
 rollback;
