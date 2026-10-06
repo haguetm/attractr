@@ -4,7 +4,8 @@
   "workspaces": [
     "apps/*",
     "packages/*",
-    "supabase/seed"
+    "supabase/seed",
+    "supabase/lite"
   ],
   "scripts": {
     "db:start": "supabase start",
@@ -18,7 +19,8 @@
     "functions:check": "cd supabase/functions && npx --yes deno@2 check update-location/index.ts delete-account/index.ts dev-impersonate/index.ts",
     "mobile": "npm run start --workspace @attractr/mobile",
     "functions:serve": "supabase functions serve --env-file supabase/functions/.env",
-    "functions:deploy": "node scripts/deploy-functions.mjs"
+    "functions:deploy": "node scripts/deploy-functions.mjs",
+    "db:test:lite": "npm run test:db --workspace @attractr/db-lite --"
   },
   "devDependencies": {
     "supabase": "^2.119.0"

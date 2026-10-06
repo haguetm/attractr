@@ -1,0 +1,19 @@
+{
+  "name": "@attractr/db-lite",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Runs migrations, seeds and pgTAP tests on PGlite (no Docker). Approximation of the Supabase stack.",
+  "scripts": {
+    "test:db": "tsx run.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@electric-sql/pglite": "0.5.8",
+    "@electric-sql/pglite-postgis": "0.2.8",
+    "@types/node": "^22.0.0",
+    "libpg-query": "^17.7.4",
+    "tsx": "^4.20.0",
+    "typescript": "^5.9.0"
+  }
+}
