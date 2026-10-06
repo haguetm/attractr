@@ -8,6 +8,7 @@ const geocoder = new MockGeocodingProvider();
 Deno.test('parses device and home requests', () => {
   assertEquals(parseLocationRequest({ mode: 'device', lat: 48.85, lon: 2.35 }), { mode: 'device', lat: 48.85, lon: 2.35 });
   assertEquals(parseLocationRequest({ mode: 'home', query: '  Lyon ' }), { mode: 'home', query: 'Lyon' });
+  assertEquals(parseLocationRequest({ mode: 'passport', query: 'Nice' }), { mode: 'passport', query: 'Nice' });
 });
 
 Deno.test('rejects malformed requests', () => {

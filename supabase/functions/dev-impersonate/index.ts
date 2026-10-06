@@ -1,7 +1,7 @@
 // Development tool: lists seed profiles and signs the app in as one of them, so
 // a tester can see that profile's feed. Guarded by ./guard.ts. Never deploy to production.
 
-import { adminClient, configReader, json } from '../_shared/supabase.ts';
+import { adminClient, configReader, json, requestUserId } from '../_shared/supabase.ts';
 import { impersonationAllowed, parseImpersonateRequest } from './guard.ts';
 
 Deno.serve(async (req) => {
@@ -18,6 +18,13 @@ Deno.serve(async (req) => {
 
   const request = parseImpersonateRequest(await req.json().catch(() => null));
   if (!request) return json(400, { error: 'invalid_request' });
+
+  if (request.action === 'grant') {
+    const userId = await requestUserId(req);
+    if (!userId) return json(401, { error: 'not_authenticated' });
+    const { error } = await admin.rpc('service_dev_grant', { p_user_id: userId, p_kind: request.kind });
+    return error ? json(500, { error: 'grant_failed' }) : json(200, { granted: request.kind });
+  }
 
   if (request.action === 'list') {
     const { data, error } = await admin

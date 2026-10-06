@@ -6,7 +6,9 @@ import type { AreaCodes, GeocodingProvider } from '../_shared/providers/geocodin
 
 export type LocationRequest =
   | { mode: 'device'; lat: number; lon: number }
-  | { mode: 'home'; query: string };
+  | { mode: 'home'; query: string }
+  /** Premium passport: search around another city (spec §10); the own position is unchanged. */
+  | { mode: 'passport'; query: string };
 
 export type LocationUpdate = AreaCodes & {
   lat: number;
@@ -27,16 +29,19 @@ export function parseLocationRequest(body: unknown): LocationRequest {
     }
     return { mode: 'device', lat, lon };
   }
-  if (b.mode === 'home') {
+  if (b.mode === 'home' || b.mode === 'passport') {
     if (typeof b.query !== 'string' || b.query.trim().length < 2 || b.query.length > 200) {
       throw new LocationError('invalid_address');
     }
-    return { mode: 'home', query: b.query.trim() };
+    return { mode: b.mode, query: b.query.trim() };
   }
   throw new LocationError('invalid_mode');
 }
 
-export async function resolveLocation(req: LocationRequest, geocoder: GeocodingProvider): Promise<LocationUpdate> {
+export async function resolveLocation(
+  req: Exclude<LocationRequest, { mode: 'passport' }>,
+  geocoder: GeocodingProvider,
+): Promise<LocationUpdate> {
   if (req.mode === 'device') {
     const areas = await geocoder.reverse(req);
     return { lat: req.lat, lon: req.lon, source: 'device', label: null, ...areas };

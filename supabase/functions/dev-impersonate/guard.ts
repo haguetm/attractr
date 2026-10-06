@@ -23,13 +23,18 @@ export function impersonationAllowed({ appEnv, supabaseUrl, flag }: GuardInput):
   return { ok: true };
 }
 
-export type ImpersonateRequest = { action: 'list' } | { action: 'login'; userId: string };
+export type ImpersonateRequest =
+  | { action: 'list' }
+  | { action: 'login'; userId: string }
+  /** Grants to the calling user, to test Premium and boosts without a store. */
+  | { action: 'grant'; kind: 'premium' | 'boost' };
 
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
 export function parseImpersonateRequest(body: unknown): ImpersonateRequest | null {
   const b = (body ?? {}) as Record<string, unknown>;
   if (b.action === 'list') return { action: 'list' };
+  if (b.action === 'grant' && (b.kind === 'premium' || b.kind === 'boost')) return { action: 'grant', kind: b.kind };
   if (b.action === 'login' && typeof b.userId === 'string' && UUID.test(b.userId)) {
     return { action: 'login', userId: b.userId };
   }

@@ -36,5 +36,7 @@ Deno.test('request parsing', () => {
     action: 'login', userId: '00000000-0000-4000-8000-000000000001',
   });
   assertEquals(parseImpersonateRequest({ action: 'login', userId: 'x' }), null);
+  assertEquals(parseImpersonateRequest({ action: 'grant', kind: 'premium' }), { action: 'grant', kind: 'premium' });
+  assertEquals(parseImpersonateRequest({ action: 'grant', kind: 'money' }), null);
   assertEquals(parseImpersonateRequest(null), null);
 });
