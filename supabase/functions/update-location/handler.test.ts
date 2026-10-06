@@ -17,15 +17,18 @@ Deno.test('rejects malformed requests', () => {
   assertThrows(() => parseLocationRequest({ mode: 'home', query: 'x' }), LocationError, 'invalid_address');
 });
 
-Deno.test('device position gets its country from the geocoder', async () => {
-  assertEquals((await resolveLocation({ mode: 'device', lat: 45.76, lon: 4.83 }, geocoder)).countryCode, 'FR');
+Deno.test('device position gets its areas from the geocoder', async () => {
+  const lyon = await resolveLocation({ mode: 'device', lat: 45.76, lon: 4.83 }, geocoder);
+  assertEquals([lyon.countryCode, lyon.departmentCode, lyon.regionCode], ['FR', '69', '84']);
   assertEquals((await resolveLocation({ mode: 'device', lat: 50.85, lon: 4.35 }, geocoder)).countryCode, 'BE');
+  const countryside = await resolveLocation({ mode: 'device', lat: 47.0, lon: 2.5 }, geocoder);
+  assertEquals([countryside.countryCode, countryside.departmentCode], ['FR', null]);
   assertEquals((await resolveLocation({ mode: 'device', lat: 0, lon: -30 }, geocoder)).countryCode, null);
 });
 
 Deno.test('home address resolves to a city', async () => {
   const r = await resolveLocation({ mode: 'home', query: '12 rue X, Montpellier' }, geocoder);
-  assertEquals([r.label, r.countryCode, r.source], ['Montpellier', 'FR', 'home']);
+  assertEquals([r.label, r.countryCode, r.departmentCode, r.regionCode, r.source], ['Montpellier', 'FR', '34', '76', 'home']);
   await assertRejects(() => resolveLocation({ mode: 'home', query: 'Atlantis' }, geocoder), LocationError, 'address_not_found');
 });
 

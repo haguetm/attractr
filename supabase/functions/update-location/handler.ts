@@ -1,17 +1,17 @@
-// Sets the caller's position (device GPS or home address) and its country.
-// Coordinates are snapped to ~1 km by the database; they are never logged.
+// Sets the caller's position (device GPS or home address), its country and its
+// administrative areas. Coordinates are snapped to ~1 km by the database; they are
+// never logged nor returned.
 
-import type { GeocodingProvider } from '../_shared/providers/geocoding/index.ts';
+import type { AreaCodes, GeocodingProvider } from '../_shared/providers/geocoding/index.ts';
 
 export type LocationRequest =
   | { mode: 'device'; lat: number; lon: number }
   | { mode: 'home'; query: string };
 
-export type LocationUpdate = {
+export type LocationUpdate = AreaCodes & {
   lat: number;
   lon: number;
   source: 'device' | 'home';
-  countryCode: string | null;
   label: string | null;
 };
 
@@ -38,10 +38,11 @@ export function parseLocationRequest(body: unknown): LocationRequest {
 
 export async function resolveLocation(req: LocationRequest, geocoder: GeocodingProvider): Promise<LocationUpdate> {
   if (req.mode === 'device') {
-    const countryCode = await geocoder.reverseCountry(req);
-    return { lat: req.lat, lon: req.lon, source: 'device', countryCode, label: null };
+    const areas = await geocoder.reverse(req);
+    return { lat: req.lat, lon: req.lon, source: 'device', label: null, ...areas };
   }
   const found = await geocoder.forward(req.query);
   if (!found) throw new LocationError('address_not_found');
-  return { lat: found.lat, lon: found.lon, source: 'home', countryCode: found.countryCode, label: found.label };
+  const { label, lat, lon, countryCode, departmentCode, regionCode } = found;
+  return { lat, lon, source: 'home', label, countryCode, departmentCode, regionCode };
 }

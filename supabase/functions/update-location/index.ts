@@ -17,6 +17,8 @@ Deno.serve(async (req) => {
       p_lon: update.lon,
       p_source: update.source,
       p_country_code: update.countryCode,
+      p_department_code: update.departmentCode,
+      p_region_code: update.regionCode,
     });
     if (error) {
       console.error('update-location: rpc failed', error.code);
