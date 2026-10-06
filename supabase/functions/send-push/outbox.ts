@@ -15,7 +15,9 @@ export type NotificationKind =
   | 'outing_cancelled'
   | 'outing_feedback'
   | 'group_invitation'
-  | 'group_vote';
+  | 'group_vote'
+  | 'couple_request'
+  | 'couple_approval';
 
 export interface OutboxRow {
   id: number;
@@ -37,6 +39,8 @@ export const TEXTS: Record<NotificationKind, { title: string; body: string }> = 
   outing_feedback: { title: "Comment c'était ?", body: 'Donne ton avis sur la sortie, il reste privé.' },
   group_invitation: { title: 'Invitation dans un groupe', body: 'Un de tes matchs t\'invite dans un groupe.' },
   group_vote: { title: 'Nouvelle personne proposée', body: 'Ton groupe doit décider : ouvre Attractr.' },
+  couple_request: { title: 'Compte de couple', body: 'Il y a du nouveau pour votre compte de couple.' },
+  couple_approval: { title: 'Ton accord est demandé', body: 'Ton ou ta partenaire attend ta réponse.' },
 };
 
 /** Only ids travel in the payload. */
