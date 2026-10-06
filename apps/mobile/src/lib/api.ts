@@ -254,6 +254,55 @@ export interface OutingCard {
   my_feedback_given: boolean;
 }
 
+export type GroupKind = 'romantic' | 'friends';
+
+export interface GroupSummary {
+  id: string;
+  kind: GroupKind;
+  name: string;
+  is_admin: boolean;
+  conversation_id: string;
+  members: number;
+  last_message: { body: string; sender: string; mine: boolean; created_at: string } | null;
+  unread_count: number;
+  pending_votes: number;
+}
+
+/** A member's view of the group (spec §8): newcomers show first name and main photo only. */
+export interface GroupDetail {
+  id: string;
+  kind: GroupKind;
+  name: string;
+  approval_mode: 'majority' | 'admin';
+  is_admin: boolean;
+  max_members: number;
+  conversation_id: string;
+  members: { id: string; first_name: string; photo_path: string | null; is_admin: boolean; me: boolean }[];
+  invitations: {
+    id: string;
+    first_name: string;
+    photo_path: string | null;
+    invited_by: string;
+    group_approved: boolean;
+    invitee_accepted: boolean;
+    my_vote: boolean | null;
+    can_vote: boolean;
+  }[];
+}
+
+/** What the invitee sees before joining: size and first names only, plus the inviter's match. */
+export interface GroupInvitationCard {
+  id: string;
+  kind: GroupKind;
+  name: string;
+  size: number;
+  member_first_names: string[];
+  invited_by: { first_name: string; match_id: string | null };
+  group_approved: boolean;
+  accepted: boolean;
+  expires_at: string;
+}
+
 export interface SeedProfileSummary {
   id: string;
   firstName: string;
@@ -440,6 +489,26 @@ export const api = {
   respondToOuting: (outingId: string, going: boolean) => rpc('respond_to_outing', { p_outing_id: outingId, p_going: going }),
   giveOutingFeedback: (outingId: string, rating: number, comment: string) =>
     rpc('give_outing_feedback', { p_outing_id: outingId, p_rating: rating, p_comment: comment.trim() || null }),
+
+  createGroup: (kind: GroupKind, name: string, approvalMode: 'majority' | 'admin') =>
+    rpc<string>('create_group', { p_kind: kind, p_name: name, p_approval_mode: approvalMode }),
+  getMyGroups: () => rpc<GroupSummary[]>('get_my_groups'),
+  getGroup: (groupId: string) => rpc<GroupDetail>('get_group', { p_group_id: groupId }),
+  getGroupInviteCandidates: (groupId: string) =>
+    rpc<{ id: string; first_name: string }[]>('get_group_invite_candidates', { p_group_id: groupId }),
+  inviteToGroup: (groupId: string, inviteeId: string) =>
+    rpc<string>('invite_to_group', { p_group_id: groupId, p_invitee_id: inviteeId }),
+  voteGroupInvitation: (invitationId: string, approve: boolean) =>
+    rpc('vote_group_invitation', { p_invitation_id: invitationId, p_approve: approve }),
+  getMyGroupInvitations: () => rpc<GroupInvitationCard[]>('get_my_group_invitations'),
+  respondGroupInvitation: (invitationId: string, accept: boolean) =>
+    rpc<'joined' | 'declined' | 'waiting_for_group' | 'cancelled' | 'expired'>('respond_group_invitation', {
+      p_invitation_id: invitationId,
+      p_accept: accept,
+    }),
+  leaveGroup: (groupId: string) => rpc('leave_group', { p_group_id: groupId }),
+  getConversationPeople: (conversationId: string) =>
+    rpc<Record<string, string>>('get_conversation_people', { p_conversation_id: conversationId }),
 
   registerPushToken: (token: string, platform: 'ios' | 'android' | 'web') =>
     rpc('register_push_token', { p_token: token, p_platform: platform }),

@@ -62,6 +62,8 @@ export default function MatchesScreen() {
         </View>
       ) : null}
 
+      <Button label={t('matches.groups')} variant="secondary" onPress={() => router.push('/groups')} />
+
       {outingCards > 0 ? (
         <Button label={`${t('outings.link')} (${outingCards})`} variant="secondary" onPress={() => router.push('/outings')} />
       ) : null}

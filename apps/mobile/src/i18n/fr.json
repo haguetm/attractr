@@ -321,7 +321,17 @@
     "reward_not_found": "Erreur interne.",
     "dev_tools_disabled": "Outils de développement désactivés.",
     "grant_failed": "Échec de l'activation de test.",
-    "apply_failed": "Erreur interne."
+    "apply_failed": "Erreur interne.",
+    "group_not_found": "Ce groupe n'existe plus.",
+    "beer_required": "Il faut la Bière parmi tes boissons.",
+    "romantic_drink_required": "Il faut une boisson romantique (Vin, Café ou Cocktail).",
+    "already_member": "Cette personne est déjà dans le groupe.",
+    "group_full": "Le groupe est complet.",
+    "must_match_all_members": "Cette personne doit avoir matché avec tous les membres.",
+    "beer_match_required": "Tu ne peux inviter qu'un match Bière.",
+    "invitation_not_found": "Cette invitation n'existe plus.",
+    "vote_closed": "Le vote est terminé.",
+    "admin_only": "Seul l'administrateur décide dans ce groupe."
   },
   "settings": {
     "title": "Réglages",
@@ -357,7 +367,8 @@
     "incognito": "Mode incognito",
     "incognitoHint": "Seules les personnes que tu likes peuvent voir ton profil.",
     "incognitoOn": "Activer le mode incognito",
-    "incognitoOff": "Désactiver le mode incognito"
+    "incognitoOff": "Désactiver le mode incognito",
+    "groups": "Mes groupes"
   },
   "feed": {
     "search": "Recherche",
@@ -456,7 +467,8 @@
     "you": "Toi : {{body}}",
     "unread_one": "{{count}} non lu",
     "unread_other": "{{count}} non lus",
-    "seeLikes": "Voir qui m'a liké"
+    "seeLikes": "Voir qui m'a liké",
+    "groups": "Mes groupes"
   },
   "chat": {
     "placeholder": "Ton message",
@@ -745,5 +757,68 @@
       "fashion": "Mode"
     },
     "save": "Enregistrer"
+  },
+  "groups": {
+    "title": "Mes groupes",
+    "subtitle": "Sur invitation uniquement. Pas de groupe public ni de recherche de groupes.",
+    "empty": "Tu n'es dans aucun groupe.",
+    "create": "Créer un groupe",
+    "createPremium": "Créer un groupe (Premium)",
+    "members_one": "{{count}} membre",
+    "members_other": "{{count}} membres",
+    "pendingVotes_one": "{{count}} vote en attente",
+    "pendingVotes_other": "{{count}} votes en attente",
+    "invitations": "Invitations reçues",
+    "invitationCard": "{{name}} invite dans « {{group}} »",
+    "invitationMembers": "{{count}} membres : {{names}}",
+    "seeInviter": "Voir le profil de {{name}}",
+    "join": "Rejoindre",
+    "decline": "Refuser",
+    "waiting": "Tu as accepté : le groupe doit encore valider.",
+    "joined": "Tu as rejoint le groupe.",
+    "cancelled": "Cette invitation n'est plus valable.",
+    "kind": {
+      "romantic": "Romantique",
+      "friends": "Potes"
+    }
+  },
+  "groupNew": {
+    "title": "Nouveau groupe",
+    "kind": "Type de groupe",
+    "romantic": "Groupe romantique ou polyamoureux",
+    "romanticHint": "6 personnes maximum. Chaque membre doit avoir matché avec tous les autres.",
+    "friends": "Groupe de potes (Bière)",
+    "friendsHint": "8 personnes maximum. Tu invites tes matchs Bière, le groupe valide.",
+    "name": "Nom du groupe",
+    "namePlaceholder": "ex. Les potes du jeudi",
+    "approval": "Qui valide les nouveaux membres ?",
+    "majority": "La majorité du groupe",
+    "admin": "L'administrateur (toi)",
+    "create": "Créer",
+    "needBeer": "Il faut la Bière parmi tes boissons.",
+    "needRomantic": "Il faut une boisson romantique (Vin, Café ou Cocktail)."
+  },
+  "group": {
+    "info": "Infos",
+    "members": "Membres ({{count}} / {{max}})",
+    "admin": "admin",
+    "you": "toi",
+    "pending": "Personnes proposées",
+    "invitedBy": "proposé·e par {{name}}",
+    "approve": "Accepter",
+    "reject": "Refuser",
+    "voted": "Tu as voté",
+    "waitingInvitee": "en attente de sa réponse",
+    "invite": "Inviter un match",
+    "inviteHintRomantic": "Seules les personnes qui ont matché avec tous les membres peuvent être invitées.",
+    "inviteHintFriends": "Tu peux inviter tes matchs Bière. Le groupe valide ensuite.",
+    "noCandidates": "Aucun de tes matchs ne peut être invité pour l'instant.",
+    "inviteSent": "Invitation envoyée.",
+    "leave": "Quitter le groupe",
+    "leaveConfirm": "Tu ne verras plus la conversation. Continuer ?",
+    "report": "Signaler",
+    "block": "Bloquer",
+    "blockHint": "Si tu bloques un membre, tu quittes le groupe.",
+    "placeholder": "Message au groupe"
   }
 }

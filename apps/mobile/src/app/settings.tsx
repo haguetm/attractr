@@ -89,6 +89,7 @@ export default function SettingsScreen() {
         <Button label={t('settings.stats')} variant="secondary" onPress={() => router.push('/stats')} />
       ) : null}
       <Button label={t('settings.friends')} variant="secondary" onPress={() => router.push('/friends')} />
+      <Button label={t('settings.groups')} variant="secondary" onPress={() => router.push('/groups')} />
       <Button label={t('settings.outings')} variant="secondary" onPress={() => router.push('/outings')} />
 
       {profile?.premium.active ? (

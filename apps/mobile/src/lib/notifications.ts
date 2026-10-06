@@ -48,10 +48,14 @@ export async function unregisterForPush(): Promise<void> {
   currentToken = null;
 }
 
-type PushData = { kind?: string; match_id?: string; conversation_id?: string; outing_id?: string };
+type PushData = { kind?: string; match_id?: string; conversation_id?: string; outing_id?: string; group_id?: string };
 
 export function routeForNotification(data: PushData) {
-  if (data.kind === 'friend_request') {
+  if (data.kind === 'group_vote' && data.group_id) {
+    router.push({ pathname: '/group/[id]/info', params: { id: data.group_id } });
+  } else if (data.kind === 'group_invitation') {
+    router.push('/groups');
+  } else if (data.kind === 'friend_request') {
     router.push('/friends');
   } else if (data.kind === 'outing_feedback' && data.outing_id) {
     router.push({ pathname: '/outing/feedback', params: { outingId: data.outing_id } });
