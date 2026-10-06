@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { Share, StyleSheet, Text, View } from 'react-native';
 import { Button, ErrorText, Field, Note, Screen, Section } from '../components/ui';
 import { useSession } from '../features/session/SessionProvider';
+import { track } from '../lib/analytics';
 import { api, type FriendSummary, type MyFriends } from '../lib/api';
 import { errorMessage } from '../lib/errors';
 import { friendInviteLink } from '../lib/format';
@@ -41,6 +42,7 @@ export default function FriendsScreen() {
   const share = () =>
     run(async () => {
       const code = await api.createFriendInvite();
+      track('invitation_shared', { kind: 'friend' });
       await Share.share({ message: t('friends.shareMessage', { link: friendInviteLink(code) }) });
     });
 

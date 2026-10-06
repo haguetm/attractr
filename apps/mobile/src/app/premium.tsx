@@ -9,6 +9,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import type { PurchasesPackage } from 'react-native-purchases';
 import { Button, ErrorText, Note, Screen, Section } from '../components/ui';
 import { useSession } from '../features/session/SessionProvider';
+import { track } from '../lib/analytics';
 import { api, type MyReferrals } from '../lib/api';
 import { DEV_TOOLS_ENABLED } from '../lib/devTools';
 import { errorMessage } from '../lib/errors';
@@ -34,6 +35,7 @@ export default function PremiumScreen() {
 
   useFocusEffect(
     useCallback(() => {
+      track('premium_viewed', { source: 'screen' });
       void loadPlans().then((p) => setPackages(p.subscriptions)).catch(() => undefined);
       void api.getMyReferrals().then(setReferrals).catch(() => undefined);
     }, []),

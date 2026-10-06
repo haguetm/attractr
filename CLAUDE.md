@@ -56,6 +56,10 @@ Node 22 + npm workspaces. The local stack needs Docker (not available on the wor
 - Review queue and moderator functions: see docs/MODERATION.md (SQL editor, every call logged in private.access_log).
 - Dev: `providers.mock_selfie_outcome` / `providers.mock_photo_outcome` / `providers.mock_ai_outcome` in app_config simulate each provider outcome.
 
+## Metrics
+- Retention D1/D7/D30 and daily KPIs are server-side (migration 20261017090000, docs/METRICS.md); dashboard: `tools/dashboard/index.html` reading the `metrics` function (secret METRICS_DASHBOARD_TOKEN).
+- PostHog events only through `apps/mobile/src/lib/analytics.ts` and the allowlist in `analyticsEvents.ts` (add an event there, with coded properties only).
+
 ## AI analysis
 - `analyze-profile` Edge Function → `ProfileAnalysisProvider` (Claude by default, model in app_config `ai.model`), output guard in `_shared/providers/ai/guard.ts`. Secret: ANTHROPIC_API_KEY.
 

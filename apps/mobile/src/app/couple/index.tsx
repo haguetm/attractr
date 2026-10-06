@@ -12,6 +12,7 @@ import { Share, StyleSheet, Text, View } from 'react-native';
 import { DrinkIcon } from '../../components/DrinkIcon';
 import { Button, Checkbox, Chip, Chips, Choice, ErrorText, Field, Note, Screen, Section } from '../../components/ui';
 import { useSession } from '../../features/session/SessionProvider';
+import { track } from '../../lib/analytics';
 import { api, type CoupleKind, type MyCouple } from '../../lib/api';
 import { errorMessage } from '../../lib/errors';
 import { coupleLink } from '../../lib/format';
@@ -64,6 +65,7 @@ export default function CoupleScreen() {
             label={t('couple.invite')}
             onPress={() => run(async () => {
               const code = await api.createCoupleInvitation();
+              track('invitation_shared', { kind: 'couple' });
               await Share.share({ message: t('couple.shareMessage', { link: coupleLink(code) }) });
             })}
             disabled={busy}

@@ -9,6 +9,7 @@ import { useTranslation } from 'react-i18next';
 import { Image, StyleSheet, Text, View } from 'react-native';
 import { Button, ErrorText, Field, Note, Screen, Section } from '../components/ui';
 import { useSession } from '../features/session/SessionProvider';
+import { track } from '../lib/analytics';
 import { type AiAnalysisState, api } from '../lib/api';
 import { errorMessage } from '../lib/errors';
 import { formatDateTime } from '../lib/format';
@@ -47,6 +48,7 @@ export default function AiAnalysisScreen() {
   });
   const analyze = () => run(async () => {
     await api.runAiAnalysis();
+    track('ai_analysis_run');
     setBio(null);
     await load();
   });

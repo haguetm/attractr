@@ -11,6 +11,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { ProfileCardView } from '../components/ProfileCardView';
 import { Button, Chip, Chips, ErrorText, Note } from '../components/ui';
 import { useSession } from '../features/session/SessionProvider';
+import { track } from '../lib/analytics';
 import { api, type Feed, type LikeQuota, type LikeTarget, type ProfileCard } from '../lib/api';
 import { DEV_TOOLS_ENABLED } from '../lib/devTools';
 import { errorCode, errorMessage } from '../lib/errors';
@@ -68,8 +69,9 @@ export default function FeedScreen() {
   // Reload when coming back from search preferences, a chat or a match.
   useFocusEffect(
     useCallback(() => {
+      track('feed_viewed', { as_couple: asCouple });
       void load();
-    }, [load]),
+    }, [load, asCouple]),
   );
 
   const card = feed?.cards[index];
@@ -84,6 +86,7 @@ export default function FeedScreen() {
     run(async () => {
       if (!card) return;
       await api.passProfile(card.id, asCouple);
+      track('pass_sent');
       setCanRewind(true);
       await next();
     });
@@ -111,6 +114,7 @@ export default function FeedScreen() {
       try {
         const result = await api.likeProfile(card.id, target);
         setQuota(result.quota);
+        track('like_sent', { target: target.kind, matched: result.matched });
         if (result.matched && result.match_id) {
           router.push({ pathname: '/match/[matchId]', params: { matchId: result.match_id, new: '1' } });
         }

@@ -6,10 +6,11 @@ import { contactDigestInput } from '@attractr/shared';
 import { Contact, ContactField, requestPermissionsAsync } from 'expo-contacts';
 import { CryptoDigestAlgorithm, digestStringAsync } from 'expo-crypto';
 import { type Href, router } from 'expo-router';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, ErrorText, Note, Screen, Section } from '../components/ui';
 import { useSession } from '../features/session/SessionProvider';
+import { analyticsAvailable, isAnalyticsEnabled, setAnalyticsEnabled } from '../lib/analytics';
 import { api } from '../lib/api';
 import { DEV_TOOLS_ENABLED } from '../lib/devTools';
 import { errorMessage } from '../lib/errors';
@@ -39,6 +40,8 @@ export default function SettingsScreen() {
   const [note, setNote] = useState<string | null>(null);
   const { busy, error, run } = useSubmit();
   const paused = profile?.status === 'paused';
+  const [measuring, setMeasuring] = useState<boolean | null>(null);
+  useEffect(() => { void isAnalyticsEnabled().then(setMeasuring); }, []);
 
   const confirm = () =>
     run(async () => {
@@ -118,6 +121,18 @@ export default function SettingsScreen() {
         <Button label={t('settings.blockedList')} variant="ghost" onPress={() => router.push('/blocked')} />
         {note ? <Note>{note}</Note> : null}
       </Section>
+
+      {analyticsAvailable && measuring !== null ? (
+        <Section title={t('settings.analytics')}>
+          <Note>{t('settings.analyticsHint')}</Note>
+          <Button
+            label={measuring ? t('settings.analyticsOff') : t('settings.analyticsOn')}
+            variant="secondary"
+            onPress={() => run(async () => { await setAnalyticsEnabled(!measuring); setMeasuring(!measuring); })}
+            disabled={busy}
+          />
+        </Section>
+      ) : null}
 
       <Section title={t('settings.title')}>
         {confirming ? (

@@ -13,6 +13,9 @@
 | Selfie de vérification | Storage `selfies` | Supprimé dès la vérification automatique, ou après la décision humaine s'il part en revue ; le résultat (âge estimé, confiance) est conservé avec la soumission | Proposé |
 | Référence de visage | `private.face_templates` | Durée du compte (règle un visage = un compte) ; référence opaque du prestataire, jamais d'image | Proposé, biométrie : validation juridique requise |
 | Photos envoyées à l'analyse IA | prestataire IA | Envoyées dans la requête (jamais via un stockage de fichiers du prestataire), gardées en mémoire par l'Edge Function le temps de l'appel ; pas d'entraînement sur les données d'API. Option « zéro rétention » à demander au prestataire avant la production | Spec §11 |
+| Mesure serveur (pseudonyme) | `private.metrics_subjects`, `private.metrics_activity` | Identifiant aléatoire ; le lien avec le compte (`private.metrics_links`) est effacé avec le compte ; lignes effacées après `metrics.raw_retention_days` (400 j) | Proposé |
+| Totaux quotidiens | `private.metrics_daily` | Sans limite (aucune donnée personnelle) | Proposé |
+| Mesure d'audience | PostHog (UE) | 13 mois (réglage du projet) ; identifiant aléatoire, pas d'IP ; désactivable | Proposé, à valider (CNIL) |
 | Résultat d'analyse IA | `private.ai_analyses` | Seule la dernière analyse est gardée (texte, ids de photos, aucune image) ; effacée au retrait du consentement ou avec le compte | Spec §11, proposé |
 | Messages | `messages` | Tant que le match existe ; effacés avec le compte de l'un ou l'autre (cascade). Durée après un match expiré ou annulé : proposé 12 mois pour les besoins de modération, à valider | Proposé |
 | Likes et « passer » | `swipes` | Durée du compte ; les « passer » ne sont plus utilisés après `feed.pass_recycle_days` | Proposé |

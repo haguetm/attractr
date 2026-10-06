@@ -16,6 +16,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { router } from 'expo-router';
 import { createContext, type ReactNode, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { track } from '../../lib/analytics';
 import { api } from '../../lib/api';
 import { WANTS_COUPLE_KEY } from '../../lib/referral';
 import { useSession } from '../session/SessionProvider';
@@ -77,8 +78,10 @@ export function OnboardingProvider({ children }: { children: ReactNode }) {
       if (leavingIntent && intent.situation) {
         await api.setIntent({ ...intent, situation: intent.situation });
       }
+      track('onboarding_step_completed', { step });
       if (next === null) {
         await api.completeOnboarding();
+        track('onboarding_completed');
         await refreshProfile();
         router.replace('/feed');
         // "Compte de couple" chosen at screen 4: invite the partner now.

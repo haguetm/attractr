@@ -9,6 +9,7 @@ import { FlatList, KeyboardAvoidingView, Platform, Pressable, StyleSheet, Text, 
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Button, ErrorText, Note } from '../../components/ui';
 import { useSession } from '../../features/session/SessionProvider';
+import { track } from '../../lib/analytics';
 import { api, type ChatMessage, type MatchOuting, type MatchSummary } from '../../lib/api';
 import { errorCode, errorMessage } from '../../lib/errors';
 import { formatDateTime } from '../../lib/format';
@@ -65,6 +66,7 @@ export default function ChatScreen() {
       if (!body) return;
       try {
         await api.sendMessage(conversationId, body);
+        track('message_sent', { kind: 'match' });
       } catch (e) {
         if (['match_expired', 'match_closed', 'conversation_not_found'].includes(errorCode(e))) setClosed(true);
         throw e;

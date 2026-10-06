@@ -380,7 +380,11 @@
     "incognitoOff": "Désactiver le mode incognito",
     "groups": "Mes groupes",
     "couple": "Compte de couple",
-    "aiAnalysis": "Analyse IA de mon profil"
+    "aiAnalysis": "Analyse IA de mon profil",
+    "analytics": "Mesure d'audience",
+    "analyticsHint": "Nous comptons, sans ton nom ni tes données personnelles, les grandes étapes d'utilisation (ouverture de l'appli, likes, matchs…) pour améliorer Attractr. Ni ta boisson, ni tes messages, ni tes données sensibles ne sont envoyés.",
+    "analyticsOn": "Activer la mesure d'audience",
+    "analyticsOff": "Désactiver la mesure d'audience"
   },
   "feed": {
     "search": "Recherche",

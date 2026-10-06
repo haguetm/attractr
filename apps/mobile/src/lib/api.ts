@@ -437,6 +437,8 @@ export const api = {
     const { error } = await supabase.from('profiles').update({ bio: bio.trim() || null }).eq('id', userId);
     if (error) throw new AppError(errorCode(error));
   },
+  touchActivity: () => rpc('touch_my_activity'),
+  getAnalyticsId: () => rpc<string | null>('get_my_analytics_id'),
   getAiAnalysis: () => rpc<AiAnalysisState>('get_my_ai_analysis'),
   runAiAnalysis: () => invoke<{ status: 'completed' }>('analyze-profile', {}),
   reorderPhotos: (ids: string[]) => rpc('reorder_my_photos', { p_photo_ids: ids }),

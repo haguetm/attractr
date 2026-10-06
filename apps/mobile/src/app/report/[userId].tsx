@@ -5,6 +5,7 @@ import { router, useLocalSearchParams } from 'expo-router';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, Checkbox, Choice, ErrorText, Field, Note, Screen, Section } from '../../components/ui';
+import { track } from '../../lib/analytics';
 import { api, REPORT_REASONS, type ReportReason } from '../../lib/api';
 import { errorMessage } from '../../lib/errors';
 import { useSubmit } from '../../lib/useSubmit';
@@ -24,6 +25,7 @@ export default function ReportScreen() {
     run(async () => {
       if (!reason) return;
       await api.reportProfile({ targetId: userId, reason, details, conversationId, alsoBlock });
+      track('report_sent');
       setSent(true);
     });
 

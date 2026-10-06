@@ -143,8 +143,8 @@ Le projet se construit en 11 phases. La V1 est testée en France.
 | 7 | Abonnement, filtres payants, boosts, parrainage | ✅ Tests de la base validés sur PGlite |
 | 8 | Chats de groupe | ✅ Tests de la base validés sur PGlite |
 | 9 | Comptes de couple | ✅ Tests de la base validés sur PGlite |
-| 10 | Analyse IA du profil | ✅ |
-| 11 | Mesure de la rétention et tableaux de suivi | ⏳ Prochaine étape |
+| 10 | Analyse IA du profil | ✅ Tests de la base validés sur PGlite |
+| 11 | Mesure de la rétention et tableaux de suivi | ✅ Tests de la base validés sur PGlite |
 
 ---
 
@@ -164,7 +164,8 @@ supabase/migrations/  Schéma, RLS, fonctions SQL : la source de vérité des r�
 supabase/tests/       Tests pgTAP (règles métier et règles d'accès)
 supabase/functions/   Edge Functions (localisation, suppression de compte…)
 supabase/seed/        Générateur des 100 profils fictifs
-docs/                 Spécification, décisions, architecture, conservation des données
+docs/                 Spécification, décisions, architecture, conservation des données, mesure
+tools/dashboard/      Tableau de suivi (rétention J1/J7/J30, chiffres du jour), à ouvrir dans un navigateur
 ```
 
 ### Démarrer
@@ -181,6 +182,8 @@ npm run db:test:lite           # mêmes tests sans Docker (Postgres embarqué PG
 npm run functions:serve       # Edge Functions en local (2e terminal)
 npm run mobile                 # appli (configurer apps/mobile/.env avant)
 ```
+
+Tableau de suivi : ouvre `tools/dashboard/index.html` (mode démo disponible) ; mise en place dans [docs/METRICS.md](docs/METRICS.md).
 
 Pour se connecter en local, utilise le numéro fictif **06 39 98 00 00** avec le code **123456** (aucun SMS n'est envoyé).
 

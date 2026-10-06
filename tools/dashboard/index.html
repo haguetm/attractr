@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Attractr · Suivi</title>
+<!-- Opened locally (file://). Reads the `metrics` Edge Function with METRICS_DASHBOARD_TOKEN.
+     The token stays in this tab only (sessionStorage). Aggregates only, no personal data. -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.6/dist/chart.umd.min.js"></script>
+<style>
+  :root { --coral:#F25459; --navy:#1F2A4A; --cream:#FDF5EC; --border:#E8DCCD; --muted:#6B7280; --ok:#2E7D4F; }
+  * { box-sizing: border-box; }
+  body { margin:0; font:15px/1.4 system-ui, -apple-system, Segoe UI, Roboto, sans-serif; background:var(--cream); color:var(--navy); }
+  header { padding:16px 24px; display:flex; flex-wrap:wrap; gap:12px; align-items:center; border-bottom:1px solid var(--border); background:#fff; }
+  h1 { font-size:20px; margin:0 16px 0 0; }
+  h2 { font-size:16px; margin:0 0 12px; }
+  main { padding:24px; display:grid; gap:24px; max-width:1200px; margin:auto; }
+  input, select, button { font:inherit; padding:8px 10px; border:1px solid var(--border); border-radius:8px; background:#fff; color:inherit; }
+  input[type=password] { width:220px; } input[type=url] { width:320px; max-width:100%; }
+  button { background:var(--coral); color:#fff; border:none; cursor:pointer; font-weight:600; }
+  button.ghost { background:transparent; color:var(--navy); border:1px solid var(--border); }
+  .card { background:#fff; border:1px solid var(--border); border-radius:14px; padding:16px; }
+  .tiles { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:12px; }
+  .tile b { display:block; font-size:26px; } .tile span { color:var(--muted); font-size:13px; }
+  table { border-collapse:collapse; width:100%; font-variant-numeric:tabular-nums; }
+  th, td { padding:6px 8px; text-align:right; border-bottom:1px solid var(--border); white-space:nowrap; }
+  th:first-child, td:first-child, th:nth-child(2), td:nth-child(2) { text-align:left; }
+  .scroll { overflow-x:auto; }
+  .charts { display:grid; grid-template-columns:repeat(auto-fit,minmax(340px,1fr)); gap:24px; }
+  .muted { color:var(--muted); font-size:13px; }
+  #error { color:#B3261E; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Attractr · Suivi</h1>
+  <input id="url" type="url" placeholder="https://<projet>.supabase.co/functions/v1/metrics" aria-label="URL de la fonction metrics">
+  <input id="token" type="password" placeholder="Jeton du tableau de bord" aria-label="Jeton">
+  <select id="days" aria-label="Période">
+    <option value="30">30 jours</option><option value="90" selected>90 jours</option><option value="180">180 jours</option><option value="365">365 jours</option>
+  </select>
+  <select id="segment" aria-label="Boisson">
+    <option value="all">Toutes boissons</option><option value="wine">Vin</option><option value="coffee">Café</option><option value="cocktail">Cocktail</option><option value="beer">Bière</option>
+  </select>
+  <button id="load">Charger</button>
+  <button id="demo" class="ghost">Données de démo</button>
+  <span id="error" role="alert"></span>
+</header>
+<main>
+  <section class="card">
+    <h2>Hier</h2>
+    <div class="tiles" id="tiles"></div>
+    <p class="muted" id="generated"></p>
+  </section>
+  <section class="card">
+    <h2>Rétention par cohorte (semaine d'activation)</h2>
+    <p class="muted" id="retentionNote"></p>
+    <div class="scroll"><table id="retention"></table></div>
+  </section>
+  <section class="charts">
+    <div class="card"><h2>Utilisateurs actifs</h2><canvas id="actives"></canvas></div>
+    <div class="card"><h2>Inscriptions et suppressions</h2><canvas id="growth"></canvas></div>
+    <div class="card"><h2>Likes, matchs, messages</h2><canvas id="engagement"></canvas></div>
+    <div class="card"><h2>Premium actifs</h2><canvas id="premium"></canvas></div>
+  </section>
+</main>
+<script>
+const $ = (id) => document.getElementById(id);
+const store = { get: (k) => { try { return sessionStorage.getItem(k) || ''; } catch { return ''; } },
+                set: (k, v) => { try { sessionStorage.setItem(k, v); } catch {} } };
+$('url').value = store.get('url'); $('token').value = store.get('token');
+const charts = {};
+let payload = null;
+
+const pct = (v) => v == null ? '–' : `${Math.round(v * 100)} %`;
+const nf = new Intl.NumberFormat('fr-FR');
+const DRINKS = { all: 'Toutes', wine: 'Vin', coffee: 'Café', cocktail: 'Cocktail', beer: 'Bière', none: 'Sans boisson' };
+
+async function load() {
+  $('error').textContent = '';
+  store.set('url', $('url').value); store.set('token', $('token').value);
+  try {
+    const res = await fetch(`${$('url').value}?days=${$('days').value}`, { headers: { Authorization: `Bearer ${$('token').value}` } });
+    if (!res.ok) throw new Error(res.status === 401 ? 'Jeton refusé.' : `Erreur ${res.status}.`);
+    payload = await res.json();
+    render();
+  } catch (e) { $('error').textContent = e.message || 'Chargement impossible.'; }
+}
+
+function render() {
+  if (!payload) return;
+  const daily = payload.daily || [];
+  const y = daily[daily.length - 1];
+  const tiles = y ? [
+    ['DAU', y.dau], ['WAU', y.wau], ['MAU', y.mau],
+    ['DAU / MAU', y.mau ? pct(y.dau / y.mau) : '–'],
+    ['Inscriptions', y.signups], ['Activations', y.activations],
+    ['Matchs', y.matches], ['Premiers messages', y.first_messages],
+    ['Taux de match', y.likes ? pct(y.matches / y.likes) : '–'],
+    ['Premium actifs', y.premium_active], ['Signalements', y.reports], ['Suppressions', y.deletions],
+  ] : [];
+  $('tiles').innerHTML = tiles.length
+    ? tiles.map(([k, v]) => `<div class="tile"><span>${k}</span><b>${typeof v === 'number' ? nf.format(v) : v}</b></div>`).join('')
+    : '<p class="muted">Pas encore de données quotidiennes (le premier calcul a lieu la nuit suivante).</p>';
+  $('generated').textContent = y ? `Journée du ${new Date(y.day).toLocaleDateString('fr-FR')} · généré le ${new Date(payload.generated_at).toLocaleString('fr-FR')}` : '';
+
+  const seg = $('segment').value;
+  const w = payload.retention_window_days;
+  $('retentionNote').textContent = `J1 = actif le lendemain de l'activation. J7 = actif au moins une fois entre J7 et J${7 + w - 1}. J30 = entre J30 et J${30 + w - 1}. Les comptes supprimés restent comptés. « – » : cohorte trop récente. Cohortes de moins de 5 personnes masquées.`;
+  const rows = (payload.retention || []).filter((r) => r.main_drink === seg);
+  const heat = (v) => v == null ? '' : `background: rgba(242,84,89,${(0.08 + v * 0.75).toFixed(2)})`;
+  $('retention').innerHTML = '<tr><th>Cohorte</th><th>Boisson</th><th>Personnes</th><th>J1</th><th>J7</th><th>J30</th></tr>' +
+    (rows.length ? rows.map((r) => `<tr><td>${new Date(r.cohort).toLocaleDateString('fr-FR')}</td><td>${DRINKS[r.main_drink] || r.main_drink}</td><td>${nf.format(r.users)}</td>` +
+      ['d1', 'd7', 'd30'].map((k) => `<td style="${heat(r[k])}">${pct(r[k])}</td>`).join('') + '</tr>').join('')
+      : '<tr><td colspan="6" class="muted">Aucune cohorte sur la période.</td></tr>');
+
+  const labels = daily.map((d) => new Date(d.day).toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' }));
+  line('actives', labels, [['DAU', daily.map((d) => d.dau), '#F25459'], ['WAU', daily.map((d) => d.wau), '#1F2A4A'], ['MAU', daily.map((d) => d.mau), '#9AA5C4']]);
+  line('growth', labels, [['Inscriptions', daily.map((d) => d.signups), '#2E7D4F'], ['Activations', daily.map((d) => d.activations), '#1F2A4A'], ['Suppressions', daily.map((d) => d.deletions), '#F25459']]);
+  line('engagement', labels, [['Likes', daily.map((d) => d.likes), '#F25459'], ['Matchs', daily.map((d) => d.matches), '#1F2A4A'], ['Messages', daily.map((d) => d.messages), '#E9A23B']]);
+  line('premium', labels, [['Premium actifs', daily.map((d) => d.premium_active), '#1F2A4A']]);
+}
+
+function line(id, labels, series) {
+  charts[id]?.destroy();
+  charts[id] = new Chart($(id), {
+    type: 'line',
+    data: { labels, datasets: series.map(([label, data, color]) => ({ label, data, borderColor: color, backgroundColor: color, pointRadius: 0, tension: 0.25 })) },
+    options: { responsive: true, interaction: { mode: 'index', intersect: false }, scales: { y: { beginAtZero: true } } },
+  });
+}
+
+function demo() {
+  const today = new Date(); const daily = []; const retention = [];
+  for (let i = 89; i >= 1; i--) {
+    const d = new Date(today); d.setDate(d.getDate() - i);
+    const base = 400 + (90 - i) * 6;
+    daily.push({ day: d.toISOString().slice(0, 10), signups: 40 + (i % 7) * 4, activations: 30 + (i % 5) * 3,
+      dau: Math.round(base * 0.32), wau: Math.round(base * 0.7), mau: base, likes: base * 6, passes: base * 9,
+      matches: Math.round(base * 0.6), first_messages: Math.round(base * 0.35), messages: base * 3, reports: 2 + (i % 4),
+      premium_active: 20 + Math.round((90 - i) * 0.8), boosts: 3 + (i % 3), deletions: 1 + (i % 3) });
+  }
+  for (let wk = 12; wk >= 1; wk--) {
+    const d = new Date(today); d.setDate(d.getDate() - wk * 7 - ((d.getDay() + 6) % 7));
+    const c = d.toISOString().slice(0, 10);
+    for (const [drink, k] of [['all', 1], ['wine', 1.08], ['coffee', 1], ['cocktail', 0.85], ['beer', 0.95]]) {
+      retention.push({ cohort: c, main_drink: drink, users: drink === 'all' ? 220 : 55,
+        d1: Math.min(1, 0.52 * k), d7: wk >= 2 ? Math.min(1, 0.31 * k) : null, d30: wk >= 6 ? Math.min(1, 0.17 * k) : null });
+    }
+  }
+  payload = { generated_at: new Date().toISOString(), retention_window_days: 7, daily, retention };
+  render();
+}
+
+$('load').onclick = load; $('demo').onclick = demo; $('segment').onchange = render; $('days').onchange = () => payload && $('url').value && load();
+</script>
+</body>
+</html>

@@ -7,6 +7,7 @@ import { FlatList, KeyboardAvoidingView, Platform, Pressable, StyleSheet, Text, 
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Button, ErrorText } from '../../../components/ui';
 import { useSession } from '../../../features/session/SessionProvider';
+import { track } from '../../../lib/analytics';
 import { api, type ChatMessage, type GroupDetail } from '../../../lib/api';
 import { errorMessage } from '../../../lib/errors';
 import { supabase } from '../../../lib/supabase';
@@ -51,6 +52,7 @@ export default function GroupChatScreen() {
     run(async () => {
       if (!conversationId || !draft.trim()) return;
       await api.sendMessage(conversationId, draft.trim());
+      track('message_sent', { kind: 'group' });
       setDraft('');
       setMessages(await api.getMessages(conversationId));
     });

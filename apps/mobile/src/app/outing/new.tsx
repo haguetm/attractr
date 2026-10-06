@@ -6,6 +6,7 @@ import { router, useLocalSearchParams } from 'expo-router';
 import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, Chip, Chips, ErrorText, Field, Note, Screen, Section } from '../../components/ui';
+import { track } from '../../lib/analytics';
 import { api } from '../../lib/api';
 import { errorMessage } from '../../lib/errors';
 import { formatDay, formatTime } from '../../lib/format';
@@ -27,6 +28,7 @@ export default function NewOutingScreen() {
     run(async () => {
       if (!start) return;
       await api.createOuting(matchId, place, start);
+      track('outing_created');
       router.replace({ pathname: '/outing/[matchId]', params: { matchId } });
     });
 

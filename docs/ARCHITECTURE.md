@@ -62,4 +62,4 @@ pgTAP (SQL rules + RLS, incl. "a user cannot read another user's sensitive field
 
 ## Legal checklist before production
 
-DPIA (art. 9 data); DPAs with Supabase, RevenueCat, PostHog, Sentry, selfie/age, moderation, AI and SMS providers; non-EU transfers (RevenueCat, Sentry); Apple 3.1.1 / 3.2.2 and Google Play rules on rewarded referral; biometrics (face template); retention after minor-account deletion; Terms (couples, content, suspensions); age-assurance vs Arcom framework; store-safe wording for Cocktail; popularity indicator disclosed in the privacy policy and DPIA.
+DPIA (art. 9 data); DPAs with Supabase, RevenueCat, PostHog, Sentry, selfie/age, moderation, AI and SMS providers; non-EU transfers (RevenueCat, Sentry); Apple 3.1.1 / 3.2.2 and Google Play rules on rewarded referral; biometrics (face template); retention after minor-account deletion; Terms (couples, content, suspensions); age-assurance vs Arcom framework; store-safe wording for Cocktail; popularity indicator disclosed in the privacy policy and DPIA; product analytics opt-out vs CNIL audience-measurement exemption (else consent at signup).

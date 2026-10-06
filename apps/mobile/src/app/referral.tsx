@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { Share, StyleSheet, Text, View } from 'react-native';
 import { Button, ErrorText, Note, Screen, Section } from '../components/ui';
 import { useSession } from '../features/session/SessionProvider';
+import { track } from '../lib/analytics';
 import { api, type MyReferrals } from '../lib/api';
 import { errorMessage } from '../lib/errors';
 import { formatDateTime } from '../lib/format';
@@ -25,6 +26,7 @@ export default function ReferralScreen() {
 
   const share = () =>
     run(async () => {
+      if (data) track('invitation_shared', { kind: 'referral' });
       if (data) await Share.share({ message: t('referral.shareMessage', { code: data.code, link: referralLink(data.code) }) });
     });
 

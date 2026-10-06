@@ -4,6 +4,7 @@
 // "Outils de développement" are used instead.
 
 import { Platform } from 'react-native';
+import { track } from './analytics';
 import Purchases, { type PurchasesPackage } from 'react-native-purchases';
 
 const API_KEY = Platform.select({
@@ -46,6 +47,7 @@ export async function loadPlans(): Promise<Plans> {
 
 /** Returns false when the user cancelled the store sheet. */
 export async function buy(pkg: PurchasesPackage): Promise<boolean> {
+  track('purchase_started', { product: pkg.packageType === 'ANNUAL' ? 'yearly' : pkg.packageType === 'MONTHLY' ? 'monthly' : 'boost' });
   try {
     await Purchases.purchasePackage(pkg);
     return true;

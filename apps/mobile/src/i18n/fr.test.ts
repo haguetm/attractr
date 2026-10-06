@@ -21,7 +21,9 @@ const matches = (text: string, re: RegExp) => [...new Set([...text.matchAll(re)]
 
 // Codes that only signal server misconfiguration; the app shows the generic message.
 // Raised only by service functions called from Edge Functions, never shown in the app.
-const INTERNAL = new Set(['sensitive_key_missing', 'method_not_allowed', 'ai_analysis_not_found', 'ai_result_invalid']);
+const INTERNAL = new Set(['sensitive_key_missing', 'method_not_allowed', 'ai_analysis_not_found', 'ai_result_invalid',
+  // Metrics dashboard (tools/dashboard), not the app.
+  'invalid_grain', 'invalid_range', 'metrics_failed']);
 
 describe('fr.json', () => {
   it('translates every error raised by the database', () => {

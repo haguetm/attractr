@@ -174,3 +174,13 @@ Réponses aux ambiguïtés relevées lors du cadrage. Validées le 2026-10-05. E
 - **Rien ne change sans l'utilisateur** : la bio proposée est modifiable puis enregistrée par un bouton ; l'ordre conseillé s'applique par un bouton.
 - **Conservation** : seule la dernière analyse est gardée ; effacée au retrait du consentement. Un consentement retiré pendant l'analyse fait jeter le résultat.
 - **À faire avant la production** : demander la zéro rétention de données à Anthropic, l'ajouter au contrat de sous-traitance et à l'analyse d'impact RGPD (transfert hors UE possible).
+
+## Phase 11 (proposées, en attente de validation)
+- **Deux sources** : la rétention et les chiffres clés sont calculés côté serveur (référence, indépendante du consentement à la mesure d'audience) ; PostHog sert aux parcours dans l'appli. Détails : docs/METRICS.md.
+- **Définition de la rétention** : J1 = actif le lendemain de l'activation ; J7 = actif au moins une fois entre J7 et J13 ; J30 = entre J30 et J36 (fenêtre de 7 jours, `metrics.retention_window_days`, provisoire). Jour 0 = fin de l'inscription. Jour actif = ouverture de l'appli, feed, like ou message (heure de Paris).
+- **Les comptes supprimés restent comptés** dans leur cohorte, de façon anonyme (identifiant de mesure aléatoire dont le lien avec le compte est effacé). Profils fictifs et profils de couple exclus.
+- **Segment** : boisson principale à l'activation uniquement. Cohortes de moins de 5 personnes masquées. Données brutes effacées après 400 jours (provisoire) ; totaux quotidiens conservés.
+- **Tableau de bord** : page locale `tools/dashboard/index.html` qui lit la fonction `metrics`, protégée par un jeton dédié (`METRICS_DASHBOARD_TOKEN`), plutôt qu'un outil tiers branché sur la base.
+- **PostHog sans SDK natif** : envoi par lots via l'API HTTP, liste fermée de 13 événements aux propriétés codées (jamais de boisson, genre, orientation, âge, nom, lieu ni message), identifiant aléatoire et non l'identifiant du compte, pas de géolocalisation IP. **Activé par défaut et désactivable** dans Réglages > Mesure d'audience : à valider juridiquement (exemption CNIL de consentement pour la mesure d'audience, sinon demander l'accord à l'inscription).
+- **Sentry** : pas encore branché (il demande un module natif et un build de développement) ; à ajouter avec le premier build EAS, avec nettoyage des données personnelles.
+- Correction au passage : deux tests dépendaient de l'ordre de lignes à égalité (membres d'un groupe arrivés dans la même transaction, profils à la même distance) ; ordre rendu stable.

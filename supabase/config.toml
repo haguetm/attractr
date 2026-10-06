@@ -430,3 +430,7 @@ verify_jwt = false
 [functions.revenuecat-webhook]
 verify_jwt = false
 
+
+# Read by the local dashboard (tools/dashboard) with METRICS_DASHBOARD_TOKEN (checked in the function).
+[functions.metrics]
+verify_jwt = false
