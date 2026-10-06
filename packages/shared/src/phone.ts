@@ -12,3 +12,13 @@ export function normalizePhone(input: string): string | null {
   if (/^\+330\d{9}$/.test(e164)) e164 = `+33${e164.slice(4)}`;
   return e164;
 }
+
+/**
+ * Text hashed (SHA-256) on the device for "bloquer mes contacts" (Q23): the digits of
+ * the E.164 number, as Supabase Auth stores phones. Null for unusable numbers.
+ * Mirrors private.phone_digests.
+ */
+export function contactDigestInput(rawNumber: string): string | null {
+  const e164 = normalizePhone(rawNumber);
+  return e164 ? e164.slice(1) : null;
+}
