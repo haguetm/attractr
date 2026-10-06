@@ -15,7 +15,7 @@
     "seed:generate": "npm run generate --workspace @attractr/seed",
     "test": "npm run test --workspaces --if-present",
     "typecheck": "npm run typecheck --workspaces --if-present",
-    "functions:test": "cd supabase/functions && npx --yes deno@2 test --allow-env",
+    "functions:test": "cd supabase/functions && npx --yes deno@2 test --allow-env --allow-read",
     "functions:check": "cd supabase/functions && npx --yes deno@2 check */index.ts",
     "mobile": "npm run start --workspace @attractr/mobile",
     "functions:serve": "supabase functions serve --env-file supabase/functions/.env",

@@ -4,7 +4,7 @@
 
 import type { PushMessage, PushResult } from '../_shared/providers/push/index.ts';
 
-export type NotificationKind = 'new_match' | 'new_message' | 'your_turn' | 'first_message_reminder';
+export type NotificationKind = 'new_match' | 'new_message' | 'your_turn' | 'first_message_reminder' | 'moderation_notice';
 
 export interface OutboxRow {
   id: number;
@@ -19,6 +19,7 @@ export const TEXTS: Record<NotificationKind, { title: string; body: string }> = 
   new_message: { title: 'Nouveau message', body: 'Ouvre Attractr pour le lire.' },
   your_turn: { title: 'À ton tour', body: 'Une conversation attend ta réponse.' },
   first_message_reminder: { title: 'Plus que quelques heures', body: 'Envoie ton premier message avant la fin du délai.' },
+  moderation_notice: { title: 'Information sur ton compte', body: 'Ouvre Attractr pour en savoir plus.' },
 };
 
 /** Only ids travel in the payload. */

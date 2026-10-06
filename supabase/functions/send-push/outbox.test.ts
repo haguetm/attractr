@@ -48,3 +48,15 @@ Deno.test('Expo tickets map to results, network errors fail the batch', async ()
   const down = new ExpoPushSender(undefined, () => Promise.reject(new Error('offline')));
   assertEquals(await down.send([msg]), [{ ok: false, error: 'offline' }]);
 });
+
+Deno.test('every notification kind defined in SQL has a text', async () => {
+  const dir = new URL('../../migrations/', import.meta.url);
+  let sql = '';
+  for await (const e of Deno.readDir(dir)) sql += await Deno.readTextFile(new URL(e.name, dir));
+  const kinds = new Set<string>();
+  const create = sql.match(/create type public\.notification_kind as enum \(([^)]*)\)/);
+  for (const m of create?.[1]?.matchAll(/'([a-z_]+)'/g) ?? []) kinds.add(m[1]!);
+  for (const m of sql.matchAll(/alter type public\.notification_kind add value if not exists '([a-z_]+)'/g)) kinds.add(m[1]!);
+  assertEquals(kinds.has('new_match') && kinds.has('moderation_notice'), true);
+  for (const k of kinds) assertEquals(k in TEXTS, true, `missing text for ${k}`);
+});
