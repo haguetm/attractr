@@ -421,3 +421,7 @@ enabled = true
 # send-push checks the service role key itself (called by pg_cron, not by users).
 [functions.send-push]
 verify_jwt = false
+
+# Called by pg_cron with the service role key (checked in the function).
+[functions.process-deletions]
+verify_jwt = false
