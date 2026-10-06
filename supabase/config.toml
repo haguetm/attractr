@@ -430,6 +430,3 @@ verify_jwt = false
 [functions.revenuecat-webhook]
 verify_jwt = false
 
-# Called by pg_cron with the service role key (checked in the function).
-[functions.apply-rewards]
-verify_jwt = false

@@ -53,9 +53,17 @@ export default function ReferralScreen() {
           {data.rewards.length ? (
             <Section title={t('referral.rewards')}>
               {data.rewards.map((r, i) => (
-                <Text key={i} style={font.body}>
-                  {t(`referral.reward.${r.kind}`, { value: r.value })} · {t(`referral.reward.${r.status}`)}
-                </Text>
+                <View key={i} style={styles.reward}>
+                  <Text style={font.body}>
+                    {t(`referral.reward.${r.kind}`, { value: r.value })} · {t(r.offer_code ? 'referral.reward.codeReady' : `referral.reward.${r.status}`)}
+                  </Text>
+                  {r.offer_code ? (
+                    <>
+                      <Text style={styles.offerCode} selectable>{r.offer_code}</Text>
+                      <Text style={font.small}>{t(r.store === 'PLAY_STORE' ? 'referral.redeemGoogle' : 'referral.redeemApple')}</Text>
+                    </>
+                  ) : null}
+                </View>
               ))}
             </Section>
           ) : null}
@@ -69,4 +77,6 @@ export default function ReferralScreen() {
 const styles = StyleSheet.create({
   codeBox: { alignItems: 'center', padding: spacing.lg, borderRadius: radius.lg, backgroundColor: colors.white, gap: spacing.xs },
   code: { fontSize: 30, fontWeight: '800', letterSpacing: 4, color: colors.navy },
+  reward: { gap: 2, padding: spacing.sm, borderRadius: radius.md, backgroundColor: colors.white },
+  offerCode: { fontSize: 18, fontWeight: '800', letterSpacing: 2, color: colors.coral },
 });

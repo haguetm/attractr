@@ -678,7 +678,7 @@
     "code": "Ton code",
     "share": "Partager mon lien",
     "shareMessage": "Rejoins-moi sur Attractr avec mon code {{code}} : {{link}}",
-    "rulesPaying": "Tu es abonné·e : 1 mois offert par filleul validé (6 mois maximum par an). Ton filleul reçoit 1 mois de Premium.",
+    "rulesPaying": "Tu es abonné·e : pour chaque filleul validé, tu reçois un mois gratuit (6 maximum par an) sous forme de code à utiliser à ton prochain renouvellement, et ton filleul reçoit aussi un mois de Premium.",
     "rulesFree": "Sans abonnement : une réduction sur ton futur abonnement par filleul validé, et -50 % sur le premier mois de ton filleul.",
     "validation": "Un filleul est validé quand son selfie est vérifié et son compte actif depuis 7 jours.",
     "list": "Mes filleuls",
@@ -694,9 +694,12 @@
       "discount": "-{{value}} %",
       "earned": "à venir",
       "applied": "utilisé",
-      "void": "expiré"
+      "void": "expiré",
+      "codeReady": "code disponible"
     },
-    "monthsThisYear": "{{count}} / {{max}} mois offerts cette année"
+    "monthsThisYear": "{{count}} / {{max}} mois offerts cette année",
+    "redeemApple": "Utilise ce code dans l'App Store (Compte > Utiliser une carte cadeau ou un code) avant ton prochain renouvellement.",
+    "redeemGoogle": "Utilise ce code dans Google Play (Profil > Paiements et abonnements > Utiliser un code) avant ton prochain renouvellement."
   },
   "details": {
     "title": "Compléter mon profil",

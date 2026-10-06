@@ -144,7 +144,15 @@ export interface MyStats {
 export interface MyReferrals {
   code: string;
   referrals: { status: 'signed_up' | 'verified' | 'validated'; created_at: string }[];
-  rewards: { role: 'referrer' | 'referee'; kind: 'free_month' | 'discount'; value: number; status: 'earned' | 'applied' | 'void' }[];
+  rewards: {
+    role: 'referrer' | 'referee';
+    kind: 'free_month' | 'discount';
+    value: number;
+    status: 'earned' | 'applied' | 'void';
+    /** Option B: store offer code for a subscribed referrer's free month. */
+    offer_code: string | null;
+    store: 'APP_STORE' | 'PLAY_STORE' | null;
+  }[];
   free_months_this_year: number;
   annual_cap_months: number;
 }

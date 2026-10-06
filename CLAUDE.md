@@ -50,7 +50,7 @@ Node 22 + npm workspaces. The local stack needs Docker (not available on the wor
 
 ## Payments
 - RevenueCat setup, products and webhook: docs/PAYMENTS.md. Premium is decided server-side from the webhook (private.entitlements), never by the app.
-- Function secrets: REVENUECAT_WEBHOOK_SECRET (webhook), REVENUECAT_SECRET_KEY (only with providers.rewards = real).
+- Function secret: REVENUECAT_WEBHOOK_SECRET (webhook). Referral free months = store offer codes from private.offer_code_pool (option B).
 
 ## Moderation
 - Review queue and moderator functions: see docs/MODERATION.md (SQL editor, every call logged in private.access_log).

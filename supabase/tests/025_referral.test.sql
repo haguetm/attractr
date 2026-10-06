@@ -1,7 +1,7 @@
 -- Referral (spec §9): anonymous statuses, validation after 7 days and a verified selfie,
 -- rewards depending on whether the referrer pays, annual cap, anti-abuse, friendship.
 begin;
-select plan(17);
+select plan(19);
 
 -- P: paying referrer. N: non-paying referrer. R1..R3 referees. S: self-referral.
 select tests.create_onboarded_user('3363998400' || n, ('e3000000-0000-4000-8000-00000000000' || n)::uuid) from generate_series(1, 6) n;
@@ -41,12 +41,16 @@ select is((select string_agg(role || ':' || kind || ':' || value, ',' order by r
   'non-paying referrer: 10 % for them, 50 % on the referee''s first payment');
 select ok(not private.is_premium(pg_temp.u(2)), 'no free subscription for a non-paying referrer');
 
--- Applying the free month (mock provider path)
-set local role service_role;
-select public.service_apply_free_month((select id from public.service_pending_rewards() where user_id = pg_temp.u(1)));
-reset role;
-select ok((select expires_at from private.entitlements where user_id = pg_temp.u(1) and source = 'referral')
-          > now() + interval '49 days', 'the free month is added after the paid period');
+-- Option B: the free month is a store offer code, assigned from the pool
+select is(private.assign_offer_codes(), 0, 'no code while the store is unknown or the pool empty');
+select private.apply_revenuecat_event(jsonb_build_object('id', 'evs1', 'type', 'RENEWAL', 'app_user_id', pg_temp.u(1)::text,
+  'store', 'APP_STORE', 'product_id', 'premium_monthly', 'expiration_at_ms', (extract(epoch from now() + interval '30 days') * 1000)::bigint));
+delete from private.offer_code_pool;
+select private.load_offer_codes('staff:test', 'PLAY_STORE', array['GOOGLE-1']);
+select private.load_offer_codes('staff:test', 'APP_STORE', array['APPLE-1', 'APPLE-2']);
+select is(private.assign_offer_codes(), 1, 'a code is assigned for the referrer''s store');
+select is((select offer_code || ':' || status from private.referral_rewards where user_id = pg_temp.u(1)), 'APPLE-1:applied',
+  'the referrer receives an App Store code to redeem at the next renewal');
 
 -- First payment uses the referee's discount
 select private.apply_revenuecat_event(jsonb_build_object('id', 'evr1', 'type', 'INITIAL_PURCHASE', 'app_user_id', pg_temp.u(4)::text,
