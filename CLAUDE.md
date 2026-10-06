@@ -34,7 +34,8 @@ Node 22 + npm workspaces. The local stack needs Docker (not available on the wor
 - `npm run seed:generate` — regenerate `supabase/seeds/20_profiles.sql` (commit the result)
 - `npm run db:start` — start local Supabase (Docker)
 - `npm run db:reset` — apply migrations + seeds
-- `npm run db:test` — run pgTAP tests (after `db:reset`)
+- `npm run db:test` — run pgTAP tests (after `db:reset`), reference run on the real stack
+- `npm run db:test:lite [-- <filter>]` — same migrations, seeds and tests on PGlite, no Docker (Supabase stand-ins in `supabase/lite`). Runs on the work PC; use it after every SQL change
 - `npm run functions:serve` — run Edge Functions locally (copy `supabase/functions/.env.example` to `.env` first)
 - `npm run functions:deploy -- --project-ref <ref>` — deploy to a hosted project (never deploys `dev-*` functions)
 - `npm run functions:test` / `npm run functions:check` — Deno tests / type-check (Deno via npx, nothing to install)

@@ -176,6 +176,7 @@ npm run functions:test         # tests des Edge Functions (Deno via npx)
 npm run db:start               # Supabase en local
 npm run db:reset               # migrations + 100 profils fictifs
 npm run db:test                # tests pgTAP
+npm run db:test:lite           # mêmes tests sans Docker (Postgres embarqué PGlite)
 npm run functions:serve       # Edge Functions en local (2e terminal)
 npm run mobile                 # appli (configurer apps/mobile/.env avant)
 ```
