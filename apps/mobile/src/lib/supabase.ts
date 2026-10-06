@@ -9,11 +9,14 @@ if (!url || !anonKey) {
   throw new Error('Missing EXPO_PUBLIC_SUPABASE_URL / EXPO_PUBLIC_SUPABASE_ANON_KEY (see apps/mobile/.env.example)');
 }
 
+// Expo web static rendering runs this module in Node, where AsyncStorage (window) is unavailable.
+const isServerRender = Platform.OS === 'web' && typeof window === 'undefined';
+
 export const supabase = createClient(url, anonKey, {
   auth: {
-    storage: AsyncStorage,
-    autoRefreshToken: true,
-    persistSession: true,
+    storage: isServerRender ? undefined : AsyncStorage,
+    autoRefreshToken: !isServerRender,
+    persistSession: !isServerRender,
     detectSessionInUrl: false,
   },
 });
