@@ -48,6 +48,10 @@ Node 22 + npm workspaces. The local stack needs Docker (not available on the wor
 - `send-push` Edge Function drains `private.notification_outbox`; pg_cron calls it every minute once two Vault secrets exist on the project: `project_url` and `service_role_key` (see migration 20261009100000). Locally, call it by hand with the service role key.
 - The app registers an Expo push token only in a development/production build with `extra.eas.projectId` (not in Expo Go).
 
+## Payments
+- RevenueCat setup, products and webhook: docs/PAYMENTS.md. Premium is decided server-side from the webhook (private.entitlements), never by the app.
+- Function secrets: REVENUECAT_WEBHOOK_SECRET (webhook), REVENUECAT_SECRET_KEY (only with providers.rewards = real).
+
 ## Moderation
 - Review queue and moderator functions: see docs/MODERATION.md (SQL editor, every call logged in private.access_log).
 - Dev: `providers.mock_selfie_outcome` / `providers.mock_photo_outcome` in app_config simulate each provider outcome.

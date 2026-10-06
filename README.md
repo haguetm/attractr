@@ -139,8 +139,8 @@ Le projet se construit en 11 phases. La V1 est testée en France.
 | 4 | Likes, quota, matchs, chat, notifications | ✅ Tests de la base validés sur PGlite |
 | 5 | Vérification selfie, contrôle d'âge, modération, blocage, signalements | ✅ Tests de la base validés sur PGlite |
 | 6 | Amis et sorties à plusieurs | ✅ Tests de la base validés sur PGlite |
-| 7 | Abonnement, filtres payants, boosts, parrainage | ⏳ Prochaine étape |
-| 8 | Chats de groupe | 🔜 |
+| 7 | Abonnement, filtres payants, boosts, parrainage | ✅ Tests de la base validés sur PGlite |
+| 8 | Chats de groupe | ⏳ Prochaine étape |
 | 9 | Comptes de couple | 🔜 |
 | 10 | Analyse IA du profil | 🔜 |
 | 11 | Mesure de la rétention et tableaux de suivi | 🔜 |
@@ -189,6 +189,7 @@ Pour se connecter en local, utilise le numéro fictif **06 39 98 00 00** avec le
 - [Architecture](docs/ARCHITECTURE.md)
 - [Durées de conservation](docs/DATA_RETENTION.md)
 - [Guide de modération](docs/MODERATION.md)
+- [Paiements (RevenueCat)](docs/PAYMENTS.md)
 
 ---
 

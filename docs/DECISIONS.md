@@ -126,3 +126,18 @@ Réponses aux ambiguïtés relevées lors du cadrage. Validées le 2026-10-05. E
 - **Carte d'un ami** : jour, lieu, heure, les deux prénoms, qui l'invite, et le nombre de participants. Aucun identifiant, profil, boisson ni like.
 - **Fin du match** (annulation, blocage) : la sortie apparaît annulée pour les invités.
 - **Avis privé** : demandé 3 h après le début (provisoire), aux deux personnes matchées et aux amis venus ; note de 1 à 5 et commentaire, lisibles par l'équipe seulement.
+
+## Phase 7 (proposées, en attente de validation)
+- **Amitié avec le parrain** (réponse par défaut) : créée à la validation du filleul, avec les mêmes règles que toute amitié (selfies vérifiés, 10 amis maximum) ; ignorée silencieusement sinon.
+- **Premium décidé par le serveur** à partir du webhook RevenueCat (idempotent), jamais par l'appli. Une résiliation garde Premium jusqu'à la fin de la période payée.
+- **« Parrain abonné »** = abonnement payant en cours (pas un mois offert ni un test).
+- **Mois offerts au parrain abonné : point à trancher.** La spec dit « 1 mois offert » et « les mois offerts s'arrêtent avec l'abonnement du parrain ». Avec un abonnement store qui se renouvelle, un mois « offert » en parallèle n'a pas de valeur, et s'il s'arrête quand l'abonnement s'arrête, il n'est jamais utilisé. En l'état : les mois sont gagnés tant que le parrain paie, appliqués par un `RewardsProvider` isolé (version factice = mois ajouté après la période payée) ; ceux pas encore appliqués sont perdus si l'abonnement expire. Pour une vraie valeur, il faut un **report de facturation côté store** (possible sur Google Play, pas sur l'App Store) ou des **codes d'offre**. À décider avec les règles des stores (validation juridique).
+- **Réductions** (filleul -50 %, parrain non abonné -10 %) : enregistrées comme récompenses, utilisées au premier paiement ; elles passent par des offres promotionnelles à créer dans les stores.
+- **Filtres Premium** ignorés dès que Premium s'arrête (les réglages sont gardés).
+- **« Actifs récemment »** = actif dans les 3 jours (provisoire). **« Composition recherchée »** = filtrer les profils polyamoureux selon ce qu'ils cherchent.
+- **Passeport** : uniquement en recherche par rayon ; la position réelle ne change pas.
+- **Retour en arrière** : le dernier « passer » des dernières 24 h (provisoire).
+- **Incognito** : visible seulement par les personnes qu'on a likées ; jamais d'indicateur de popularité.
+- **Boost** : en tête de la zone (avant les personnes actives récemment), un à la fois, vues comptées une fois par personne et par jour. Boost mensuel Premium : le 1er de chaque mois (job quotidien).
+- **Popularité** : calcul quotidien par département et boisson principale ; groupes de moins de 5 profils sans indicateur ; « beaucoup » = au-dessus du 80ᵉ centile, « peu » = sous le 20ᵉ.
+- **Détails de profil** (études, taille, 5 centres d'intérêt max) : facultatifs, pour tout le monde ; seul le filtre est Premium.
