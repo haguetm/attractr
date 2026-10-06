@@ -19,6 +19,8 @@
 | Notifications envoyées | `private.notification_outbox` | Proposé : 30 jours puis purge | Proposé |
 | Jetons de notification | `push_tokens` | Supprimés à la déconnexion, quand Expo les déclare invalides, ou avec le compte | Proposé |
 | Signalements | `reports` | Durée des deux comptes ; supprimés avec le compte du signalant ou du signalé (cascade). Proposé : conserver une trace anonymisée des sanctions, à valider | Proposé |
+| Amitiés et liens d'invitation | `friendships`, `private.friend_invites` | Durée des comptes ; liens expirés : proposé purge après 30 jours | Proposé |
+| Sorties et avis | `outings`, `outing_invitations`, `private.outing_feedback` | Supprimés avec le match ou les comptes ; proposé 12 mois après la sortie | Proposé |
 | File de modération | `private.moderation_queue` | Proposé : 12 mois après résolution | Proposé |
 | Avertissements | `private.user_warnings` | Durée du compte | Proposé |
 

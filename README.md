@@ -138,8 +138,8 @@ Le projet se construit en 11 phases. La V1 est testée en France.
 | 3 | Feed avec compatibilité, mode « tester en tant que » | ✅ Tests de la base validés sur PGlite |
 | 4 | Likes, quota, matchs, chat, notifications | ✅ Tests de la base validés sur PGlite |
 | 5 | Vérification selfie, contrôle d'âge, modération, blocage, signalements | ✅ Tests de la base validés sur PGlite |
-| 6 | Amis et sorties à plusieurs | ⏳ Prochaine étape |
-| 7 | Abonnement, filtres payants, boosts, parrainage | 🔜 |
+| 6 | Amis et sorties à plusieurs | ✅ Tests de la base validés sur PGlite |
+| 7 | Abonnement, filtres payants, boosts, parrainage | ⏳ Prochaine étape |
 | 8 | Chats de groupe | 🔜 |
 | 9 | Comptes de couple | 🔜 |
 | 10 | Analyse IA du profil | 🔜 |

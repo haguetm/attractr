@@ -115,3 +115,14 @@ Réponses aux ambiguïtés relevées lors du cadrage. Validées le 2026-10-05. E
 - **Mode pause** : invisible dans le feed, matchs et conversations conservés.
 - **Modération en V1 depuis l'éditeur SQL** de Supabase avec des fonctions journalisées (`docs/MODERATION.md`). Un back-office web reste à faire.
 - **Réinscription bloquée** : un numéro dont le compte a été fermé pour minorité ne peut plus s'inscrire pendant la durée de conservation (hash HMAC avec un sel stocké dans Vault).
+
+## Phase 6 (proposées, en attente de validation)
+- **Ajout par lien** : le lien est à usage unique et valable 7 jours ; le partager vaut acceptation de son auteur, l'ouvrir vaut acceptation de l'autre (amitié immédiate). **Ajout par pseudo** : une demande que l'autre accepte ou refuse.
+- **Pseudo** : uniquement pour s'ajouter en ami, jamais cherchable ni listé ; une recherche par pseudo inconnu ou indisponible donne la même réponse (on ne peut pas tester si quelqu'un est inscrit).
+- **Ce qu'un ami voit de toi** : ton prénom et ton pseudo, rien d'autre (pas de photo ni de profil).
+- **Bloquer quelqu'un met fin à l'amitié.**
+- **Sortie** : une sortie prévue à la fois par match. Les 3 à 8 participants comptent les deux personnes matchées et toutes les invitations non refusées ; le minimum de 3 est indiqué (« invite un ami ») mais ne bloque pas la création.
+- **Chacun n'invite que ses propres amis** ; les deux personnes matchées voient les prénoms des invités des deux côtés et leurs réponses.
+- **Carte d'un ami** : jour, lieu, heure, les deux prénoms, qui l'invite, et le nombre de participants. Aucun identifiant, profil, boisson ni like.
+- **Fin du match** (annulation, blocage) : la sortie apparaît annulée pour les invités.
+- **Avis privé** : demandé 3 h après le début (provisoire), aux deux personnes matchées et aux amis venus ; note de 1 à 5 et commentaire, lisibles par l'équipe seulement.
