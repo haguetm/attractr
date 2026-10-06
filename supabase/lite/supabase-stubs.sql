@@ -39,6 +39,7 @@ create table auth.users (
   phone_change_token text,
   email_change_token_current text,
   reauthentication_token text,
+  banned_until timestamptz,
   created_at timestamptz,
   updated_at timestamptz
 );
