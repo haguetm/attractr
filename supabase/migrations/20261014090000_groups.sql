@@ -33,6 +33,7 @@ create table public.group_members (
   group_id uuid not null references public.groups (id) on delete cascade,
   user_id uuid not null references public.profiles (id) on delete cascade,
   joined_at timestamptz not null default now(),
+  seq bigint generated always as identity,  -- join order when joined_at ties (same transaction)
   primary key (group_id, user_id)
 );
 
@@ -524,7 +525,7 @@ begin
     'max_members', private.group_max(g.kind),
     'conversation_id', (select id from public.conversations where group_id = g.id),
     'members', (select jsonb_agg(jsonb_build_object('id', p.id, 'first_name', p.first_name, 'photo_path', private.main_photo(p.id),
-                                                    'is_admin', p.id = g.admin_id, 'me', p.id = uid) order by gm.joined_at)
+                                                    'is_admin', p.id = g.admin_id, 'me', p.id = uid) order by gm.joined_at, gm.seq)
                 from public.group_members gm join public.profiles p on p.id = gm.user_id where gm.group_id = g.id),
     'invitations', coalesce((
       select jsonb_agg(jsonb_build_object(
@@ -582,7 +583,7 @@ begin
     select jsonb_agg(jsonb_build_object(
       'id', i.id, 'kind', g.kind, 'name', g.name,
       'size', (select count(*) from public.group_members x where x.group_id = g.id),
-      'member_first_names', (select jsonb_agg(p.first_name order by gm.joined_at)
+      'member_first_names', (select jsonb_agg(p.first_name order by gm.joined_at, gm.seq)
                              from public.group_members gm join public.profiles p on p.id = gm.user_id where gm.group_id = g.id),
       'invited_by', jsonb_build_object('first_name', inviter.first_name,
                                        'match_id', (select m.id from public.matches m

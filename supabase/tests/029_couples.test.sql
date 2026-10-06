@@ -69,7 +69,9 @@ create function pg_temp.feed_has(n text, as_couple boolean default false) return
 $$;
 select tests.authenticate_as('f6000000-0000-4000-8000-00000000001c');
 select ok(pg_temp.feed_has('C'), 'an individual open to couples sees the couple');
-select ok(public.get_feed(50) -> 'cards' -> 0 -> 'couple' -> 'first_names' = '["Lea", "Hugo"]', 'the card shows both first names and the couple badge');
+-- The couple shares its creator's position: find its card by id (ties are ordered by random ids).
+select ok((select c -> 'couple' -> 'first_names' from jsonb_array_elements(public.get_feed(50) -> 'cards') c
+           where c ->> 'id' = (select id::text from cpl)) = '["Lea", "Hugo"]', 'the card shows both first names and the couple badge');
 select tests.authenticate_as('f6000000-0000-4000-8000-00000000001d');
 select ok(not pg_temp.feed_has('C'), 'not open to couples: no couple in the feed');
 select tests.authenticate_as('f6000000-0000-4000-8000-00000000001e');
