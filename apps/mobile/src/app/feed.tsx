@@ -71,11 +71,23 @@ export default function FeedScreen() {
     else await load();
   };
 
+  const [canRewind, setCanRewind] = useState(false);
+
   const pass = () =>
     run(async () => {
       if (!card) return;
       await api.passProfile(card.id);
+      setCanRewind(true);
       await next();
+    });
+
+  // Premium: bring back the last passed profile in front of the queue.
+  const rewind = () =>
+    run(async () => {
+      const back = await api.rewindLastPass();
+      setCanRewind(false);
+      setFeed((f) => (f ? { ...f, cards: [back, ...f.cards.slice(index).filter((c) => c.id !== back.id)] } : f));
+      setIndex(0);
     });
 
   const like = (target: LikeTarget | null) =>
@@ -104,6 +116,7 @@ export default function FeedScreen() {
         <Image source={require('../../assets/images/logo.png')} style={styles.logo} contentFit="contain" />
         <View style={styles.headerActions}>
           <HeaderLink label={t('feed.matches')} badge={unread} onPress={() => router.push('/matches')} />
+          <HeaderLink label={t('feed.boost')} badge={profile?.boost_credits} onPress={() => router.push('/boost')} />
           <HeaderLink label={t('feed.search')} onPress={() => router.push('/search')} />
           <HeaderLink label={t('feed.settings')} onPress={() => router.push('/settings')} />
         </View>
@@ -121,6 +134,7 @@ export default function FeedScreen() {
           <ActivityIndicator color={colors.coral} style={styles.loader} />
         ) : card ? (
           <>
+            {feed?.passport ? <Note>{t('feed.passport', { label: feed.passport })}</Note> : null}
             {feed?.widened && feed.radius_km ? <Note>{t('feed.widened', { km: feed.radius_km })}</Note> : null}
             <ProfileCardView
               card={card}
@@ -156,6 +170,9 @@ export default function FeedScreen() {
               <Button label={t('feed.like')} onPress={() => like(defaultTarget(card))} loading={busy} disabled={outOfLikes} />
             </View>
           </View>
+          {canRewind && profile?.premium.active ? (
+            <Button label={t('feed.rewind')} variant="ghost" onPress={rewind} disabled={busy} />
+          ) : null}
           {outOfLikes && reset ? (
             <Text style={[font.small, styles.center]}>
               {t('feed.quotaReached', { hours: reset.hours, minutes: reset.minutes })} {t('feed.quotaPremium')}

@@ -310,7 +310,18 @@
     "not_a_friend": "Tu ne peux inviter que tes amis.",
     "outing_full": "La sortie est complète.",
     "outing_not_over": "Tu pourras donner ton avis après la sortie.",
-    "invalid_rating": "Choisis une note de 1 à 5."
+    "invalid_rating": "Choisis une note de 1 à 5.",
+    "premium_required": "Cette fonctionnalité est réservée à Premium.",
+    "too_many_interests": "Choisis 5 centres d'intérêt maximum.",
+    "unknown_interest": "Ce centre d'intérêt n'existe plus.",
+    "boost_already_active": "Un Boost est déjà en cours.",
+    "no_boost_credit": "Tu n'as pas de Boost disponible.",
+    "nothing_to_rewind": "Aucun profil récent à retrouver.",
+    "invalid_event": "Erreur interne.",
+    "reward_not_found": "Erreur interne.",
+    "dev_tools_disabled": "Outils de développement désactivés.",
+    "grant_failed": "Échec de l'activation de test.",
+    "apply_failed": "Erreur interne."
   },
   "settings": {
     "title": "Réglages",
@@ -337,7 +348,16 @@
     "blockedList": "Profils bloqués",
     "warning": "Tu as reçu un avertissement de notre équipe de modération. Respecte les règles pour éviter une suspension.",
     "friends": "Mes amis",
-    "outings": "Invitations à des sorties"
+    "outings": "Invitations à des sorties",
+    "premium": "Attractr Premium",
+    "boost": "Boost",
+    "stats": "Mes statistiques",
+    "referral": "Parrainage",
+    "details": "Compléter mon profil",
+    "incognito": "Mode incognito",
+    "incognitoHint": "Seules les personnes que tu likes peuvent voir ton profil.",
+    "incognitoOn": "Activer le mode incognito",
+    "incognitoOff": "Désactiver le mode incognito"
   },
   "feed": {
     "search": "Recherche",
@@ -357,7 +377,10 @@
     "likesLeft_one": "{{count}} like restant aujourd'hui",
     "likesLeft_other": "{{count}} likes restants aujourd'hui",
     "quotaReached": "Tu as utilisé tes likes. Les prochains reviennent dans {{hours}} h {{minutes}} min.",
-    "quotaPremium": "Likes illimités avec Premium (bientôt)."
+    "quotaPremium": "Likes illimités avec Premium.",
+    "rewind": "Revenir au profil précédent",
+    "boost": "Boost",
+    "passport": "Recherche autour de {{label}}"
   },
   "card": {
     "age": "{{age}} ans",
@@ -372,6 +395,10 @@
       "lt50": "À moins de 50 km",
       "lt100": "À moins de 100 km",
       "gte100": "À plus de 100 km"
+    },
+    "popularity": {
+      "high": "Reçoit beaucoup de likes",
+      "low": "Reçoit peu de likes"
     }
   },
   "search": {
@@ -385,9 +412,23 @@
     "ageRange": "De {{min}} à {{max}} ans",
     "drinks": "Boissons",
     "drinksHint": "Aucune sélection : toutes les boissons compatibles.",
-    "passportSoon": "Chercher ailleurs (passeport) : bientôt avec Premium.",
     "save": "Enregistrer",
-    "saved": "Préférences enregistrées."
+    "saved": "Préférences enregistrées.",
+    "premiumFilters": "Filtres Premium",
+    "verifiedOnly": "Profils vérifiés uniquement",
+    "recentlyActive": "Actifs récemment",
+    "education": "Études",
+    "height": "Taille",
+    "heightRange": "De {{min}} à {{max}} cm",
+    "anyHeight": "Toutes les tailles",
+    "interests": "Centres d'intérêt",
+    "compositions": "Ce que cherchent les profils polyamoureux",
+    "passport": "Passeport",
+    "passportHint": "Cherche dans une autre ville, sans changer ta position.",
+    "passportPlaceholder": "Ex. Bordeaux",
+    "passportSet": "Recherche autour de {{label}}",
+    "passportApply": "Chercher dans cette ville",
+    "passportClear": "Revenir autour de moi"
   },
   "dev": {
     "title": "Tester en tant que",
@@ -408,13 +449,14 @@
     "empty": "Pas encore de match. Les likes, c'est par ici.",
     "backToFeed": "Retour aux profils",
     "likesReceived": "Des personnes t'ont liké",
-    "likesReceivedHint": "Découvre qui avec Premium (bientôt). En attendant, elles apparaissent dans tes profils.",
+    "likesReceivedHint": "Découvre qui avec Premium.",
     "newMatch": "Nouveau match : envoie le premier message",
     "timeLeft": "Plus que {{hours}} h {{minutes}} min pour écrire",
     "yourTurn": "À ton tour",
     "you": "Toi : {{body}}",
     "unread_one": "{{count}} non lu",
-    "unread_other": "{{count}} non lus"
+    "unread_other": "{{count}} non lus",
+    "seeLikes": "Voir qui m'a liké"
   },
   "chat": {
     "placeholder": "Ton message",
@@ -559,5 +601,146 @@
     "rating": "Ta note",
     "comment": "Un commentaire ? (facultatif)",
     "send": "Envoyer"
+  },
+  "premium": {
+    "title": "Attractr Premium",
+    "subtitle": "Le même prix pour tout le monde, sans engagement, résiliable en un clic.",
+    "active": "Tu es Premium jusqu'au {{date}}.",
+    "activeReferral": "Tu profites de Premium grâce au parrainage jusqu'au {{date}}.",
+    "features": {
+      "unlimited_likes": "Likes illimités",
+      "who_liked": "Voir qui t'a liké (profils vérifiés)",
+      "filters": "Filtres avancés : études, taille, centres d'intérêt, actifs récemment, vérifiés uniquement, composition recherchée",
+      "groups": "Chats de groupe",
+      "incognito": "Mode incognito : visible seulement par les personnes que tu likes",
+      "rewind": "Retour en arrière sur un profil passé",
+      "passport": "Passeport : chercher dans une autre ville",
+      "stats": "Statistiques de profil : vues, likes par photo",
+      "popularity": "Savoir si un profil reçoit beaucoup ou peu de likes",
+      "boost": "1 Boost offert chaque mois",
+      "no_ads": "Aucune publicité"
+    },
+    "monthly": "7,99 € par mois",
+    "yearly": "49,99 € par an",
+    "subscribe": "S'abonner",
+    "restore": "Restaurer mes achats",
+    "manage": "Gérer ou résilier mon abonnement",
+    "unavailable": "Les achats ne sont pas disponibles dans cette version de l'appli.",
+    "refereeDiscount": "Grâce à ton parrainage, ton premier mois est à -{{pct}} %.",
+    "referrerDiscount": "Grâce à tes filleuls, tu as -{{pct}} % sur ton abonnement.",
+    "processing": "Ton achat est en cours de validation, cela peut prendre quelques secondes.",
+    "devGrant": "Activer Premium (test, 30 jours)",
+    "devBoost": "Ajouter un Boost (test)",
+    "locked": "Réservé à Premium",
+    "discover": "Découvrir Premium"
+  },
+  "boost": {
+    "title": "Boost",
+    "subtitle": "Ton profil passe en tête de ta zone pendant 30 minutes.",
+    "credits_one": "{{count}} Boost disponible",
+    "credits_other": "{{count}} Boosts disponibles",
+    "noCredits": "Aucun Boost disponible.",
+    "activate": "Lancer un Boost",
+    "active": "Boost en cours jusqu'à {{time}} · {{views}} vues",
+    "lastResult": "Ton dernier Boost : {{views}} vues",
+    "buy": "Acheter un Boost (2 €)",
+    "monthly": "Avec Premium, un Boost est offert chaque mois."
+  },
+  "likes": {
+    "title": "Ils t'ont liké",
+    "subtitle": "Profils vérifiés qui attendent ta réponse. Un like en retour crée le match.",
+    "empty": "Personne pour le moment. Ça viendra !",
+    "likedPhoto": "A aimé ta photo",
+    "likedAnswer": "A aimé ta réponse",
+    "likeBack": "Liker en retour",
+    "pass": "Passer"
+  },
+  "stats": {
+    "title": "Mes statistiques",
+    "views": "Vues",
+    "likes": "Likes reçus",
+    "last7": "7 derniers jours",
+    "last30": "30 derniers jours",
+    "perPhoto": "Likes par photo",
+    "photo": "Photo {{position}}",
+    "perAnswer": "Likes par réponse",
+    "popularity": "Ta popularité dans ta zone",
+    "popularityLevels": {
+      "high": "Tu reçois beaucoup de likes",
+      "medium": "Dans la moyenne",
+      "low": "Tu reçois peu de likes : l'analyse de profil peut t'aider"
+    },
+    "popularityUnknown": "Pas encore assez de données."
+  },
+  "referral": {
+    "title": "Parrainage",
+    "subtitle": "Invite des amis sur Attractr. Tu sauras seulement s'ils se sont inscrits et vérifiés, jamais leur profil.",
+    "code": "Ton code",
+    "share": "Partager mon lien",
+    "shareMessage": "Rejoins-moi sur Attractr avec mon code {{code}} : {{link}}",
+    "rulesPaying": "Tu es abonné·e : 1 mois offert par filleul validé (6 mois maximum par an). Ton filleul reçoit 1 mois de Premium.",
+    "rulesFree": "Sans abonnement : une réduction sur ton futur abonnement par filleul validé, et -50 % sur le premier mois de ton filleul.",
+    "validation": "Un filleul est validé quand son selfie est vérifié et son compte actif depuis 7 jours.",
+    "list": "Mes filleuls",
+    "empty": "Pas encore de filleul.",
+    "status": {
+      "signed_up": "Inscrit",
+      "verified": "Inscrit et vérifié",
+      "validated": "Validé"
+    },
+    "rewards": "Mes récompenses",
+    "reward": {
+      "free_month": "{{value}} mois offert",
+      "discount": "-{{value}} %",
+      "earned": "à venir",
+      "applied": "utilisé",
+      "void": "expiré"
+    },
+    "monthsThisYear": "{{count}} / {{max}} mois offerts cette année"
+  },
+  "details": {
+    "title": "Compléter mon profil",
+    "subtitle": "Facultatif. Ces informations servent aux filtres avancés.",
+    "education": "Études",
+    "educationLevels": {
+      "secondary": "Collège / lycée",
+      "bac": "Bac",
+      "bac_2": "Bac +2",
+      "bac_3": "Bac +3",
+      "bac_5": "Bac +5",
+      "doctorate": "Doctorat",
+      "other": "Autre"
+    },
+    "height": "Taille",
+    "heightValue": "{{cm}} cm",
+    "noHeight": "Non renseignée",
+    "interests": "Centres d'intérêt (5 maximum)",
+    "interestLabels": {
+      "music": "Musique",
+      "concerts": "Concerts",
+      "cinema": "Cinéma",
+      "series": "Séries",
+      "reading": "Lecture",
+      "travel": "Voyages",
+      "hiking": "Randonnée",
+      "running": "Course à pied",
+      "climbing": "Escalade",
+      "yoga": "Yoga",
+      "cooking": "Cuisine",
+      "restaurants": "Restaurants",
+      "board_games": "Jeux de société",
+      "video_games": "Jeux vidéo",
+      "art": "Art",
+      "museums": "Musées",
+      "photography": "Photo",
+      "dance": "Danse",
+      "theatre": "Théâtre",
+      "volunteering": "Bénévolat",
+      "animals": "Animaux",
+      "nature": "Nature",
+      "tech": "Tech",
+      "fashion": "Mode"
+    },
+    "save": "Enregistrer"
   }
 }

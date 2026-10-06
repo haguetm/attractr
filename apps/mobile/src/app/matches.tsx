@@ -9,6 +9,7 @@ import { useTranslation } from 'react-i18next';
 import { ActivityIndicator, Pressable, StyleSheet, Text, View } from 'react-native';
 import { avatarColor } from '../components/ProfileCardView';
 import { Button, ErrorText, Note, Screen } from '../components/ui';
+import { useSession } from '../features/session/SessionProvider';
 import { api, type MatchSummary } from '../lib/api';
 import { errorMessage } from '../lib/errors';
 import { supabase } from '../lib/supabase';
@@ -16,6 +17,7 @@ import { colors, font, radius, spacing } from '../theme';
 
 export default function MatchesScreen() {
   const { t } = useTranslation();
+  const premium = !!useSession().profile?.premium.active;
   const [matches, setMatches] = useState<MatchSummary[] | null>(null);
   const [likesWaiting, setLikesWaiting] = useState(0);
   const [outingCards, setOutingCards] = useState(0);
@@ -56,6 +58,7 @@ export default function MatchesScreen() {
         <View style={styles.likes}>
           <Text style={font.label}>{t('matches.likesReceived')}</Text>
           <Text style={font.small}>{t('matches.likesReceivedHint')}</Text>
+          <Button label={t('matches.seeLikes')} variant="secondary" onPress={() => router.push(premium ? '/likes' : '/premium')} />
         </View>
       ) : null}
 

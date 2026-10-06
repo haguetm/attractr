@@ -108,6 +108,7 @@ export function ProfileCardView(props: {
           {card.verified ? <Text style={[styles.badge, styles.badgeVerified]}>✓ {t('card.verified')}</Text> : null}
           {card.recently_active ? <Text style={[styles.badge, styles.badgeActive]}>● {t('card.recentlyActive')}</Text> : null}
           <Text style={styles.badge}>{t(`card.distance.${card.distance}`)}</Text>
+          {card.popularity ? <Text style={[styles.badge, styles.badgePopularity]}>{t(`card.popularity.${card.popularity}`)}</Text> : null}
         </View>
         {onlyBeer ? <Text style={styles.beerOnly}>{t('card.matchedOnlyBeer')}</Text> : null}
         {card.gender_detail || card.orientation ? (
@@ -169,6 +170,7 @@ const styles = StyleSheet.create({
   badge: { fontSize: 12, color: colors.navy, backgroundColor: colors.navySoft, paddingHorizontal: 8, paddingVertical: 3, borderRadius: radius.pill, overflow: 'hidden' },
   badgeVerified: { backgroundColor: '#DDF0E4', color: colors.success },
   badgeActive: { backgroundColor: colors.coralSoft, color: colors.coral },
+  badgePopularity: { backgroundColor: colors.navy, color: colors.white },
   beerOnly: { fontSize: 13, color: colors.navy, fontWeight: '600' },
   prompt: { flexDirection: 'row', alignItems: 'center', gap: spacing.sm, paddingVertical: spacing.sm, borderTopWidth: 1, borderTopColor: colors.border },
   promptText: { flex: 1, gap: 2 },

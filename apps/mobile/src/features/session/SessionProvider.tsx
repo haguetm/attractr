@@ -2,6 +2,7 @@ import type { Session } from '@supabase/supabase-js';
 import { createContext, type ReactNode, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { api, type MyProfile } from '../../lib/api';
 import { unregisterForPush } from '../../lib/notifications';
+import { resetPurchaser } from '../../lib/purchases';
 import { supabase } from '../../lib/supabase';
 
 interface SessionState {
@@ -46,6 +47,7 @@ export function SessionProvider({ children }: { children: ReactNode }) {
 
   const signOut = useCallback(async () => {
     await unregisterForPush();
+    await resetPurchaser();
     await supabase.auth.signOut();
     setProfile(null);
   }, []);

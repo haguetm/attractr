@@ -81,9 +81,27 @@ export default function SettingsScreen() {
       {profile?.warnings ? <Note>{t('settings.warning')}</Note> : null}
       {profile?.verification_status === 'pending' ? <Note>{t('settings.pendingVerification')}</Note> : null}
 
+      <Button label={t('settings.premium')} onPress={() => router.push('/premium')} />
       <Button label={t('settings.searchPreferences')} variant="secondary" onPress={() => router.push('/search')} />
+      <Button label={t('settings.details')} variant="secondary" onPress={() => router.push('/profile-details')} />
+      <Button label={t('settings.referral')} variant="secondary" onPress={() => router.push('/referral')} />
+      {profile?.premium.active ? (
+        <Button label={t('settings.stats')} variant="secondary" onPress={() => router.push('/stats')} />
+      ) : null}
       <Button label={t('settings.friends')} variant="secondary" onPress={() => router.push('/friends')} />
       <Button label={t('settings.outings')} variant="secondary" onPress={() => router.push('/outings')} />
+
+      {profile?.premium.active ? (
+        <Section title={t('settings.incognito')}>
+          <Note>{t('settings.incognitoHint')}</Note>
+          <Button
+            label={profile.incognito ? t('settings.incognitoOff') : t('settings.incognitoOn')}
+            variant="secondary"
+            onPress={() => run(async () => { await api.setIncognito(!profile.incognito); await refreshProfile(); })}
+            disabled={busy}
+          />
+        </Section>
+      ) : null}
 
       <Section title={t('settings.pause')}>
         <Note>{paused ? t('settings.paused') : t('settings.pauseHint')}</Note>

@@ -41,6 +41,13 @@ export interface MyProfile {
   verification_status: 'unverified' | 'pending' | 'verified' | 'rejected';
   verification_in_review: boolean;
   warnings: number;
+  username: string | null;
+  premium: { active: boolean; until: string | null; paying: boolean };
+  incognito: boolean;
+  education_level: EducationLevel | null;
+  height_cm: number | null;
+  interests: string[];
+  boost_credits: number;
   country_code: string | null;
   department_code: string | null;
   region_code: string | null;
@@ -62,12 +69,27 @@ export interface MyProfile {
 
 export type SearchMode = 'radius' | 'department' | 'region';
 
-export interface SearchPreferences {
+export const EDUCATION_LEVELS = ['secondary', 'bac', 'bac_2', 'bac_3', 'bac_5', 'doctorate', 'other'] as const;
+export type EducationLevel = (typeof EDUCATION_LEVELS)[number];
+
+/** Premium filters (spec §10); ignored by the feed once Premium ends. */
+export interface PremiumFilters {
+  verified_only: boolean;
+  recently_active: boolean;
+  education_levels: EducationLevel[] | null;
+  height_min: number | null;
+  height_max: number | null;
+  interests: string[] | null;
+  compositions: string[] | null;
+}
+
+export interface SearchPreferences extends PremiumFilters {
   mode: SearchMode;
   radius_km: number;
   age_min: number;
   age_max: number;
   drinks: Drink[] | null;
+  passport_label: string | null;
 }
 
 /** What the feed shows of another profile: public fields only, distance as a range. */
@@ -86,6 +108,8 @@ export interface ProfileCard {
   orientation: string | null;
   prompts: { question_code: string; answer: string }[];
   photos: { id: string; storage_path: string }[];
+  /** Premium viewers only (P1): 'high' | 'low', nothing in between. */
+  popularity?: 'high' | 'low' | null;
 }
 
 export interface Feed {
@@ -93,6 +117,36 @@ export interface Feed {
   mode: SearchMode;
   radius_km: number | null;
   widened: boolean;
+  /** City searched with the Premium passport, if any. */
+  passport: string | null;
+}
+
+export interface LikeReceived extends ProfileCard {
+  liked_at: string;
+  liked_target: { kind: 'photo' | 'prompt'; ref: string };
+}
+
+export interface BoostStatus {
+  credits: number;
+  last: { starts_at: string; ends_at: string; active: boolean; views: number } | null;
+}
+
+export interface MyStats {
+  views_7d: number;
+  views_30d: number;
+  likes_7d: number;
+  likes_30d: number;
+  photos: { id: string; storage_path: string; position: number; likes: number }[];
+  prompts: { question_code: string; likes: number }[];
+  popularity: 'high' | 'medium' | 'low' | null;
+}
+
+export interface MyReferrals {
+  code: string;
+  referrals: { status: 'signed_up' | 'verified' | 'validated'; created_at: string }[];
+  rewards: { role: 'referrer' | 'referee'; kind: 'free_month' | 'discount'; value: number; status: 'earned' | 'applied' | 'void' }[];
+  free_months_this_year: number;
+  annual_cap_months: number;
 }
 
 export type LikeTarget = { kind: 'photo' | 'prompt'; ref: string };
@@ -283,14 +337,38 @@ export const api = {
 
   getFeed: (limit?: number) => rpc<Feed>('get_feed', limit ? { p_limit: limit } : {}),
   passProfile: (targetId: string) => rpc('pass_profile', { p_target_id: targetId }),
-  setSearchPreferences: (p: SearchPreferences) =>
+  /** withPremium: also send the Premium filters (refused server-side without Premium). */
+  setSearchPreferences: (p: SearchPreferences, withPremium: boolean) =>
     rpc('set_my_search_preferences', {
       p_mode: p.mode,
       p_radius_km: p.mode === 'radius' ? p.radius_km : null,
       p_age_min: p.age_min,
       p_age_max: p.age_max,
       p_drinks: p.drinks,
+      p_premium: withPremium
+        ? {
+            verified_only: p.verified_only,
+            recently_active: p.recently_active,
+            education_levels: p.education_levels ?? [],
+            height_min: p.height_min,
+            height_max: p.height_max,
+            interests: p.interests ?? [],
+            compositions: p.compositions ?? [],
+          }
+        : null,
     }),
+  setPassport: (query: string) => invoke<{ label: string | null }>('update-location', { mode: 'passport', query }),
+  clearPassport: () => rpc('clear_my_passport'),
+  setIncognito: (enabled: boolean) => rpc('set_my_incognito', { p_enabled: enabled }),
+  setDetails: (education: EducationLevel | null, heightCm: number | null, interests: string[]) =>
+    rpc('set_my_details', { p_education_level: education, p_height_cm: heightCm, p_interests: interests }),
+  getLikesReceived: () => rpc<LikeReceived[]>('get_likes_received'),
+  rewindLastPass: () => rpc<ProfileCard>('rewind_last_pass'),
+  getMyStats: () => rpc<MyStats>('get_my_stats'),
+  activateBoost: () => rpc<{ ends_at: string }>('activate_boost'),
+  getMyBoost: () => rpc<BoostStatus>('get_my_boost'),
+  getMyReferrals: () => rpc<MyReferrals>('get_my_referrals'),
+  devGrant: (kind: 'premium' | 'boost') => invoke<{ granted: string }>('dev-impersonate', { action: 'grant', kind }),
 
   likeProfile: (targetId: string, target: LikeTarget) =>
     rpc<LikeResult>('like_profile', { p_target_id: targetId, p_target_kind: target.kind, p_target_ref: target.ref }),
