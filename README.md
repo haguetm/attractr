@@ -135,8 +135,8 @@ Le projet se construit en 11 phases. La V1 est testée en France.
 |---|---|---|
 | 1 | Base de données, authentification, consentements, règles d'accès, données de test, configuration | ✅ Écrite, tests de la base à exécuter |
 | 2 | Inscription complète | ✅ Écrite, tests de la base à exécuter |
-| 3 | Feed avec compatibilité, mode « tester en tant que » | ⏳ Prochaine étape |
-| 4 | Likes, quota, matchs, chat, notifications | 🔜 |
+| 3 | Feed avec compatibilité, mode « tester en tant que » | ✅ Écrite, tests de la base à exécuter |
+| 4 | Likes, quota, matchs, chat, notifications | ⏳ Prochaine étape |
 | 5 | Vérification selfie, contrôle d'âge, modération, blocage, signalements | 🔜 |
 | 6 | Amis et sorties à plusieurs | 🔜 |
 | 7 | Abonnement, filtres payants, boosts, parrainage | 🔜 |
@@ -176,7 +176,7 @@ npm run functions:test         # tests des Edge Functions (Deno via npx)
 npm run db:start               # Supabase en local
 npm run db:reset               # migrations + 100 profils fictifs
 npm run db:test                # tests pgTAP
-npx supabase functions serve   # Edge Functions en local (2e terminal)
+npm run functions:serve       # Edge Functions en local (2e terminal)
 npm run mobile                 # appli (configurer apps/mobile/.env avant)
 ```
 

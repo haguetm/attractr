@@ -35,9 +35,13 @@ Node 22 + npm workspaces. The local stack needs Docker (not available on the wor
 - `npm run db:start` — start local Supabase (Docker)
 - `npm run db:reset` — apply migrations + seeds
 - `npm run db:test` — run pgTAP tests (after `db:reset`)
-- `npx supabase functions serve` — run Edge Functions locally
+- `npm run functions:serve` — run Edge Functions locally (copy `supabase/functions/.env.example` to `.env` first)
+- `npm run functions:deploy -- --project-ref <ref>` — deploy to a hosted project (never deploys `dev-*` functions)
 - `npm run functions:test` / `npm run functions:check` — Deno tests / type-check (Deno via npx, nothing to install)
 - `npm run mobile` — start Expo (needs `apps/mobile/.env`, see `.env.example` there)
+
+## Dev tools
+- "Tester en tant que": Réglages > Outils de développement in the app. Needs local Supabase, `APP_ENV=development` (functions) and `EXPO_PUBLIC_APP_ENV=development` (app); the local seed enables `dev.impersonation_enabled`.
 
 ## SQL conventions
 - `set search_path = ''` and fully qualified names in every function.

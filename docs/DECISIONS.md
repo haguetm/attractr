@@ -77,3 +77,16 @@ Réponses aux ambiguïtés relevées lors du cadrage. Validées le 2026-10-05. E
 - Ensuite : publicité **légère et fermable**, pour les **non-abonnés uniquement** (Premium = sans publicité), à plusieurs endroits de l'appli.
 - Ciblage (personnalisé ou non) : **à décider plus tard**. Contrainte déjà posée : aucune donnée sensible ne sort vers un tiers, donc aucun ciblage fondé sur le profil ; un ciblage personnalisé exigerait un consentement dédié (et l'App Tracking Transparency sur iOS).
 - À cadrer avant l'implémentation : emplacements exacts (jamais à l'intérieur d'une conversation ?), régie et contrat de traitement, impact sur l'analyse d'impact RGPD.
+
+## Phase 3 (proposées, en attente de validation)
+- **Réciprocité aussi sur l'âge** : un profil n'apparaît que si chacun est dans la tranche d'âge de l'autre (comme pour le rayon, Q6), sauf pendant l'élargissement automatique.
+- **Élargissement automatique** : rayon doublé jusqu'à `feed.max_radius_km` (300 km) tant qu'il y a moins de `feed.min_results` (10) profils. Uniquement en recherche par rayon ; en département ou région, pas d'élargissement (message d'attente si vide).
+- **Rayon par défaut 25 km**, choix proposés 5 à 300 km (`feed.default_radius_km`, `feed.max_radius_km`, provisoires).
+- **Ordre du feed** : d'abord les personnes actives récemment, puis par distance. Le Boost (phase 7) passera devant.
+- **Filtre boisson** (gratuit) : ne garde que les profils compatibles via au moins une des boissons choisies.
+- **Badge d'activité, version provisoire** : « actif dans les 72 h ». Il deviendra « a répondu à un message dans les 72 h » quand le chat existera (phase 4, Q16).
+- **Photos visibles par les autres** : seulement pour les profils que le feed leur a montrés dans les 24 h (et plus tard les matchs), via une URL signée. En attendant la modération (phase 5), seules les photos refusées sont masquées.
+- **Département et région** déterminés côté serveur par le géocodage, comme le pays.
+- **Blocages et signalements** : tables créées dès maintenant pour que le feed les exclue ; les actions et l'interface arrivent en phase 5.
+- **« Tester en tant que »** : uniquement sur le Supabase local, avec `APP_ENV=development` et le drapeau `dev.impersonation_enabled` (activé par le seed local). La fonction n'est jamais déployée sur un projet hébergé (`npm run functions:deploy` l'exclut). Les profils fictifs ont un e-mail en `.test` pour cette connexion.
+- **Environnement par défaut** : un projet hébergé sans `APP_ENV` est traité comme la production (versions factices refusées).
