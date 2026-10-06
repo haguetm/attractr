@@ -95,7 +95,7 @@ export default function ChatScreen() {
   const report = () => {
     setMenu('closed');
     if (match) {
-      router.push({ pathname: '/report/[userId]', params: { userId: match.other.id, name: match.other.first_name, conversationId } });
+      router.push({ pathname: '/report/[userId]', params: { userId: match.other.id, name: match.other.first_name, conversationId, isCouple: match.other.is_couple ? '1' : '0' } });
     }
   };
 
@@ -132,6 +132,8 @@ export default function ChatScreen() {
           <Button label={t('chat.cancel')} variant="ghost" onPress={() => setMenu('closed')} />
         </View>
       ) : null}
+
+      {match?.with_couple ? <Text style={styles.coupleBanner}>{t('chat.coupleBanner')}</Text> : null}
 
       {left && !left.expired ? (
         <View style={styles.banner}>
@@ -202,6 +204,7 @@ const styles = StyleSheet.create({
   headerLink: { color: colors.navy, fontWeight: '700', fontSize: 15 },
   banner: { margin: spacing.md, padding: spacing.md, borderRadius: radius.md, backgroundColor: colors.coralSoft, gap: spacing.sm },
   list: { padding: spacing.md, gap: spacing.sm },
+  coupleBanner: { textAlign: 'center', paddingVertical: spacing.xs, backgroundColor: colors.navy, color: colors.white, fontSize: 13 },
   outing: { marginHorizontal: spacing.md, marginTop: spacing.sm, padding: spacing.sm, borderRadius: radius.md, backgroundColor: colors.navySoft },
   outingText: { color: colors.navy, fontWeight: '600', textAlign: 'center' },
   empty: { textAlign: 'center', marginTop: spacing.xl, transform: [{ scaleY: -1 }] },

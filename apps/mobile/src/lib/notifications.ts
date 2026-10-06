@@ -51,7 +51,9 @@ export async function unregisterForPush(): Promise<void> {
 type PushData = { kind?: string; match_id?: string; conversation_id?: string; outing_id?: string; group_id?: string };
 
 export function routeForNotification(data: PushData) {
-  if (data.kind === 'group_vote' && data.group_id) {
+  if (data.kind === 'couple_request' || data.kind === 'couple_approval') {
+    router.push('/couple');
+  } else if (data.kind === 'group_vote' && data.group_id) {
     router.push({ pathname: '/group/[id]/info', params: { id: data.group_id } });
   } else if (data.kind === 'group_invitation') {
     router.push('/groups');

@@ -83,8 +83,7 @@
     "individual": "Compte individuel",
     "individualDescription": "Ton profil, rien que pour toi.",
     "couple": "Compte de couple",
-    "coupleDescription": "Un profil commun, relié à vos deux comptes vérifiés.",
-    "comingSoon": "Bientôt disponible"
+    "coupleDescription": "Un profil commun, relié à vos deux comptes vérifiés. Tu créeras le tien, puis tu inviteras ton ou ta partenaire."
   },
   "situation": {
     "title": "Ta situation actuelle",
@@ -331,7 +330,14 @@
     "beer_match_required": "Tu ne peux inviter qu'un match Bière.",
     "invitation_not_found": "Cette invitation n'existe plus.",
     "vote_closed": "Le vote est terminé.",
-    "admin_only": "Seul l'administrateur décide dans ce groupe."
+    "admin_only": "Seul l'administrateur décide dans ce groupe.",
+    "already_in_couple": "Tu fais déjà partie d'un compte de couple.",
+    "onboarding_required": "Termine d'abord ton inscription.",
+    "couple_not_found": "Tu n'as pas de compte de couple.",
+    "couple_not_published": "Votre profil commun n'est pas encore publié.",
+    "approval_not_found": "Cette demande n'existe plus.",
+    "partner_must_approve": "Ton ou ta partenaire doit donner son accord.",
+    "approval_expired": "Cette demande a expiré."
   },
   "settings": {
     "title": "Réglages",
@@ -368,7 +374,8 @@
     "incognitoHint": "Seules les personnes que tu likes peuvent voir ton profil.",
     "incognitoOn": "Activer le mode incognito",
     "incognitoOff": "Désactiver le mode incognito",
-    "groups": "Mes groupes"
+    "groups": "Mes groupes",
+    "couple": "Compte de couple"
   },
   "feed": {
     "search": "Recherche",
@@ -391,7 +398,10 @@
     "quotaPremium": "Likes illimités avec Premium.",
     "rewind": "Revenir au profil précédent",
     "boost": "Boost",
-    "passport": "Recherche autour de {{label}}"
+    "passport": "Recherche autour de {{label}}",
+    "asMe": "Moi",
+    "asCouple": "Notre couple",
+    "coupleLikeProposed": "Like proposé : {{name}} doit être d'accord."
   },
   "card": {
     "age": "{{age}} ans",
@@ -410,7 +420,11 @@
     "popularity": {
       "high": "Reçoit beaucoup de likes",
       "low": "Reçoit peu de likes"
-    }
+    },
+    "coupleBadge": "Compte couple",
+    "coupleNames": "{{a}} et {{b}}",
+    "coupleAges": "{{a}} et {{b}} ans",
+    "openRelationship": "En relation ouverte"
   },
   "search": {
     "title": "Préférences de recherche",
@@ -487,7 +501,8 @@
     "menuBlock": "Bloquer",
     "menuUnmatch": "Ne plus matcher",
     "menuClose": "Fermer",
-    "scamTip": "Ne partage jamais d'argent ni de coordonnées bancaires avec un match."
+    "scamTip": "Ne partage jamais d'argent ni de coordonnées bancaires avec un match.",
+    "coupleBanner": "Les deux partenaires voient cette conversation."
   },
   "safety": {
     "reportOrBlock": "Signaler ou bloquer",
@@ -820,5 +835,61 @@
     "block": "Bloquer",
     "blockHint": "Si tu bloques un membre, tu quittes le groupe.",
     "placeholder": "Message au groupe"
+  },
+  "couple": {
+    "title": "Compte de couple",
+    "intro": "Un compte de couple relie vos deux comptes vérifiés à un profil commun. Chacun garde ses likes et ses matchs personnels pour lui.",
+    "invite": "Inviter mon ou ma partenaire",
+    "inviteLinkHint": "Lien valable 7 jours. Ton ou ta partenaire crée son propre compte (âge, selfie, consentements) puis ouvre le lien.",
+    "shareMessage": "Rejoins-moi sur Attractr pour notre compte de couple : {{link}}",
+    "byUsername": "Ou avec son pseudo",
+    "usernamePlaceholder": "Pseudo de ton ou ta partenaire",
+    "send": "Envoyer l'invitation",
+    "sent": "Invitation envoyée.",
+    "requests": "Invitations reçues",
+    "requestFrom": "{{name}} veut créer un compte de couple avec toi",
+    "accept": "Accepter",
+    "refuse": "Refuser",
+    "setupTitle": "Votre profil commun",
+    "checklist": "Avant publication",
+    "checkProfile": "Profil commun rempli",
+    "checkPhoto": "Une photo de vous deux validée par chacun",
+    "checkVerified": "Vos deux selfies vérifiés",
+    "partnerPending": "Selfie de {{name}} en attente",
+    "published": "Votre profil commun est visible.",
+    "kind": "Votre couple",
+    "open": "Couple ouvert",
+    "openHint": "Toutes les boissons selon votre façon d'aimer. Chacun peut garder son profil individuel.",
+    "closed": "Couple fermé",
+    "closedHint": "Bière uniquement : vous cherchez des amis. Vos profils individuels passent aussi en Bière.",
+    "target": "Vous cherchez",
+    "targetPerson": "Une personne",
+    "targetCouple": "Un autre couple",
+    "seeking": "Genres recherchés",
+    "bio": "Bio commune",
+    "save": "Enregistrer",
+    "photos": "Photos de vous deux",
+    "photosHint": "Chaque photo doit être acceptée par vous deux avant d'être visible.",
+    "addPhoto": "Ajouter une photo",
+    "approve": "Accepter cette photo",
+    "reject": "Refuser",
+    "waitingPartner": "en attente de {{name}}",
+    "inModeration": "en vérification",
+    "myProfile": "Mon profil individuel",
+    "hideMine": "Masquer mon profil individuel",
+    "showMine": "Afficher mon profil individuel",
+    "hiddenHint": "En couple ouvert, ton profil individuel affiche « en relation ouverte ».",
+    "likes": "Likes à valider",
+    "likeToApprove": "{{partner}} propose de liker {{name}}",
+    "likeMine": "Tu proposes de liker {{name}} : en attente de {{partner}}",
+    "approveLike": "D'accord",
+    "rejectLike": "Non",
+    "leave": "Quitter le compte de couple",
+    "leaveConfirm": "Le profil commun, ses matchs et ses conversations seront supprimés. Ton compte individuel reste. Continuer ?",
+    "linkTitle": "Invitation de couple",
+    "linkBody": "{{name}} t'invite à créer un compte de couple.",
+    "linkInvalid": "Ce lien n'est plus valable.",
+    "linkDone": "Votre compte de couple est créé.",
+    "finishSignup": "Termine d'abord ton inscription, puis rouvre ce lien."
   }
 }

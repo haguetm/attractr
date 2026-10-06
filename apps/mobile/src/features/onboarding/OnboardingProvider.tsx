@@ -12,10 +12,12 @@ import {
   applicableSteps,
   nextStep,
 } from '@attractr/shared';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { router } from 'expo-router';
 import { createContext, type ReactNode, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { api } from '../../lib/api';
+import { WANTS_COUPLE_KEY } from '../../lib/referral';
 import { useSession } from '../session/SessionProvider';
 import { stepPath } from './routes';
 
@@ -79,6 +81,11 @@ export function OnboardingProvider({ children }: { children: ReactNode }) {
         await api.completeOnboarding();
         await refreshProfile();
         router.replace('/feed');
+        // "Compte de couple" chosen at screen 4: invite the partner now.
+        if ((await AsyncStorage.getItem(WANTS_COUPLE_KEY).catch(() => null)) === '1') {
+          await AsyncStorage.removeItem(WANTS_COUPLE_KEY).catch(() => undefined);
+          router.push('/couple');
+        }
         return;
       }
       router.push(stepPath(next));

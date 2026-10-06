@@ -9,7 +9,7 @@ import { useTranslation } from 'react-i18next';
 import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ProfileCardView } from '../components/ProfileCardView';
-import { Button, ErrorText, Note } from '../components/ui';
+import { Button, Chip, Chips, ErrorText, Note } from '../components/ui';
 import { useSession } from '../features/session/SessionProvider';
 import { api, type Feed, type LikeQuota, type LikeTarget, type ProfileCard } from '../lib/api';
 import { DEV_TOOLS_ENABLED } from '../lib/devTools';
@@ -32,13 +32,20 @@ export default function FeedScreen() {
   const [quota, setQuota] = useState<LikeQuota | null>(null);
   const [unread, setUnread] = useState(0);
   const [loading, setLoading] = useState(true);
+  // Partners of a published couple browse either as themselves or as the couple (spec §6).
+  const [asCouple, setAsCouple] = useState(false);
+  const [couple, setCouple] = useState<{ published: boolean; partner: string } | null>(null);
+  const [proposed, setProposed] = useState<string | null>(null);
   const { busy, error, run, setError } = useSubmit();
 
   const load = useCallback(async () => {
     setLoading(true);
     setError(null);
     try {
-      const [nextFeed, nextQuota, matches] = await Promise.all([api.getFeed(), api.getLikeQuota(), api.getMyMatches()]);
+      const [nextFeed, nextQuota, matches, myCouple] = await Promise.all([
+        api.getFeed(asCouple), api.getLikeQuota(), api.getMyMatches(), api.getMyCouple().catch(() => null),
+      ]);
+      setCouple(myCouple?.couple ? { published: myCouple.couple.status === 'published', partner: myCouple.couple.partner.first_name } : null);
       setFeed(nextFeed);
       setQuota(nextQuota);
       setUnread(matches.reduce((sum, m) => sum + m.unread_count, 0));
@@ -56,7 +63,7 @@ export default function FeedScreen() {
     } finally {
       setLoading(false);
     }
-  }, [setError, refreshProfile]);
+  }, [setError, refreshProfile, asCouple]);
 
   // Reload when coming back from search preferences, a chat or a match.
   useFocusEffect(
@@ -76,7 +83,7 @@ export default function FeedScreen() {
   const pass = () =>
     run(async () => {
       if (!card) return;
-      await api.passProfile(card.id);
+      await api.passProfile(card.id, asCouple);
       setCanRewind(true);
       await next();
     });
@@ -93,6 +100,14 @@ export default function FeedScreen() {
   const like = (target: LikeTarget | null) =>
     run(async () => {
       if (!card || !target) return;
+      if (asCouple) {
+        // A couple's like waits for the other partner's approval.
+        await api.proposeCoupleLike(card.id, target);
+        setProposed(t('feed.coupleLikeProposed', { name: couple?.partner ?? '' }));
+        await next();
+        return;
+      }
+      setProposed(null);
       try {
         const result = await api.likeProfile(card.id, target);
         setQuota(result.quota);
@@ -130,6 +145,13 @@ export default function FeedScreen() {
       ) : null}
 
       <ScrollView contentContainerStyle={styles.content}>
+        {couple?.published ? (
+          <Chips>
+            <Chip label={t('feed.asMe')} selected={!asCouple} onPress={() => setAsCouple(false)} />
+            <Chip label={t('feed.asCouple')} selected={asCouple} onPress={() => setAsCouple(true)} />
+          </Chips>
+        ) : null}
+        {proposed ? <Note>{proposed}</Note> : null}
         {loading ? (
           <ActivityIndicator color={colors.coral} style={styles.loader} />
         ) : card ? (
@@ -144,7 +166,7 @@ export default function FeedScreen() {
             />
             <Pressable
               accessibilityRole="button"
-              onPress={() => router.push({ pathname: '/report/[userId]', params: { userId: card.id, name: card.first_name } })}
+              onPress={() => router.push({ pathname: '/report/[userId]', params: { userId: card.id, name: card.first_name, isCouple: card.is_couple ? '1' : '0' } })}
             >
               <Text style={[font.small, styles.center, styles.reportLink]}>{t('safety.reportOrBlock')}</Text>
             </Pressable>

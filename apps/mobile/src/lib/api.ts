@@ -110,6 +110,10 @@ export interface ProfileCard {
   photos: { id: string; storage_path: string }[];
   /** Premium viewers only (P1): 'high' | 'low', nothing in between. */
   popularity?: 'high' | 'low' | null;
+  is_couple?: boolean;
+  couple?: { first_names: [string, string]; ages: [number, number]; kind: 'open' | 'closed' | null } | null;
+  /** Partner of an open couple: shows "en relation ouverte" (spec §6). */
+  in_open_couple?: boolean;
 }
 
 export interface Feed {
@@ -119,6 +123,28 @@ export interface Feed {
   widened: boolean;
   /** City searched with the Premium passport, if any. */
   passport: string | null;
+  as_couple: boolean;
+}
+
+export type CoupleKind = 'open' | 'closed';
+
+export interface MyCouple {
+  couple: {
+    id: string;
+    status: 'setup' | 'published';
+    kind: CoupleKind | null;
+    seeking_target: ('person' | 'couple')[];
+    name: string;
+    bio: string | null;
+    drinks: Drink[];
+    sensitive: { structure?: Structure; seeking_genders?: Gender[] };
+    partner: { first_name: string; verified: boolean };
+    me_verified: boolean;
+    my_individual_hidden: boolean;
+    photos: { id: string; storage_path: string; partner_approved: boolean; moderation_status: string; needs_my_approval: boolean }[];
+    pending_likes: { id: string; target_first_name: string; mine: boolean; created_at: string }[];
+  } | null;
+  invitations: { id: string; from: string; expires_at: string }[];
 }
 
 export interface LikeReceived extends ProfileCard {
@@ -174,11 +200,15 @@ export interface MatchSummary {
   match_id: string;
   conversation_id: string;
   created_at: string;
+  /** This match belongs to my couple (spec §6). */
+  as_couple: boolean;
+  /** A couple is on one side: both partners see the conversation. */
+  with_couple: boolean;
   matched_drinks: Drink[];
   /** Set while no message has been sent yet (24 h window). */
   first_message_deadline: string | null;
   extensions_left: number;
-  other: { id: string; first_name: string; age: number; verified: boolean; drinks: Drink[]; photo_path: string | null };
+  other: { id: string; first_name: string; age: number; verified: boolean; is_couple: boolean; drinks: Drink[]; photo_path: string | null };
   last_message: { body: string; mine: boolean; created_at: string } | null;
   unread_count: number;
   my_turn: boolean;
@@ -201,7 +231,7 @@ export const REPORT_REASONS = [
   'fake_profile',
   'other',
 ] as const;
-export type ReportReason = (typeof REPORT_REASONS)[number];
+export type ReportReason = (typeof REPORT_REASONS)[number] | 'couple_pressure';
 
 export type SelfieOutcome = 'verified' | 'retake' | 'review';
 export type PhotoOutcome = 'approved' | 'rejected' | 'review' | 'pending';
@@ -392,8 +422,27 @@ export const api = {
     rpc('set_my_orientation', { p_label: label, p_visible: visible }),
   completeOnboarding: () => rpc('complete_onboarding'),
 
-  getFeed: (limit?: number) => rpc<Feed>('get_feed', limit ? { p_limit: limit } : {}),
-  passProfile: (targetId: string) => rpc('pass_profile', { p_target_id: targetId }),
+  getFeed: (asCouple = false, limit?: number) => rpc<Feed>('get_feed', { p_limit: limit ?? null, p_as_couple: asCouple }),
+  passProfile: (targetId: string, asCouple = false) => rpc('pass_profile', { p_target_id: targetId, p_as_couple: asCouple }),
+
+  getMyCouple: () => rpc<MyCouple>('get_my_couple'),
+  createCoupleInvitation: () => rpc<string>('create_couple_invitation'),
+  requestCoupleByUsername: (username: string) => rpc('request_couple_by_username', { p_username: username }),
+  previewCoupleInvitation: (code: string) => rpc<{ first_name: string } | null>('preview_couple_invitation', { p_code: code }),
+  acceptCoupleInvitation: (code: string) => rpc<string>('accept_couple_invitation', { p_code: code }),
+  respondCoupleRequest: (id: string, accept: boolean) => rpc<string | null>('respond_couple_request', { p_invitation_id: id, p_accept: accept }),
+  setCoupleProfile: (p: { kind: CoupleKind; drinks: Drink[]; structure: Structure | null; target: ('person' | 'couple')[]; seeking: Gender[]; bio: string }) =>
+    rpc<'setup' | 'published'>('set_couple_profile', {
+      p_kind: p.kind, p_drinks: p.drinks, p_structure: p.kind === 'closed' ? null : p.structure, p_composition: null,
+      p_seeking_target: p.target, p_seeking_genders: p.seeking.length ? p.seeking : null, p_bio: p.bio,
+    }),
+  setCoupleVisibility: (hidden: boolean) => rpc('set_my_couple_visibility', { p_hidden: hidden }),
+  addCouplePhoto: (path: string) => rpc<string>('add_couple_photo', { p_storage_path: path }),
+  approveCouplePhoto: (photoId: string, approve: boolean) => rpc('approve_couple_photo', { p_photo_id: photoId, p_approve: approve }),
+  proposeCoupleLike: (targetId: string, target: LikeTarget) =>
+    rpc<string | null>('propose_couple_like', { p_target_id: targetId, p_target_kind: target.kind, p_target_ref: target.ref }),
+  decideCoupleLike: (approvalId: string, approve: boolean) => rpc<LikeResult | { matched: false }>('decide_couple_like', { p_approval_id: approvalId, p_approve: approve }),
+  leaveCouple: () => rpc('leave_couple'),
   /** withPremium: also send the Premium filters (refused server-side without Premium). */
   setSearchPreferences: (p: SearchPreferences, withPremium: boolean) =>
     rpc('set_my_search_preferences', {

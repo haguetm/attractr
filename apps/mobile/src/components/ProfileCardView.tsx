@@ -101,10 +101,19 @@ export function ProfileCardView(props: {
       </Pressable>
 
       <View style={styles.body}>
-        <Text style={styles.name}>
-          {card.first_name}, <Text style={styles.age}>{t('card.age', { age: card.age })}</Text>
-        </Text>
+        {card.couple ? (
+          <Text style={styles.name}>
+            {t('card.coupleNames', { a: card.couple.first_names[0], b: card.couple.first_names[1] })},{' '}
+            <Text style={styles.age}>{t('card.coupleAges', { a: card.couple.ages[0], b: card.couple.ages[1] })}</Text>
+          </Text>
+        ) : (
+          <Text style={styles.name}>
+            {card.first_name}, <Text style={styles.age}>{t('card.age', { age: card.age })}</Text>
+          </Text>
+        )}
         <View style={styles.badges}>
+          {card.is_couple ? <Text style={[styles.badge, styles.badgeCouple]}>{t('card.coupleBadge')}</Text> : null}
+          {card.in_open_couple ? <Text style={styles.badge}>{t('card.openRelationship')}</Text> : null}
           {card.verified ? <Text style={[styles.badge, styles.badgeVerified]}>✓ {t('card.verified')}</Text> : null}
           {card.recently_active ? <Text style={[styles.badge, styles.badgeActive]}>● {t('card.recentlyActive')}</Text> : null}
           <Text style={styles.badge}>{t(`card.distance.${card.distance}`)}</Text>
@@ -171,6 +180,7 @@ const styles = StyleSheet.create({
   badgeVerified: { backgroundColor: '#DDF0E4', color: colors.success },
   badgeActive: { backgroundColor: colors.coralSoft, color: colors.coral },
   badgePopularity: { backgroundColor: colors.navy, color: colors.white },
+  badgeCouple: { backgroundColor: colors.coral, color: colors.white },
   beerOnly: { fontSize: 13, color: colors.navy, fontWeight: '600' },
   prompt: { flexDirection: 'row', alignItems: 'center', gap: spacing.sm, paddingVertical: spacing.sm, borderTopWidth: 1, borderTopColor: colors.border },
   promptText: { flex: 1, gap: 2 },

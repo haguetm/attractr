@@ -15,3 +15,6 @@ export const formatTime = (hour: number, minute: number) => `${hour} h ${String(
 
 /** Deep link opened by the friend invitation (expo-router: /friend/[code]). */
 export const friendInviteLink = (code: string) => `attractr://friend/${code}`;
+
+/** Couple invitation link (expo-router: /couple/[code]). */
+export const coupleLink = (code: string) => `attractr://couple/${code}`;

@@ -11,7 +11,9 @@ import { useSubmit } from '../../lib/useSubmit';
 
 export default function ReportScreen() {
   const { t } = useTranslation();
-  const { userId, name, conversationId } = useLocalSearchParams<{ userId: string; name?: string; conversationId?: string }>();
+  const { userId, name, conversationId, isCouple } = useLocalSearchParams<{ userId: string; name?: string; conversationId?: string; isCouple?: string }>();
+  // "Pression exercée sur une troisième personne" only makes sense for a couple (spec §6).
+  const reasons: ReportReason[] = isCouple === '1' ? [...REPORT_REASONS.slice(0, 1), 'couple_pressure', ...REPORT_REASONS.slice(1)] : [...REPORT_REASONS];
   const [reason, setReason] = useState<ReportReason | null>(null);
   const [details, setDetails] = useState('');
   const [alsoBlock, setAlsoBlock] = useState(true);
@@ -47,7 +49,7 @@ export default function ReportScreen() {
       ) : (
         <>
           <Section title={t('report.reason')}>
-            {REPORT_REASONS.map((r) => (
+            {reasons.map((r) => (
               <Choice key={r} label={t(`report.reasons.${r}`)} selected={reason === r} onPress={() => setReason(r)} />
             ))}
             {reason === 'suspected_minor' ? <Note>{t('report.minorNote')}</Note> : null}

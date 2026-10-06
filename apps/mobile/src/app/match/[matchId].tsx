@@ -42,7 +42,7 @@ export default function MatchScreen() {
             <Button
               label={t('safety.reportOrBlock')}
               variant="ghost"
-              onPress={() => router.push({ pathname: '/report/[userId]', params: { userId: card.id, name: card.first_name, conversationId: summary?.conversation_id } })}
+              onPress={() => router.push({ pathname: '/report/[userId]', params: { userId: card.id, name: card.first_name, conversationId: summary?.conversation_id, isCouple: card.is_couple ? '1' : '0' } })}
             />
           ) : null}
           <Button label={isNew ? t('match.later') : t('common.back')} variant="ghost" onPress={() => router.back()} />
