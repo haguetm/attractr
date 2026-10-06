@@ -1,7 +1,7 @@
 -- Group outings (spec §7): inside a match, each side invites its friends, friends get a
 -- card with no profile access, 3 to 8 participants, private feedback afterwards.
 begin;
-select plan(20);
+select plan(21);
 
 -- V and W are matched. F1, F2 are V's friends, G1 is W's friend, X is nobody's friend.
 select tests.create_onboarded_user('3363998370' || n, ('d2000000-0000-4000-8000-00000000000' || n)::uuid) from generate_series(1, 6) n;
@@ -36,6 +36,8 @@ select tests.authenticate_as('d2000000-0000-4000-8000-000000000002');
 select lives_ok($$ select public.invite_to_outing((select id from outing), array['d2000000-0000-4000-8000-000000000005']::uuid[]) $$,
   'W invites his friend');
 select is((public.get_match_outing('d2100000-0000-4000-8000-000000000001') ->> 'participants')::int, 5, 'two matched + three friends');
+select ok(not exists (select 1 from jsonb_array_elements(public.get_match_outing('d2100000-0000-4000-8000-000000000001') -> 'invitations') i
+                      where not (i ->> 'mine')::boolean and i ->> 'friend_id' is not null), 'the other side''s friends are first names only');
 
 -- Outsiders see nothing
 select tests.authenticate_as('d2000000-0000-4000-8000-000000000006');

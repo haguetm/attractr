@@ -522,7 +522,9 @@ begin
     'min_participants', private.config_int('outings.min_participants'),
     'max_participants', private.config_int('outings.max_participants'),
     'invitations', coalesce((
-      select jsonb_agg(jsonb_build_object('first_name', p.first_name, 'response', i.response, 'mine', i.invited_by = uid)
+      -- friend_id only for my own invitations: the other side's friends stay first names.
+      select jsonb_agg(jsonb_build_object('first_name', p.first_name, 'response', i.response, 'mine', i.invited_by = uid,
+                                          'friend_id', case when i.invited_by = uid then i.friend_id end)
                        order by i.invited_at)
       from public.outing_invitations i join public.profiles p on p.id = i.friend_id
       where i.outing_id = o.id), '[]'::jsonb),
