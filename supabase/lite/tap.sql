@@ -117,3 +117,8 @@ end;
 $$;
 
 grant execute on all functions in schema tap to anon, authenticated, service_role;
+
+create function tap.isnt(p_have anyelement, p_want anyelement, p_desc text default null) returns text language sql as $$
+  select tap._result(p_have is distinct from p_want, p_desc, 'have: ' || coalesce(p_have::text, 'NULL') || ' / should differ')
+$$;
+grant execute on function tap.isnt(anyelement, anyelement, text) to anon, authenticated, service_role;
