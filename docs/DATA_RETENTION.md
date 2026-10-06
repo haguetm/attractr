@@ -25,6 +25,7 @@
 | Droits Premium, Boosts, parrainage | `private.entitlements`, `boost_credits`, `boosts`, `private.referrals`, `referral_rewards` | Durée du compte | Proposé |
 | Vues de profil | `private.profile_view_events` | Proposé : 90 jours (statistiques sur 30 jours) | Proposé |
 | Groupes | `groups`, `group_members`, `group_invitations`, `group_votes` | Un groupe vide est fermé ; proposé : suppression 30 jours après la fermeture. Les messages d'un membre sont effacés avec son compte | Proposé |
+| Comptes de couple | `couples`, `couple_invitations`, `couple_like_approvals`, profil commun | Effacés dès qu'un partenaire quitte le couple ou supprime son compte | Proposé |
 | File de modération | `private.moderation_queue` | Proposé : 12 mois après résolution | Proposé |
 | Avertissements | `private.user_warnings` | Durée du compte | Proposé |
 

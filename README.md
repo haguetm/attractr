@@ -141,8 +141,8 @@ Le projet se construit en 11 phases. La V1 est testée en France.
 | 6 | Amis et sorties à plusieurs | ✅ Tests de la base validés sur PGlite |
 | 7 | Abonnement, filtres payants, boosts, parrainage | ✅ Tests de la base validés sur PGlite |
 | 8 | Chats de groupe | ✅ Tests de la base validés sur PGlite |
-| 9 | Comptes de couple | ⏳ Prochaine étape |
-| 10 | Analyse IA du profil | 🔜 |
+| 9 | Comptes de couple | ✅ Tests de la base validés sur PGlite |
+| 10 | Analyse IA du profil | ⏳ Prochaine étape |
 | 11 | Mesure de la rétention et tableaux de suivi | 🔜 |
 
 ---

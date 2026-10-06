@@ -151,3 +151,16 @@ Réponses aux ambiguïtés relevées lors du cadrage. Validées le 2026-10-05. E
 - **Quitter** : le rôle d'admin passe au membre le plus ancien ; un groupe vide est fermé.
 - **Invitation valable 7 jours** (provisoire).
 - **Ce que voit l'invité avant d'entrer** : nom du groupe, type, taille, prénoms, et le profil de la personne qui l'invite (via leur match). **Ce que voient les membres d'un nouveau** : prénom et photo principale.
+
+## Phase 9 (proposées, en attente de validation)
+- **Modèle technique** : le profil commun est un profil à part entière (sans connexion possible), piloté par les deux partenaires, qui gardent leurs comptes individuels vérifiés. Feed, likes, matchs, chat, blocages et effacement fonctionnent ainsi pour les couples.
+- **Invitation** par lien (valable 7 jours) ou par pseudo. Chemin B : le partenaire termine sa propre inscription puis ouvre le lien.
+- **Publication** : profil commun rempli + au moins une photo commune acceptée par les deux et validée par la modération + les deux selfies vérifiés. Toute photo du profil commun demande l'accord de l'autre partenaire (on considère qu'elles montrent les deux).
+- **Couple ouvert** : boissons libres selon la structure (relation ouverte, polyamour ou ouvert à voir). **Couple fermé** : Bière seule pour le couple et pour les deux profils individuels (changement forcé, sans délai de 7 jours).
+- **Compatibilité avec un couple** : une personne seule doit avoir coché « ouvert aux couples » (sauf en Bière, Q8) ; le couple doit chercher « une personne » ou « un autre couple » ; genres recherchés croisés dans les deux sens (un couple = ses deux genres) ; structures compatibles. Pas d'appariement fin des compositions à plusieurs avec les couples (hors périmètre V1, passe par les groupes).
+- **Âge d'un couple** pour les filtres : celui du plus jeune partenaire. Position : celle du partenaire qui a créé le couple.
+- **Feed « Notre couple »** : chaque partenaire peut parcourir le feed au nom du couple ; « passer » ne demande pas d'accord, un like oui (proposition valable 3 jours, provisoire). Le quota de likes du couple est celui d'un compte gratuit (pas d'abonnement couple en V1).
+- **Chat d'un match de couple** : les deux partenaires et la personne y participent, avec le bandeau « Les deux partenaires voient cette conversation » et le prénom de qui écrit.
+- **Quitter** : un seul partenaire, un clic ; le profil commun, ses likes, matchs et conversations sont effacés. La suppression du compte d'un partenaire efface aussi le couple.
+- **Signalement « pression exercée par un couple »** proposé quand la personne signalée est un compte couple.
+- **Hors V1 pour les couples** : sorties à plusieurs et chats de groupe au nom du couple (chaque partenaire peut y participer avec son compte individuel).
