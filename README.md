@@ -136,9 +136,9 @@ Le projet se construit en 11 phases. La V1 est testée en France.
 | 1 | Base de données, authentification, consentements, règles d'accès, données de test, configuration | ✅ Tests de la base validés sur PGlite |
 | 2 | Inscription complète | ✅ Tests de la base validés sur PGlite |
 | 3 | Feed avec compatibilité, mode « tester en tant que » | ✅ Tests de la base validés sur PGlite |
-| 4 | Likes, quota, matchs, chat, notifications | ✅ Écrite, tests de la base validés sur PGlite |
-| 5 | Vérification selfie, contrôle d'âge, modération, blocage, signalements | ⏳ Prochaine étape |
-| 6 | Amis et sorties à plusieurs | 🔜 |
+| 4 | Likes, quota, matchs, chat, notifications | ✅ Tests de la base validés sur PGlite |
+| 5 | Vérification selfie, contrôle d'âge, modération, blocage, signalements | ✅ Tests de la base validés sur PGlite |
+| 6 | Amis et sorties à plusieurs | ⏳ Prochaine étape |
 | 7 | Abonnement, filtres payants, boosts, parrainage | 🔜 |
 | 8 | Chats de groupe | 🔜 |
 | 9 | Comptes de couple | 🔜 |
@@ -188,6 +188,7 @@ Pour se connecter en local, utilise le numéro fictif **06 39 98 00 00** avec le
 - [Décisions validées](docs/DECISIONS.md)
 - [Architecture](docs/ARCHITECTURE.md)
 - [Durées de conservation](docs/DATA_RETENTION.md)
+- [Guide de modération](docs/MODERATION.md)
 
 ---
 

@@ -102,3 +102,16 @@ Réponses aux ambiguïtés relevées lors du cadrage. Validées le 2026-10-05. E
 - **Notifications génériques** : aucun prénom ni contenu de message sur l'écran verrouillé (« Nouveau message — Ouvre Attractr pour le lire »).
 - **Likes reçus en gratuit** : on indique seulement que des personnes ont liké, sans le nombre exact ni les profils (la liste est Premium, phase 7).
 - **Badge d'activité** : il signifie désormais « a répondu dans le chat dans les 72 h » (Q16).
+
+## Phase 5 (proposées, en attente de validation)
+- **Contrôle d'âge** : une estimation sous 18 ans ne ferme jamais le compte automatiquement. Le profil est suspendu (invisible) et passe en revue humaine prioritaire ; seule la décision humaine ferme le compte (évite les faux positifs de l'IA).
+- **Revue humaine aussi** pour : visage déjà utilisé par un autre compte, confiance de l'estimation sous 0,7, écart de plus de 5 ans entre âge déclaré et âge estimé (valeurs provisoires).
+- **Selfie supprimé** dès qu'il est vérifié ou à reprendre ; conservé seulement le temps d'une revue humaine.
+- **Photos** : rejet automatique au-delà de 0,9 (nudité ou violence), revue humaine entre 0,5 et 0,9, sinon acceptée. Les autres ne voient plus que les photos acceptées ; une photo refusée ne compte pas dans le minimum.
+- **Signaler bloque aussi par défaut** (case cochée, décochable) et ferme le match. 10 signalements maximum par jour et par personne.
+- **Sanctions automatiques sur signalement validé** : intention trompeuse (avertissement au 3ᵉ, suspension au 4ᵉ), suspicion de mineur (fermeture), arnaque / harcèlement / faux profil / pression d'un couple (suspension).
+- **Arnaques, règles simples** : liens refusés dans les 3 premiers messages d'une personne dans une conversation ; demandes d'argent (virement, Western Union, cartes cadeaux, crypto…) délivrées mais envoyées en revue.
+- **Blocage des contacts** : les empreintes SHA-256 des numéros sont calculées sur le téléphone, comparées puis oubliées ; la liste des contacts bloqués n'est jamais affichée (cela révélerait qui utilise l'appli).
+- **Mode pause** : invisible dans le feed, matchs et conversations conservés.
+- **Modération en V1 depuis l'éditeur SQL** de Supabase avec des fonctions journalisées (`docs/MODERATION.md`). Un back-office web reste à faire.
+- **Réinscription bloquée** : un numéro dont le compte a été fermé pour minorité ne peut plus s'inscrire pendant la durée de conservation (hash HMAC avec un sel stocké dans Vault).
