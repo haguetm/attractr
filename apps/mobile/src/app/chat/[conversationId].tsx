@@ -9,8 +9,9 @@ import { FlatList, KeyboardAvoidingView, Platform, Pressable, StyleSheet, Text, 
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Button, ErrorText, Note } from '../../components/ui';
 import { useSession } from '../../features/session/SessionProvider';
-import { api, type ChatMessage, type MatchSummary } from '../../lib/api';
+import { api, type ChatMessage, type MatchOuting, type MatchSummary } from '../../lib/api';
 import { errorCode, errorMessage } from '../../lib/errors';
+import { formatDateTime } from '../../lib/format';
 import { supabase } from '../../lib/supabase';
 import { useSubmit } from '../../lib/useSubmit';
 import { colors, font, radius, spacing } from '../../theme';
@@ -22,6 +23,7 @@ export default function ChatScreen() {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [match, setMatch] = useState<MatchSummary | null>(null);
   const [closed, setClosed] = useState(false);
+  const [outing, setOuting] = useState<MatchOuting | null>(null);
   const [draft, setDraft] = useState('');
   const [menu, setMenu] = useState<'closed' | 'open' | 'unmatch' | 'block'>('closed');
   const { busy, error, run } = useSubmit();
@@ -36,6 +38,7 @@ export default function ChatScreen() {
   useEffect(() => {
     void api.getMessages(conversationId).then(setMessages).catch(() => undefined);
     void refreshMatch().catch(() => undefined);
+    void api.getMatchOuting(matchId).then(setOuting).catch(() => undefined);
     void api.markRead(conversationId).catch(() => undefined);
 
     // RLS on messages scopes realtime events to conversations the user belongs to.
@@ -54,7 +57,7 @@ export default function ChatScreen() {
     return () => {
       void supabase.removeChannel(channel);
     };
-  }, [conversationId, refreshMatch]);
+  }, [conversationId, matchId, refreshMatch]);
 
   const send = () =>
     run(async () => {
@@ -139,6 +142,20 @@ export default function ChatScreen() {
         </View>
       ) : null}
 
+      {!closed && !left ? (
+        <Pressable
+          accessibilityRole="button"
+          onPress={() => router.push({ pathname: '/outing/[matchId]', params: { matchId } })}
+          style={styles.outing}
+        >
+          <Text style={styles.outingText}>
+            {outing && outing.status === 'planned'
+              ? t('outing.planned', { date: formatDateTime(outing.starts_at), place: outing.place })
+              : t('outing.propose')}
+          </Text>
+        </Pressable>
+      ) : null}
+
       <KeyboardAvoidingView style={styles.flex} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
         <FlatList
           inverted
@@ -185,6 +202,8 @@ const styles = StyleSheet.create({
   headerLink: { color: colors.navy, fontWeight: '700', fontSize: 15 },
   banner: { margin: spacing.md, padding: spacing.md, borderRadius: radius.md, backgroundColor: colors.coralSoft, gap: spacing.sm },
   list: { padding: spacing.md, gap: spacing.sm },
+  outing: { marginHorizontal: spacing.md, marginTop: spacing.sm, padding: spacing.sm, borderRadius: radius.md, backgroundColor: colors.navySoft },
+  outingText: { color: colors.navy, fontWeight: '600', textAlign: 'center' },
   empty: { textAlign: 'center', marginTop: spacing.xl, transform: [{ scaleY: -1 }] },
   tip: { textAlign: 'center', marginBottom: spacing.md },
   bubble: { maxWidth: '80%', paddingHorizontal: spacing.md, paddingVertical: spacing.sm, borderRadius: radius.lg },

@@ -48,10 +48,16 @@ export async function unregisterForPush(): Promise<void> {
   currentToken = null;
 }
 
-type PushData = { kind?: string; match_id?: string; conversation_id?: string };
+type PushData = { kind?: string; match_id?: string; conversation_id?: string; outing_id?: string };
 
 export function routeForNotification(data: PushData) {
-  if (data.kind === 'new_match' && data.match_id) {
+  if (data.kind === 'friend_request') {
+    router.push('/friends');
+  } else if (data.kind === 'outing_feedback' && data.outing_id) {
+    router.push({ pathname: '/outing/feedback', params: { outingId: data.outing_id } });
+  } else if (data.kind === 'outing_invitation' || data.kind === 'outing_cancelled') {
+    router.push('/outings');
+  } else if (data.kind === 'new_match' && data.match_id) {
     router.push({ pathname: '/match/[matchId]', params: { matchId: data.match_id } });
   } else if (data.conversation_id || data.kind === 'first_message_reminder') {
     router.push('/matches');

@@ -18,13 +18,15 @@ export default function MatchesScreen() {
   const { t } = useTranslation();
   const [matches, setMatches] = useState<MatchSummary[] | null>(null);
   const [likesWaiting, setLikesWaiting] = useState(0);
+  const [outingCards, setOutingCards] = useState(0);
   const [error, setError] = useState<unknown>(null);
 
   const load = useCallback(async () => {
     try {
-      const [list, count] = await Promise.all([api.getMyMatches(), api.getLikesReceivedCount()]);
+      const [list, count, cards] = await Promise.all([api.getMyMatches(), api.getLikesReceivedCount(), api.getMyOutingInvitations()]);
       setMatches(list);
       setLikesWaiting(count);
+      setOutingCards(cards.filter((c) => c.status === 'planned').length);
     } catch (e) {
       setError(e);
     }
@@ -55,6 +57,10 @@ export default function MatchesScreen() {
           <Text style={font.label}>{t('matches.likesReceived')}</Text>
           <Text style={font.small}>{t('matches.likesReceivedHint')}</Text>
         </View>
+      ) : null}
+
+      {outingCards > 0 ? (
+        <Button label={`${t('outings.link')} (${outingCards})`} variant="secondary" onPress={() => router.push('/outings')} />
       ) : null}
 
       {matches === null && !error ? <ActivityIndicator color={colors.coral} /> : null}

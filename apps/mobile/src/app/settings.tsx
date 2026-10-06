@@ -82,6 +82,8 @@ export default function SettingsScreen() {
       {profile?.verification_status === 'pending' ? <Note>{t('settings.pendingVerification')}</Note> : null}
 
       <Button label={t('settings.searchPreferences')} variant="secondary" onPress={() => router.push('/search')} />
+      <Button label={t('settings.friends')} variant="secondary" onPress={() => router.push('/friends')} />
+      <Button label={t('settings.outings')} variant="secondary" onPress={() => router.push('/outings')} />
 
       <Section title={t('settings.pause')}>
         <Note>{paused ? t('settings.paused') : t('settings.pauseHint')}</Note>
