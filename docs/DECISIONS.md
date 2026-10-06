@@ -164,3 +164,13 @@ Réponses aux ambiguïtés relevées lors du cadrage. Validées le 2026-10-05. E
 - **Quitter** : un seul partenaire, un clic ; le profil commun, ses likes, matchs et conversations sont effacés. La suppression du compte d'un partenaire efface aussi le couple.
 - **Signalement « pression exercée par un couple »** proposé quand la personne signalée est un compte couple.
 - **Hors V1 pour les couples** : sorties à plusieurs et chats de groupe au nom du couple (chaque partenaire peut y participer avec son compte individuel).
+
+## Phase 10 (proposées, en attente de validation)
+- **Prestataire IA** : Claude (Anthropic), modèle `claude-opus-5-5` par défaut. Le modèle et le niveau d'effort se changent dans `app_config` (`ai.model`, `ai.effort`) sans redéploiement ; un autre prestataire = une nouvelle implémentation de `ProfileAnalysisProvider`.
+- **Gratuit / Premium** : une seule analyse complète est calculée et mise en cache ; le gratuit voit le conseil principal (et ce que Premium débloque), le Premium voit tout. Passer Premium affiche l'analyse existante sans nouvel appel.
+- **Limite** : une analyse tous les 7 jours (`ai.analysis_interval_days`, provisoire), pour tous. Un échec (prestataire, contrôle de sortie) ne compte pas.
+- **Ce qui est envoyé** : jusqu'à 6 photos validées par la modération (`ai.max_photos`, provisoire), la bio, les réponses écrites et la boisson. Jamais le prénom, l'âge, le genre, la position ni les données sensibles.
+- **Contrôle de sortie** : forme de la réponse vérifiée (chaque photo une fois, ordre complet, longueurs) et liste de termes interdits (beauté, corps, peau, âge, origine, orientation, santé, religion), sans accents ni majuscules. Une réponse rejetée est redemandée une fois, puis l'analyse échoue. **Exception** : la bio réécrite et les clichés cités peuvent reprendre un mot que la personne a écrit elle-même (ex. « croyante ») ; tout mot ajouté par l'IA est rejeté.
+- **Rien ne change sans l'utilisateur** : la bio proposée est modifiable puis enregistrée par un bouton ; l'ordre conseillé s'applique par un bouton.
+- **Conservation** : seule la dernière analyse est gardée ; effacée au retrait du consentement. Un consentement retiré pendant l'analyse fait jeter le résultat.
+- **À faire avant la production** : demander la zéro rétention de données à Anthropic, l'ajouter au contrat de sous-traitance et à l'analyse d'impact RGPD (transfert hors UE possible).

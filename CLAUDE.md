@@ -54,7 +54,10 @@ Node 22 + npm workspaces. The local stack needs Docker (not available on the wor
 
 ## Moderation
 - Review queue and moderator functions: see docs/MODERATION.md (SQL editor, every call logged in private.access_log).
-- Dev: `providers.mock_selfie_outcome` / `providers.mock_photo_outcome` in app_config simulate each provider outcome.
+- Dev: `providers.mock_selfie_outcome` / `providers.mock_photo_outcome` / `providers.mock_ai_outcome` in app_config simulate each provider outcome.
+
+## AI analysis
+- `analyze-profile` Edge Function → `ProfileAnalysisProvider` (Claude by default, model in app_config `ai.model`), output guard in `_shared/providers/ai/guard.ts`. Secret: ANTHROPIC_API_KEY.
 
 ## SQL conventions
 - `set search_path = ''` and fully qualified names in every function.

@@ -256,7 +256,7 @@
     "onboarding_incomplete_location": "Indique où tu es.",
     "storage_cleanup_failed": "La suppression a échoué. Réessaie dans un instant.",
     "deletion_failed": "La suppression a échoué. Réessaie dans un instant.",
-    "profile_not_active": "Termine ton inscription pour voir des profils.",
+    "profile_not_active": "Ton profil doit être actif pour cette action.",
     "location_required": "Indique ta position pour voir des profils.",
     "cannot_swipe_self": "Action impossible.",
     "invalid_radius": "Choisis une distance valide.",
@@ -337,7 +337,11 @@
     "couple_not_published": "Votre profil commun n'est pas encore publié.",
     "approval_not_found": "Cette demande n'existe plus.",
     "partner_must_approve": "Ton ou ta partenaire doit donner son accord.",
-    "approval_expired": "Cette demande a expiré."
+    "approval_expired": "Cette demande a expiré.",
+    "ai_consent_required": "Donne ton accord à l'analyse IA pour continuer.",
+    "ai_analysis_rate_limited": "Tu as déjà fait ton analyse cette semaine. Reviens à la date indiquée.",
+    "ai_analysis_no_photo": "Ajoute au moins une photo validée avant de lancer l'analyse.",
+    "ai_analysis_failed": "L'analyse n'a pas pu aboutir. Réessaie un peu plus tard : elle ne t'a pas été décomptée."
   },
   "settings": {
     "title": "Réglages",
@@ -375,7 +379,8 @@
     "incognitoOn": "Activer le mode incognito",
     "incognitoOff": "Désactiver le mode incognito",
     "groups": "Mes groupes",
-    "couple": "Compte de couple"
+    "couple": "Compte de couple",
+    "aiAnalysis": "Analyse IA de mon profil"
   },
   "feed": {
     "search": "Recherche",
@@ -891,5 +896,34 @@
     "linkInvalid": "Ce lien n'est plus valable.",
     "linkDone": "Votre compte de couple est créé.",
     "finishSignup": "Termine d'abord ton inscription, puis rouvre ce lien."
+  },
+  "ai": {
+    "title": "Analyse IA du profil",
+    "subtitle": "Des conseils concrets sur tes photos et ta bio. Une analyse par semaine.",
+    "consentIntro": "Pour t'aider, tes photos validées, ta bio, tes réponses et ta boisson sont envoyées à notre prestataire d'IA. Ton prénom, ton âge et tes données sensibles ne sont jamais envoyés.",
+    "consentItems": "• Aucun entraînement sur tes photos.\n• Rien n'est conservé chez le prestataire après l'analyse.\n• Tu peux retirer ton accord à tout moment : tes analyses sont alors effacées.",
+    "consentRules": "L'IA ne note jamais ton physique et ne commente ni ton corps, ni ta peau, ni ton âge, ni tes origines. Elle ne parle que de la photo (lumière, cadrage, variété) et de tes textes.",
+    "consentAccept": "J'accepte l'analyse IA",
+    "run": "Lancer l'analyse",
+    "runAgain": "Lancer une nouvelle analyse",
+    "running": "Analyse en cours…",
+    "nextAt": "Prochaine analyse possible le {{date}}.",
+    "doneAt": "Analyse du {{date}}",
+    "topTip": "Le conseil principal",
+    "lockedTitle": "L'analyse complète avec Premium",
+    "lockedBody_one": "Avec Premium, découvre les conseils pour ta photo, l'ordre conseillé et une bio réécrite dans ton ton.",
+    "lockedBody_other": "Avec Premium, découvre les conseils pour tes {{count}} photos, l'ordre conseillé et une bio réécrite dans ton ton.",
+    "goPremium": "Découvrir Premium",
+    "photos": "Tes photos, dans l'ordre conseillé",
+    "position": "Position {{n}}",
+    "applyOrder": "Appliquer cet ordre",
+    "orderApplied": "L'ordre de tes photos a été mis à jour.",
+    "bio": "Ta bio",
+    "cliches": "Expressions vues souvent : {{list}}",
+    "rewrite": "Proposition de bio",
+    "rewriteHint": "Modifie-la comme tu veux avant de l'enregistrer.",
+    "saveBio": "Enregistrer cette bio",
+    "bioSaved": "Ta bio a été mise à jour.",
+    "withdraw": "Retirer mon accord et effacer mes analyses"
   }
 }

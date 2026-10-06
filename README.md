@@ -84,6 +84,7 @@ Attractr reprend ce qui fonctionne dans les applis de rencontre et écarte ce qu
 - Pour la bio : repérage des clichés et réécriture proposée **dans ton ton**.
 - **Jamais** de note de beauté, de commentaire sur le corps, l'âge ou l'origine, ni de déduction sur l'orientation, la santé ou la religion. Une vérification automatique rejette toute réponse qui ne respecte pas ces règles.
 - Consentement séparé, aucun entraînement sur tes photos, suppression après l'analyse.
+- Une analyse par semaine. Gratuit : le conseil principal. Premium : l'analyse complète. Tu valides ou modifies la bio proposée et l'ordre des photos avant tout changement.
 
 ### Le parrainage
 - **Parrain abonné** : 1 mois offert par filleul validé, jusqu'à 6 mois par an. Le filleul reçoit aussi 1 mois de Premium.
@@ -142,8 +143,8 @@ Le projet se construit en 11 phases. La V1 est testée en France.
 | 7 | Abonnement, filtres payants, boosts, parrainage | ✅ Tests de la base validés sur PGlite |
 | 8 | Chats de groupe | ✅ Tests de la base validés sur PGlite |
 | 9 | Comptes de couple | ✅ Tests de la base validés sur PGlite |
-| 10 | Analyse IA du profil | ⏳ Prochaine étape |
-| 11 | Mesure de la rétention et tableaux de suivi | 🔜 |
+| 10 | Analyse IA du profil | ✅ |
+| 11 | Mesure de la rétention et tableaux de suivi | ⏳ Prochaine étape |
 
 ---
 

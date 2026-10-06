@@ -135,6 +135,8 @@ begin
   update private.ai_analyses
      set status = 'completed', model = p_model, result = p_result, completed_at = now()
    where id = a.id;
+  -- Only the latest analysis is kept.
+  delete from private.ai_analyses where user_id = a.user_id and id <> a.id and status = 'completed';
   return true;
 end;
 $$;

@@ -38,6 +38,7 @@ export interface MyProfile {
   birth_date: string | null;
   gender: Gender | null;
   gender_detail: string | null;
+  bio?: string | null;
   verification_status: 'unverified' | 'pending' | 'verified' | 'rejected';
   verification_in_review: boolean;
   warnings: number;
@@ -64,6 +65,22 @@ export interface MyProfile {
     structure?: Structure;
     orientation?: string;
     orientation_visible?: boolean;
+  };
+}
+
+export interface AiAnalysisState {
+  consent: boolean;
+  premium: boolean;
+  running: boolean;
+  next_available_at: string | null;
+  analysis: null | {
+    completed_at: string;
+    top_tip: string;
+    photos?: { photo_id: string; strength: string; improvement: string }[];
+    photo_order?: string[];
+    bio?: { cliches: string[]; rewrite: string; drink_fit: string };
+    /** Free users: what Premium unlocks. */
+    locked?: { photos: number; has_bio_rewrite: boolean };
   };
 }
 
@@ -416,6 +433,12 @@ export const api = {
   setPrompts: (prompts: { question_code: string; answer: string }[]) => rpc('set_my_prompts', { p_prompts: prompts }),
   addPhoto: (path: string) => rpc<string>('add_my_photo', { p_storage_path: path }),
   removePhoto: (id: string) => rpc<string>('remove_my_photo', { p_photo_id: id }),
+  async setBio(bio: string, userId: string) {
+    const { error } = await supabase.from('profiles').update({ bio: bio.trim() || null }).eq('id', userId);
+    if (error) throw new AppError(errorCode(error));
+  },
+  getAiAnalysis: () => rpc<AiAnalysisState>('get_my_ai_analysis'),
+  runAiAnalysis: () => invoke<{ status: 'completed' }>('analyze-profile', {}),
   reorderPhotos: (ids: string[]) => rpc('reorder_my_photos', { p_photo_ids: ids }),
   submitSelfie: (path: string) => rpc('submit_my_selfie', { p_storage_path: path }),
   setOrientation: (label: string | null, visible: boolean) =>

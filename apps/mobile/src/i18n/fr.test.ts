@@ -20,7 +20,8 @@ const functions = read('supabase/functions', (f) => f.endsWith('.ts') && !f.ends
 const matches = (text: string, re: RegExp) => [...new Set([...text.matchAll(re)].map((m) => m[1]!))];
 
 // Codes that only signal server misconfiguration; the app shows the generic message.
-const INTERNAL = new Set(['sensitive_key_missing', 'method_not_allowed']);
+// Raised only by service functions called from Edge Functions, never shown in the app.
+const INTERNAL = new Set(['sensitive_key_missing', 'method_not_allowed', 'ai_analysis_not_found', 'ai_result_invalid']);
 
 describe('fr.json', () => {
   it('translates every error raised by the database', () => {

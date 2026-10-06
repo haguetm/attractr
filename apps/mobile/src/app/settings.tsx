@@ -84,6 +84,7 @@ export default function SettingsScreen() {
       <Button label={t('settings.premium')} onPress={() => router.push('/premium')} />
       <Button label={t('settings.searchPreferences')} variant="secondary" onPress={() => router.push('/search')} />
       <Button label={t('settings.details')} variant="secondary" onPress={() => router.push('/profile-details')} />
+      <Button label={t('settings.aiAnalysis')} variant="secondary" onPress={() => router.push('/ai-analysis')} />
       <Button label={t('settings.referral')} variant="secondary" onPress={() => router.push('/referral')} />
       {profile?.premium.active ? (
         <Button label={t('settings.stats')} variant="secondary" onPress={() => router.push('/stats')} />

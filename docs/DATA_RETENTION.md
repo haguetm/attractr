@@ -12,8 +12,8 @@
 | Compte mineur fermé | empreinte de visage (prestataire) + hash du téléphone | `compliance.minor_trace_retention_days` (365 j par défaut) pour empêcher la réinscription | DECISIONS Q22, à valider |
 | Selfie de vérification | Storage `selfies` | Supprimé dès la vérification automatique, ou après la décision humaine s'il part en revue ; le résultat (âge estimé, confiance) est conservé avec la soumission | Proposé |
 | Référence de visage | `private.face_templates` | Durée du compte (règle un visage = un compte) ; référence opaque du prestataire, jamais d'image | Proposé, biométrie : validation juridique requise |
-| Photos envoyées à l'analyse IA | prestataire IA | Supprimées après analyse, sans entraînement | Spec §11 |
-| Résultat d'analyse IA | `ai_analyses` | Cache d'une semaine ; effacé au retrait du consentement | Spec §11 (phase 10) |
+| Photos envoyées à l'analyse IA | prestataire IA | Envoyées dans la requête (jamais via un stockage de fichiers du prestataire), gardées en mémoire par l'Edge Function le temps de l'appel ; pas d'entraînement sur les données d'API. Option « zéro rétention » à demander au prestataire avant la production | Spec §11 |
+| Résultat d'analyse IA | `private.ai_analyses` | Seule la dernière analyse est gardée (texte, ids de photos, aucune image) ; effacée au retrait du consentement ou avec le compte | Spec §11, proposé |
 | Messages | `messages` | Tant que le match existe ; effacés avec le compte de l'un ou l'autre (cascade). Durée après un match expiré ou annulé : proposé 12 mois pour les besoins de modération, à valider | Proposé |
 | Likes et « passer » | `swipes` | Durée du compte ; les « passer » ne sont plus utilisés après `feed.pass_recycle_days` | Proposé |
 | Notifications envoyées | `private.notification_outbox` | Proposé : 30 jours puis purge | Proposé |
