@@ -142,3 +142,12 @@ Réponses aux ambiguïtés relevées lors du cadrage. Validées le 2026-10-05. E
 - **Boost** : en tête de la zone (avant les personnes actives récemment), un à la fois, vues comptées une fois par personne et par jour. Boost mensuel Premium : le 1er de chaque mois (job quotidien).
 - **Popularité** : calcul quotidien par département et boisson principale ; groupes de moins de 5 profils sans indicateur ; « beaucoup » = au-dessus du 80ᵉ centile, « peu » = sous le 20ᵉ.
 - **Détails de profil** (études, taille, 5 centres d'intérêt max) : facultatifs, pour tout le monde ; seul le filtre est Premium.
+
+## Phase 8 (proposées, en attente de validation)
+- **Groupe romantique** : n'importe quel membre invite une personne qui a un match actif avec **tous** les membres ; elle accepte et entre (pas de vote : chacun a déjà matché avec elle). La règle est revérifiée au moment d'entrer (un match terminé entre-temps annule l'invitation).
+- **Groupe de potes** : n'importe quel membre invite un de ses matchs Bière ; le vote de l'invitant compte. Majorité stricte des membres, ou l'admin seul selon le mode choisi à la création (Q18). Le refus est acquis dès que la moitié des membres a voté contre.
+- **Un groupe se crée seul** puis on invite (pas de membres initiaux). Créateur Premium, avec la Bière pour un groupe de potes, une boisson romantique pour un groupe romantique.
+- **Si le créateur n'est plus Premium** : la conversation continue, mais plus aucune nouvelle invitation (`groups.creator_only_premium`, provisoire).
+- **Quitter** : le rôle d'admin passe au membre le plus ancien ; un groupe vide est fermé.
+- **Invitation valable 7 jours** (provisoire).
+- **Ce que voit l'invité avant d'entrer** : nom du groupe, type, taille, prénoms, et le profil de la personne qui l'invite (via leur match). **Ce que voient les membres d'un nouveau** : prénom et photo principale.
