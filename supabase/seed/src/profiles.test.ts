@@ -1,4 +1,4 @@
-import { validateIntent } from '@attractr/shared';
+import { GENDERS, isCompatible, validateIntent } from '@attractr/shared';
 import { describe, expect, it } from 'vitest';
 import { CITIES, buildProfiles } from './profiles';
 
@@ -59,6 +59,35 @@ describe('seed coverage (spec §13)', () => {
       for (const pr of p.prompts) expect(pr.answer.length).toBeLessThanOrEqual(150);
       expect((p.bio ?? '').length).toBeLessThanOrEqual(300);
       expect(p.firstName.length).toBeLessThanOrEqual(40);
+    }
+  });
+});
+
+describe('seed feeds are not empty (phase 3)', () => {
+  const asMatch = (p: (typeof profiles)[number]) => ({
+    gender: p.gender,
+    drinks: p.drinks,
+    seekingGenders: p.seekingGenders,
+    friendGenders: [...GENDERS],
+    structure: p.structure,
+    composition: p.composition,
+  });
+
+  it('almost every profile has at least one compatible profile', () => {
+    const lonely = profiles.filter((a) => !profiles.some((b) => a !== b && isCompatible(asMatch(a), asMatch(b))));
+    expect(lonely.length).toBeLessThanOrEqual(5);
+  });
+
+  it('has compatible pairs inside the same city, for the default radius', () => {
+    const pairs = profiles.filter((a) =>
+      profiles.some((b) => a !== b && a.city === b.city && isCompatible(asMatch(a), asMatch(b))));
+    expect(pairs.length).toBeGreaterThanOrEqual(40);
+  });
+
+  it('stores areas and a reserved test email for impersonation', () => {
+    for (const p of profiles) {
+      expect(p.email).toMatch(/^seed-\d{3}@attractr\.test$/);
+      expect(p.departmentCode).toMatch(/^\d{2}$/);
     }
   });
 });

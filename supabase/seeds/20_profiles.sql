@@ -2,17 +2,19 @@
 -- 100 fictional profiles, fictional phone numbers, no photos (initials avatars).
 
 -- Thomas, Paris
-insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, raw_app_meta_data, raw_user_meta_data,
+insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, email, email_confirmed_at, raw_app_meta_data, raw_user_meta_data,
   created_at, updated_at, confirmation_token, recovery_token, email_change_token_new, email_change,
   phone_change, phone_change_token, email_change_token_current, reauthentication_token)
-values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000001', 'authenticated', 'authenticated', '33639981000', now(),
-  '{"provider":"phone","providers":["phone"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
+values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000001', 'authenticated', 'authenticated', '33639981000', now(), 'seed-001@attractr.test', now(),
+  '{"provider":"phone","providers":["phone","email"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
 insert into auth.identities (provider_id, user_id, identity_data, provider, created_at, updated_at)
-values ('00000000-0000-4000-8000-000000000001', '00000000-0000-4000-8000-000000000001', '{"sub":"00000000-0000-4000-8000-000000000001","phone":"33639981000"}', 'phone', now(), now());
+values ('00000000-0000-4000-8000-000000000001', '00000000-0000-4000-8000-000000000001', '{"sub":"00000000-0000-4000-8000-000000000001","phone":"33639981000"}', 'phone', now(), now()),
+  ('00000000-0000-4000-8000-000000000001', '00000000-0000-4000-8000-000000000001', '{"sub":"00000000-0000-4000-8000-000000000001","email":"seed-001@attractr.test","email_verified":true}', 'email', now(), now());
 update public.profiles set first_name = 'Thomas', birth_date = '1995-03-07', gender = 'man',
   bio = 'Je cuisine mieux que je ne danse.', open_to_couples = false, alcohol_free_icons = true,
   verification_status = 'verified', verified_at = now(),
   location = private.snap_point(48.858598, 2.271017), location_source = 'device', country_code = 'FR',
+  department_code = '75', region_code = '11',
   last_active_at = now() - interval '231 hours', is_seed = true, status = 'active'
 where id = '00000000-0000-4000-8000-000000000001';
 insert into public.consents (user_id, type, version) values
@@ -27,17 +29,19 @@ insert into public.profile_prompts (user_id, position, question_code, answer) va
   ('00000000-0000-4000-8000-000000000001', 3, 'ideal_first_date', 'Une balade et une glace.');
 
 -- Martin, Marseille
-insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, raw_app_meta_data, raw_user_meta_data,
+insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, email, email_confirmed_at, raw_app_meta_data, raw_user_meta_data,
   created_at, updated_at, confirmation_token, recovery_token, email_change_token_new, email_change,
   phone_change, phone_change_token, email_change_token_current, reauthentication_token)
-values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000002', 'authenticated', 'authenticated', '33639981001', now(),
-  '{"provider":"phone","providers":["phone"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
+values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000002', 'authenticated', 'authenticated', '33639981001', now(), 'seed-002@attractr.test', now(),
+  '{"provider":"phone","providers":["phone","email"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
 insert into auth.identities (provider_id, user_id, identity_data, provider, created_at, updated_at)
-values ('00000000-0000-4000-8000-000000000002', '00000000-0000-4000-8000-000000000002', '{"sub":"00000000-0000-4000-8000-000000000002","phone":"33639981001"}', 'phone', now(), now());
+values ('00000000-0000-4000-8000-000000000002', '00000000-0000-4000-8000-000000000002', '{"sub":"00000000-0000-4000-8000-000000000002","phone":"33639981001"}', 'phone', now(), now()),
+  ('00000000-0000-4000-8000-000000000002', '00000000-0000-4000-8000-000000000002', '{"sub":"00000000-0000-4000-8000-000000000002","email":"seed-002@attractr.test","email_verified":true}', 'email', now(), now());
 update public.profiles set first_name = 'Martin', birth_date = '1975-11-23', gender = 'man',
   bio = null, open_to_couples = true, alcohol_free_icons = false,
   verification_status = 'pending', verified_at = null,
   location = private.snap_point(43.306296, 5.364455), location_source = 'device', country_code = 'FR',
+  department_code = '13', region_code = '93',
   last_active_at = now() - interval '165 hours', is_seed = true, status = 'active'
 where id = '00000000-0000-4000-8000-000000000002';
 insert into public.consents (user_id, type, version) values
@@ -52,17 +56,19 @@ insert into public.profile_prompts (user_id, position, question_code, answer) va
   ('00000000-0000-4000-8000-000000000002', 3, 'currently_learning', 'La guitare, lentement.');
 
 -- Alice, Lyon
-insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, raw_app_meta_data, raw_user_meta_data,
+insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, email, email_confirmed_at, raw_app_meta_data, raw_user_meta_data,
   created_at, updated_at, confirmation_token, recovery_token, email_change_token_new, email_change,
   phone_change, phone_change_token, email_change_token_current, reauthentication_token)
-values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000003', 'authenticated', 'authenticated', '33639981002', now(),
-  '{"provider":"phone","providers":["phone"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
+values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000003', 'authenticated', 'authenticated', '33639981002', now(), 'seed-003@attractr.test', now(),
+  '{"provider":"phone","providers":["phone","email"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
 insert into auth.identities (provider_id, user_id, identity_data, provider, created_at, updated_at)
-values ('00000000-0000-4000-8000-000000000003', '00000000-0000-4000-8000-000000000003', '{"sub":"00000000-0000-4000-8000-000000000003","phone":"33639981002"}', 'phone', now(), now());
+values ('00000000-0000-4000-8000-000000000003', '00000000-0000-4000-8000-000000000003', '{"sub":"00000000-0000-4000-8000-000000000003","phone":"33639981002"}', 'phone', now(), now()),
+  ('00000000-0000-4000-8000-000000000003', '00000000-0000-4000-8000-000000000003', '{"sub":"00000000-0000-4000-8000-000000000003","email":"seed-003@attractr.test","email_verified":true}', 'email', now(), now());
 update public.profiles set first_name = 'Alice', birth_date = '2000-06-02', gender = 'woman',
   bio = null, open_to_couples = false, alcohol_free_icons = false,
   verification_status = 'verified', verified_at = now(),
   location = private.snap_point(45.809805, 4.824607), location_source = 'device', country_code = 'FR',
+  department_code = '69', region_code = '84',
   last_active_at = now() - interval '53 hours', is_seed = true, status = 'active'
 where id = '00000000-0000-4000-8000-000000000003';
 insert into public.consents (user_id, type, version) values
@@ -77,17 +83,19 @@ insert into public.profile_prompts (user_id, position, question_code, answer) va
   ('00000000-0000-4000-8000-000000000003', 3, 'unpopular_opinion', 'Les séries sont trop longues.');
 
 -- Nora, Toulouse
-insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, raw_app_meta_data, raw_user_meta_data,
+insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, email, email_confirmed_at, raw_app_meta_data, raw_user_meta_data,
   created_at, updated_at, confirmation_token, recovery_token, email_change_token_new, email_change,
   phone_change, phone_change_token, email_change_token_current, reauthentication_token)
-values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000004', 'authenticated', 'authenticated', '33639981003', now(),
-  '{"provider":"phone","providers":["phone"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
+values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000004', 'authenticated', 'authenticated', '33639981003', now(), 'seed-004@attractr.test', now(),
+  '{"provider":"phone","providers":["phone","email"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
 insert into auth.identities (provider_id, user_id, identity_data, provider, created_at, updated_at)
-values ('00000000-0000-4000-8000-000000000004', '00000000-0000-4000-8000-000000000004', '{"sub":"00000000-0000-4000-8000-000000000004","phone":"33639981003"}', 'phone', now(), now());
+values ('00000000-0000-4000-8000-000000000004', '00000000-0000-4000-8000-000000000004', '{"sub":"00000000-0000-4000-8000-000000000004","phone":"33639981003"}', 'phone', now(), now()),
+  ('00000000-0000-4000-8000-000000000004', '00000000-0000-4000-8000-000000000004', '{"sub":"00000000-0000-4000-8000-000000000004","email":"seed-004@attractr.test","email_verified":true}', 'email', now(), now());
 update public.profiles set first_name = 'Nora', birth_date = '1990-09-11', gender = 'woman',
   bio = null, open_to_couples = false, alcohol_free_icons = false,
   verification_status = 'verified', verified_at = now(),
   location = private.snap_point(43.647763, 1.488662), location_source = 'device', country_code = 'FR',
+  department_code = '31', region_code = '76',
   last_active_at = now() - interval '38 hours', is_seed = true, status = 'active'
 where id = '00000000-0000-4000-8000-000000000004';
 insert into public.consents (user_id, type, version) values
@@ -102,17 +110,19 @@ insert into public.profile_prompts (user_id, position, question_code, answer) va
   ('00000000-0000-4000-8000-000000000004', 3, 'perfect_sunday', 'Une rando et un bon repas.');
 
 -- Jade, Nice
-insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, raw_app_meta_data, raw_user_meta_data,
+insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, email, email_confirmed_at, raw_app_meta_data, raw_user_meta_data,
   created_at, updated_at, confirmation_token, recovery_token, email_change_token_new, email_change,
   phone_change, phone_change_token, email_change_token_current, reauthentication_token)
-values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000005', 'authenticated', 'authenticated', '33639981004', now(),
-  '{"provider":"phone","providers":["phone"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
+values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000005', 'authenticated', 'authenticated', '33639981004', now(), 'seed-005@attractr.test', now(),
+  '{"provider":"phone","providers":["phone","email"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
 insert into auth.identities (provider_id, user_id, identity_data, provider, created_at, updated_at)
-values ('00000000-0000-4000-8000-000000000005', '00000000-0000-4000-8000-000000000005', '{"sub":"00000000-0000-4000-8000-000000000005","phone":"33639981004"}', 'phone', now(), now());
+values ('00000000-0000-4000-8000-000000000005', '00000000-0000-4000-8000-000000000005', '{"sub":"00000000-0000-4000-8000-000000000005","phone":"33639981004"}', 'phone', now(), now()),
+  ('00000000-0000-4000-8000-000000000005', '00000000-0000-4000-8000-000000000005', '{"sub":"00000000-0000-4000-8000-000000000005","email":"seed-005@attractr.test","email_verified":true}', 'email', now(), now());
 update public.profiles set first_name = 'Jade', birth_date = '1977-07-21', gender = 'woman',
   bio = 'Je cuisine mieux que je ne danse.', open_to_couples = false, alcohol_free_icons = false,
   verification_status = 'verified', verified_at = now(),
   location = private.snap_point(43.71445, 7.269948), location_source = 'device', country_code = 'FR',
+  department_code = '06', region_code = '93',
   last_active_at = now() - interval '224 hours', is_seed = true, status = 'active'
 where id = '00000000-0000-4000-8000-000000000005';
 insert into public.consents (user_id, type, version) values
@@ -127,17 +137,19 @@ insert into public.profile_prompts (user_id, position, question_code, answer) va
   ('00000000-0000-4000-8000-000000000005', 3, 'never_without', 'Mon vélo.');
 
 -- Baptiste, Nantes
-insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, raw_app_meta_data, raw_user_meta_data,
+insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, email, email_confirmed_at, raw_app_meta_data, raw_user_meta_data,
   created_at, updated_at, confirmation_token, recovery_token, email_change_token_new, email_change,
   phone_change, phone_change_token, email_change_token_current, reauthentication_token)
-values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000006', 'authenticated', 'authenticated', '33639981005', now(),
-  '{"provider":"phone","providers":["phone"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
+values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000006', 'authenticated', 'authenticated', '33639981005', now(), 'seed-006@attractr.test', now(),
+  '{"provider":"phone","providers":["phone","email"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
 insert into auth.identities (provider_id, user_id, identity_data, provider, created_at, updated_at)
-values ('00000000-0000-4000-8000-000000000006', '00000000-0000-4000-8000-000000000006', '{"sub":"00000000-0000-4000-8000-000000000006","phone":"33639981005"}', 'phone', now(), now());
+values ('00000000-0000-4000-8000-000000000006', '00000000-0000-4000-8000-000000000006', '{"sub":"00000000-0000-4000-8000-000000000006","phone":"33639981005"}', 'phone', now(), now()),
+  ('00000000-0000-4000-8000-000000000006', '00000000-0000-4000-8000-000000000006', '{"sub":"00000000-0000-4000-8000-000000000006","email":"seed-006@attractr.test","email_verified":true}', 'email', now(), now());
 update public.profiles set first_name = 'Baptiste', birth_date = '1971-11-17', gender = 'man',
   bio = 'Fan de randonnée et de jeux de société.', open_to_couples = true, alcohol_free_icons = false,
   verification_status = 'pending', verified_at = null,
   location = private.snap_point(47.193676, -1.559906), location_source = 'device', country_code = 'FR',
+  department_code = '44', region_code = '52',
   last_active_at = now() - interval '132 hours', is_seed = true, status = 'active'
 where id = '00000000-0000-4000-8000-000000000006';
 insert into public.consents (user_id, type, version) values
@@ -152,17 +164,19 @@ insert into public.profile_prompts (user_id, position, question_code, answer) va
   ('00000000-0000-4000-8000-000000000006', 3, 'simple_pleasure', 'Le pain chaud.');
 
 -- Margaux, Montpellier
-insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, raw_app_meta_data, raw_user_meta_data,
+insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, email, email_confirmed_at, raw_app_meta_data, raw_user_meta_data,
   created_at, updated_at, confirmation_token, recovery_token, email_change_token_new, email_change,
   phone_change, phone_change_token, email_change_token_current, reauthentication_token)
-values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000007', 'authenticated', 'authenticated', '33639981006', now(),
-  '{"provider":"phone","providers":["phone"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
+values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000007', 'authenticated', 'authenticated', '33639981006', now(), 'seed-007@attractr.test', now(),
+  '{"provider":"phone","providers":["phone","email"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
 insert into auth.identities (provider_id, user_id, identity_data, provider, created_at, updated_at)
-values ('00000000-0000-4000-8000-000000000007', '00000000-0000-4000-8000-000000000007', '{"sub":"00000000-0000-4000-8000-000000000007","phone":"33639981006"}', 'phone', now(), now());
+values ('00000000-0000-4000-8000-000000000007', '00000000-0000-4000-8000-000000000007', '{"sub":"00000000-0000-4000-8000-000000000007","phone":"33639981006"}', 'phone', now(), now()),
+  ('00000000-0000-4000-8000-000000000007', '00000000-0000-4000-8000-000000000007', '{"sub":"00000000-0000-4000-8000-000000000007","email":"seed-007@attractr.test","email_verified":true}', 'email', now(), now());
 update public.profiles set first_name = 'Margaux', birth_date = '2005-07-17', gender = 'woman',
   bio = null, open_to_couples = true, alcohol_free_icons = false,
   verification_status = 'verified', verified_at = now(),
   location = private.snap_point(43.630356, 3.807558), location_source = 'device', country_code = 'FR',
+  department_code = '34', region_code = '76',
   last_active_at = now() - interval '188 hours', is_seed = true, status = 'active'
 where id = '00000000-0000-4000-8000-000000000007';
 insert into public.consents (user_id, type, version) values
@@ -177,17 +191,19 @@ insert into public.profile_prompts (user_id, position, question_code, answer) va
   ('00000000-0000-4000-8000-000000000007', 3, 'never_without', 'Un livre dans le sac.');
 
 -- Alex, Strasbourg
-insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, raw_app_meta_data, raw_user_meta_data,
+insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, email, email_confirmed_at, raw_app_meta_data, raw_user_meta_data,
   created_at, updated_at, confirmation_token, recovery_token, email_change_token_new, email_change,
   phone_change, phone_change_token, email_change_token_current, reauthentication_token)
-values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000008', 'authenticated', 'authenticated', '33639981007', now(),
-  '{"provider":"phone","providers":["phone"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
+values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000008', 'authenticated', 'authenticated', '33639981007', now(), 'seed-008@attractr.test', now(),
+  '{"provider":"phone","providers":["phone","email"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
 insert into auth.identities (provider_id, user_id, identity_data, provider, created_at, updated_at)
-values ('00000000-0000-4000-8000-000000000008', '00000000-0000-4000-8000-000000000008', '{"sub":"00000000-0000-4000-8000-000000000008","phone":"33639981007"}', 'phone', now(), now());
+values ('00000000-0000-4000-8000-000000000008', '00000000-0000-4000-8000-000000000008', '{"sub":"00000000-0000-4000-8000-000000000008","phone":"33639981007"}', 'phone', now(), now()),
+  ('00000000-0000-4000-8000-000000000008', '00000000-0000-4000-8000-000000000008', '{"sub":"00000000-0000-4000-8000-000000000008","email":"seed-008@attractr.test","email_verified":true}', 'email', now(), now());
 update public.profiles set first_name = 'Alex', birth_date = '1987-12-15', gender = 'non_binary',
   bio = null, open_to_couples = false, alcohol_free_icons = true,
   verification_status = 'pending', verified_at = null,
   location = private.snap_point(48.562198, 7.685302), location_source = 'device', country_code = 'FR',
+  department_code = '67', region_code = '44',
   last_active_at = now() - interval '179 hours', is_seed = true, status = 'active'
 where id = '00000000-0000-4000-8000-000000000008';
 insert into public.consents (user_id, type, version) values
@@ -202,17 +218,19 @@ insert into public.profile_prompts (user_id, position, question_code, answer) va
   ('00000000-0000-4000-8000-000000000008', 3, 'best_travel_memory', 'Camper en Bretagne sous la pluie.');
 
 -- Alice B., Bordeaux
-insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, raw_app_meta_data, raw_user_meta_data,
+insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, email, email_confirmed_at, raw_app_meta_data, raw_user_meta_data,
   created_at, updated_at, confirmation_token, recovery_token, email_change_token_new, email_change,
   phone_change, phone_change_token, email_change_token_current, reauthentication_token)
-values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000009', 'authenticated', 'authenticated', '33639981008', now(),
-  '{"provider":"phone","providers":["phone"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
+values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000009', 'authenticated', 'authenticated', '33639981008', now(), 'seed-009@attractr.test', now(),
+  '{"provider":"phone","providers":["phone","email"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
 insert into auth.identities (provider_id, user_id, identity_data, provider, created_at, updated_at)
-values ('00000000-0000-4000-8000-000000000009', '00000000-0000-4000-8000-000000000009', '{"sub":"00000000-0000-4000-8000-000000000009","phone":"33639981008"}', 'phone', now(), now());
+values ('00000000-0000-4000-8000-000000000009', '00000000-0000-4000-8000-000000000009', '{"sub":"00000000-0000-4000-8000-000000000009","phone":"33639981008"}', 'phone', now(), now()),
+  ('00000000-0000-4000-8000-000000000009', '00000000-0000-4000-8000-000000000009', '{"sub":"00000000-0000-4000-8000-000000000009","email":"seed-009@attractr.test","email_verified":true}', 'email', now(), now());
 update public.profiles set first_name = 'Alice B.', birth_date = '2002-07-03', gender = 'woman',
   bio = null, open_to_couples = false, alcohol_free_icons = false,
   verification_status = 'pending', verified_at = null,
   location = private.snap_point(44.841845, -0.504522), location_source = 'device', country_code = 'FR',
+  department_code = '33', region_code = '75',
   last_active_at = now() - interval '40 hours', is_seed = true, status = 'active'
 where id = '00000000-0000-4000-8000-000000000009';
 insert into public.consents (user_id, type, version) values
@@ -227,17 +245,19 @@ insert into public.profile_prompts (user_id, position, question_code, answer) va
   ('00000000-0000-4000-8000-000000000009', 3, 'looking_for_someone_who', 'Ne se prend pas trop au sérieux.');
 
 -- Mehdi, Lille
-insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, raw_app_meta_data, raw_user_meta_data,
+insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, email, email_confirmed_at, raw_app_meta_data, raw_user_meta_data,
   created_at, updated_at, confirmation_token, recovery_token, email_change_token_new, email_change,
   phone_change, phone_change_token, email_change_token_current, reauthentication_token)
-values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000010', 'authenticated', 'authenticated', '33639981009', now(),
-  '{"provider":"phone","providers":["phone"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
+values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000010', 'authenticated', 'authenticated', '33639981009', now(), 'seed-010@attractr.test', now(),
+  '{"provider":"phone","providers":["phone","email"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
 insert into auth.identities (provider_id, user_id, identity_data, provider, created_at, updated_at)
-values ('00000000-0000-4000-8000-000000000010', '00000000-0000-4000-8000-000000000010', '{"sub":"00000000-0000-4000-8000-000000000010","phone":"33639981009"}', 'phone', now(), now());
+values ('00000000-0000-4000-8000-000000000010', '00000000-0000-4000-8000-000000000010', '{"sub":"00000000-0000-4000-8000-000000000010","phone":"33639981009"}', 'phone', now(), now()),
+  ('00000000-0000-4000-8000-000000000010', '00000000-0000-4000-8000-000000000010', '{"sub":"00000000-0000-4000-8000-000000000010","email":"seed-010@attractr.test","email_verified":true}', 'email', now(), now());
 update public.profiles set first_name = 'Mehdi', birth_date = '1986-11-08', gender = 'man',
   bio = null, open_to_couples = true, alcohol_free_icons = false,
   verification_status = 'verified', verified_at = now(),
   location = private.snap_point(50.627805, 3.137398), location_source = 'device', country_code = 'FR',
+  department_code = '59', region_code = '32',
   last_active_at = now() - interval '57 hours', is_seed = true, status = 'active'
 where id = '00000000-0000-4000-8000-000000000010';
 insert into public.consents (user_id, type, version) values
@@ -252,17 +272,19 @@ insert into public.profile_prompts (user_id, position, question_code, answer) va
   ('00000000-0000-4000-8000-000000000010', 3, 'green_flag', 'Quelqu''un qui pose des questions.');
 
 -- Simon, Paris
-insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, raw_app_meta_data, raw_user_meta_data,
+insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, email, email_confirmed_at, raw_app_meta_data, raw_user_meta_data,
   created_at, updated_at, confirmation_token, recovery_token, email_change_token_new, email_change,
   phone_change, phone_change_token, email_change_token_current, reauthentication_token)
-values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000011', 'authenticated', 'authenticated', '33639981010', now(),
-  '{"provider":"phone","providers":["phone"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
+values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000011', 'authenticated', 'authenticated', '33639981010', now(), 'seed-011@attractr.test', now(),
+  '{"provider":"phone","providers":["phone","email"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
 insert into auth.identities (provider_id, user_id, identity_data, provider, created_at, updated_at)
-values ('00000000-0000-4000-8000-000000000011', '00000000-0000-4000-8000-000000000011', '{"sub":"00000000-0000-4000-8000-000000000011","phone":"33639981010"}', 'phone', now(), now());
+values ('00000000-0000-4000-8000-000000000011', '00000000-0000-4000-8000-000000000011', '{"sub":"00000000-0000-4000-8000-000000000011","phone":"33639981010"}', 'phone', now(), now()),
+  ('00000000-0000-4000-8000-000000000011', '00000000-0000-4000-8000-000000000011', '{"sub":"00000000-0000-4000-8000-000000000011","email":"seed-011@attractr.test","email_verified":true}', 'email', now(), now());
 update public.profiles set first_name = 'Simon', birth_date = '2001-03-14', gender = 'man',
   bio = null, open_to_couples = false, alcohol_free_icons = false,
   verification_status = 'verified', verified_at = now(),
   location = private.snap_point(48.885434, 2.294019), location_source = 'device', country_code = 'FR',
+  department_code = '75', region_code = '11',
   last_active_at = now() - interval '51 hours', is_seed = true, status = 'active'
 where id = '00000000-0000-4000-8000-000000000011';
 insert into public.consents (user_id, type, version) values
@@ -277,17 +299,19 @@ insert into public.profile_prompts (user_id, position, question_code, answer) va
   ('00000000-0000-4000-8000-000000000011', 3, 'unpopular_opinion', 'L''hiver est la meilleure saison.');
 
 -- Nathan, Marseille
-insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, raw_app_meta_data, raw_user_meta_data,
+insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, email, email_confirmed_at, raw_app_meta_data, raw_user_meta_data,
   created_at, updated_at, confirmation_token, recovery_token, email_change_token_new, email_change,
   phone_change, phone_change_token, email_change_token_current, reauthentication_token)
-values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000012', 'authenticated', 'authenticated', '33639981011', now(),
-  '{"provider":"phone","providers":["phone"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
+values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000012', 'authenticated', 'authenticated', '33639981011', now(), 'seed-012@attractr.test', now(),
+  '{"provider":"phone","providers":["phone","email"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
 insert into auth.identities (provider_id, user_id, identity_data, provider, created_at, updated_at)
-values ('00000000-0000-4000-8000-000000000012', '00000000-0000-4000-8000-000000000012', '{"sub":"00000000-0000-4000-8000-000000000012","phone":"33639981011"}', 'phone', now(), now());
+values ('00000000-0000-4000-8000-000000000012', '00000000-0000-4000-8000-000000000012', '{"sub":"00000000-0000-4000-8000-000000000012","phone":"33639981011"}', 'phone', now(), now()),
+  ('00000000-0000-4000-8000-000000000012', '00000000-0000-4000-8000-000000000012', '{"sub":"00000000-0000-4000-8000-000000000012","email":"seed-012@attractr.test","email_verified":true}', 'email', now(), now());
 update public.profiles set first_name = 'Nathan', birth_date = '1993-07-21', gender = 'man',
   bio = null, open_to_couples = false, alcohol_free_icons = false,
   verification_status = 'verified', verified_at = now(),
   location = private.snap_point(43.305293, 5.333314), location_source = 'device', country_code = 'FR',
+  department_code = '13', region_code = '93',
   last_active_at = now() - interval '215 hours', is_seed = true, status = 'active'
 where id = '00000000-0000-4000-8000-000000000012';
 insert into public.consents (user_id, type, version) values
@@ -302,17 +326,19 @@ insert into public.profile_prompts (user_id, position, question_code, answer) va
   ('00000000-0000-4000-8000-000000000012', 3, 'makes_me_laugh', 'Les vidéos de chats.');
 
 -- Simon B., Lyon
-insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, raw_app_meta_data, raw_user_meta_data,
+insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, email, email_confirmed_at, raw_app_meta_data, raw_user_meta_data,
   created_at, updated_at, confirmation_token, recovery_token, email_change_token_new, email_change,
   phone_change, phone_change_token, email_change_token_current, reauthentication_token)
-values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000013', 'authenticated', 'authenticated', '33639981012', now(),
-  '{"provider":"phone","providers":["phone"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
+values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000013', 'authenticated', 'authenticated', '33639981012', now(), 'seed-013@attractr.test', now(),
+  '{"provider":"phone","providers":["phone","email"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
 insert into auth.identities (provider_id, user_id, identity_data, provider, created_at, updated_at)
-values ('00000000-0000-4000-8000-000000000013', '00000000-0000-4000-8000-000000000013', '{"sub":"00000000-0000-4000-8000-000000000013","phone":"33639981012"}', 'phone', now(), now());
+values ('00000000-0000-4000-8000-000000000013', '00000000-0000-4000-8000-000000000013', '{"sub":"00000000-0000-4000-8000-000000000013","phone":"33639981012"}', 'phone', now(), now()),
+  ('00000000-0000-4000-8000-000000000013', '00000000-0000-4000-8000-000000000013', '{"sub":"00000000-0000-4000-8000-000000000013","email":"seed-013@attractr.test","email_verified":true}', 'email', now(), now());
 update public.profiles set first_name = 'Simon B.', birth_date = '1971-05-14', gender = 'man',
   bio = 'Je cuisine mieux que je ne danse.', open_to_couples = false, alcohol_free_icons = false,
   verification_status = 'verified', verified_at = now(),
   location = private.snap_point(45.725494, 4.793061), location_source = 'device', country_code = 'FR',
+  department_code = '69', region_code = '84',
   last_active_at = now() - interval '152 hours', is_seed = true, status = 'active'
 where id = '00000000-0000-4000-8000-000000000013';
 insert into public.consents (user_id, type, version) values
@@ -327,17 +353,19 @@ insert into public.profile_prompts (user_id, position, question_code, answer) va
   ('00000000-0000-4000-8000-000000000013', 3, 'best_travel_memory', 'Camper en Bretagne sous la pluie.');
 
 -- Lucie, Toulouse
-insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, raw_app_meta_data, raw_user_meta_data,
+insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, email, email_confirmed_at, raw_app_meta_data, raw_user_meta_data,
   created_at, updated_at, confirmation_token, recovery_token, email_change_token_new, email_change,
   phone_change, phone_change_token, email_change_token_current, reauthentication_token)
-values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000014', 'authenticated', 'authenticated', '33639981013', now(),
-  '{"provider":"phone","providers":["phone"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
+values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000014', 'authenticated', 'authenticated', '33639981013', now(), 'seed-014@attractr.test', now(),
+  '{"provider":"phone","providers":["phone","email"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
 insert into auth.identities (provider_id, user_id, identity_data, provider, created_at, updated_at)
-values ('00000000-0000-4000-8000-000000000014', '00000000-0000-4000-8000-000000000014', '{"sub":"00000000-0000-4000-8000-000000000014","phone":"33639981013"}', 'phone', now(), now());
+values ('00000000-0000-4000-8000-000000000014', '00000000-0000-4000-8000-000000000014', '{"sub":"00000000-0000-4000-8000-000000000014","phone":"33639981013"}', 'phone', now(), now()),
+  ('00000000-0000-4000-8000-000000000014', '00000000-0000-4000-8000-000000000014', '{"sub":"00000000-0000-4000-8000-000000000014","email":"seed-014@attractr.test","email_verified":true}', 'email', now(), now());
 update public.profiles set first_name = 'Lucie', birth_date = '1996-08-07', gender = 'woman',
   bio = null, open_to_couples = true, alcohol_free_icons = false,
   verification_status = 'verified', verified_at = now(),
   location = private.snap_point(43.600311, 1.397784), location_source = 'device', country_code = 'FR',
+  department_code = '31', region_code = '76',
   last_active_at = now() - interval '212 hours', is_seed = true, status = 'active'
 where id = '00000000-0000-4000-8000-000000000014';
 insert into public.consents (user_id, type, version) values
@@ -352,17 +380,19 @@ insert into public.profile_prompts (user_id, position, question_code, answer) va
   ('00000000-0000-4000-8000-000000000014', 3, 'currently_learning', 'La poterie.');
 
 -- Théo, Nice
-insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, raw_app_meta_data, raw_user_meta_data,
+insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, email, email_confirmed_at, raw_app_meta_data, raw_user_meta_data,
   created_at, updated_at, confirmation_token, recovery_token, email_change_token_new, email_change,
   phone_change, phone_change_token, email_change_token_current, reauthentication_token)
-values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000015', 'authenticated', 'authenticated', '33639981014', now(),
-  '{"provider":"phone","providers":["phone"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
+values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000015', 'authenticated', 'authenticated', '33639981014', now(), 'seed-015@attractr.test', now(),
+  '{"provider":"phone","providers":["phone","email"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
 insert into auth.identities (provider_id, user_id, identity_data, provider, created_at, updated_at)
-values ('00000000-0000-4000-8000-000000000015', '00000000-0000-4000-8000-000000000015', '{"sub":"00000000-0000-4000-8000-000000000015","phone":"33639981014"}', 'phone', now(), now());
+values ('00000000-0000-4000-8000-000000000015', '00000000-0000-4000-8000-000000000015', '{"sub":"00000000-0000-4000-8000-000000000015","phone":"33639981014"}', 'phone', now(), now()),
+  ('00000000-0000-4000-8000-000000000015', '00000000-0000-4000-8000-000000000015', '{"sub":"00000000-0000-4000-8000-000000000015","email":"seed-015@attractr.test","email_verified":true}', 'email', now(), now());
 update public.profiles set first_name = 'Théo', birth_date = '1983-05-02', gender = 'man',
   bio = null, open_to_couples = false, alcohol_free_icons = false,
   verification_status = 'pending', verified_at = null,
   location = private.snap_point(43.70264, 7.316137), location_source = 'device', country_code = 'FR',
+  department_code = '06', region_code = '93',
   last_active_at = now() - interval '116 hours', is_seed = true, status = 'active'
 where id = '00000000-0000-4000-8000-000000000015';
 insert into public.consents (user_id, type, version) values
@@ -377,17 +407,19 @@ insert into public.profile_prompts (user_id, position, question_code, answer) va
   ('00000000-0000-4000-8000-000000000015', 3, 'looking_for_someone_who', 'Aime bouger le week-end.');
 
 -- Alice C., Nantes
-insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, raw_app_meta_data, raw_user_meta_data,
+insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, email, email_confirmed_at, raw_app_meta_data, raw_user_meta_data,
   created_at, updated_at, confirmation_token, recovery_token, email_change_token_new, email_change,
   phone_change, phone_change_token, email_change_token_current, reauthentication_token)
-values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000016', 'authenticated', 'authenticated', '33639981015', now(),
-  '{"provider":"phone","providers":["phone"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
+values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000016', 'authenticated', 'authenticated', '33639981015', now(), 'seed-016@attractr.test', now(),
+  '{"provider":"phone","providers":["phone","email"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
 insert into auth.identities (provider_id, user_id, identity_data, provider, created_at, updated_at)
-values ('00000000-0000-4000-8000-000000000016', '00000000-0000-4000-8000-000000000016', '{"sub":"00000000-0000-4000-8000-000000000016","phone":"33639981015"}', 'phone', now(), now());
+values ('00000000-0000-4000-8000-000000000016', '00000000-0000-4000-8000-000000000016', '{"sub":"00000000-0000-4000-8000-000000000016","phone":"33639981015"}', 'phone', now(), now()),
+  ('00000000-0000-4000-8000-000000000016', '00000000-0000-4000-8000-000000000016', '{"sub":"00000000-0000-4000-8000-000000000016","email":"seed-016@attractr.test","email_verified":true}', 'email', now(), now());
 update public.profiles set first_name = 'Alice C.', birth_date = '1990-01-15', gender = 'woman',
   bio = null, open_to_couples = true, alcohol_free_icons = false,
   verification_status = 'verified', verified_at = now(),
   location = private.snap_point(47.178236, -1.528806), location_source = 'device', country_code = 'FR',
+  department_code = '44', region_code = '52',
   last_active_at = now() - interval '223 hours', is_seed = true, status = 'active'
 where id = '00000000-0000-4000-8000-000000000016';
 insert into public.consents (user_id, type, version) values
@@ -402,17 +434,19 @@ insert into public.profile_prompts (user_id, position, question_code, answer) va
   ('00000000-0000-4000-8000-000000000016', 3, 'best_travel_memory', 'Camper en Bretagne sous la pluie.');
 
 -- Léa, Montpellier
-insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, raw_app_meta_data, raw_user_meta_data,
+insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, email, email_confirmed_at, raw_app_meta_data, raw_user_meta_data,
   created_at, updated_at, confirmation_token, recovery_token, email_change_token_new, email_change,
   phone_change, phone_change_token, email_change_token_current, reauthentication_token)
-values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000017', 'authenticated', 'authenticated', '33639981016', now(),
-  '{"provider":"phone","providers":["phone"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
+values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000017', 'authenticated', 'authenticated', '33639981016', now(), 'seed-017@attractr.test', now(),
+  '{"provider":"phone","providers":["phone","email"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
 insert into auth.identities (provider_id, user_id, identity_data, provider, created_at, updated_at)
-values ('00000000-0000-4000-8000-000000000017', '00000000-0000-4000-8000-000000000017', '{"sub":"00000000-0000-4000-8000-000000000017","phone":"33639981016"}', 'phone', now(), now());
+values ('00000000-0000-4000-8000-000000000017', '00000000-0000-4000-8000-000000000017', '{"sub":"00000000-0000-4000-8000-000000000017","phone":"33639981016"}', 'phone', now(), now()),
+  ('00000000-0000-4000-8000-000000000017', '00000000-0000-4000-8000-000000000017', '{"sub":"00000000-0000-4000-8000-000000000017","email":"seed-017@attractr.test","email_verified":true}', 'email', now(), now());
 update public.profiles set first_name = 'Léa', birth_date = '2003-07-13', gender = 'woman',
   bio = 'Toujours partant·e pour une expo ou un ciné.', open_to_couples = false, alcohol_free_icons = false,
   verification_status = 'pending', verified_at = null,
   location = private.snap_point(43.633213, 3.84037), location_source = 'device', country_code = 'FR',
+  department_code = '34', region_code = '76',
   last_active_at = now() - interval '159 hours', is_seed = true, status = 'active'
 where id = '00000000-0000-4000-8000-000000000017';
 insert into public.consents (user_id, type, version) values
@@ -427,17 +461,19 @@ insert into public.profile_prompts (user_id, position, question_code, answer) va
   ('00000000-0000-4000-8000-000000000017', 3, 'unpopular_opinion', 'Les séries sont trop longues.');
 
 -- Noa, Strasbourg
-insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, raw_app_meta_data, raw_user_meta_data,
+insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, email, email_confirmed_at, raw_app_meta_data, raw_user_meta_data,
   created_at, updated_at, confirmation_token, recovery_token, email_change_token_new, email_change,
   phone_change, phone_change_token, email_change_token_current, reauthentication_token)
-values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000018', 'authenticated', 'authenticated', '33639981017', now(),
-  '{"provider":"phone","providers":["phone"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
+values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000018', 'authenticated', 'authenticated', '33639981017', now(), 'seed-018@attractr.test', now(),
+  '{"provider":"phone","providers":["phone","email"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
 insert into auth.identities (provider_id, user_id, identity_data, provider, created_at, updated_at)
-values ('00000000-0000-4000-8000-000000000018', '00000000-0000-4000-8000-000000000018', '{"sub":"00000000-0000-4000-8000-000000000018","phone":"33639981017"}', 'phone', now(), now());
+values ('00000000-0000-4000-8000-000000000018', '00000000-0000-4000-8000-000000000018', '{"sub":"00000000-0000-4000-8000-000000000018","phone":"33639981017"}', 'phone', now(), now()),
+  ('00000000-0000-4000-8000-000000000018', '00000000-0000-4000-8000-000000000018', '{"sub":"00000000-0000-4000-8000-000000000018","email":"seed-018@attractr.test","email_verified":true}', 'email', now(), now());
 update public.profiles set first_name = 'Noa', birth_date = '1969-02-19', gender = 'non_binary',
   bio = null, open_to_couples = false, alcohol_free_icons = false,
   verification_status = 'verified', verified_at = now(),
   location = private.snap_point(48.577419, 7.757977), location_source = 'device', country_code = 'FR',
+  department_code = '67', region_code = '44',
   last_active_at = now() - interval '27 hours', is_seed = true, status = 'active'
 where id = '00000000-0000-4000-8000-000000000018';
 insert into public.consents (user_id, type, version) values
@@ -452,17 +488,19 @@ insert into public.profile_prompts (user_id, position, question_code, answer) va
   ('00000000-0000-4000-8000-000000000018', 3, 'perfect_sunday', 'Brunch qui dure jusqu''à 16 h.');
 
 -- Hugo, Bordeaux
-insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, raw_app_meta_data, raw_user_meta_data,
+insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, email, email_confirmed_at, raw_app_meta_data, raw_user_meta_data,
   created_at, updated_at, confirmation_token, recovery_token, email_change_token_new, email_change,
   phone_change, phone_change_token, email_change_token_current, reauthentication_token)
-values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000019', 'authenticated', 'authenticated', '33639981018', now(),
-  '{"provider":"phone","providers":["phone"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
+values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000019', 'authenticated', 'authenticated', '33639981018', now(), 'seed-019@attractr.test', now(),
+  '{"provider":"phone","providers":["phone","email"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
 insert into auth.identities (provider_id, user_id, identity_data, provider, created_at, updated_at)
-values ('00000000-0000-4000-8000-000000000019', '00000000-0000-4000-8000-000000000019', '{"sub":"00000000-0000-4000-8000-000000000019","phone":"33639981018"}', 'phone', now(), now());
+values ('00000000-0000-4000-8000-000000000019', '00000000-0000-4000-8000-000000000019', '{"sub":"00000000-0000-4000-8000-000000000019","phone":"33639981018"}', 'phone', now(), now()),
+  ('00000000-0000-4000-8000-000000000019', '00000000-0000-4000-8000-000000000019', '{"sub":"00000000-0000-4000-8000-000000000019","email":"seed-019@attractr.test","email_verified":true}', 'email', now(), now());
 update public.profiles set first_name = 'Hugo', birth_date = '1968-10-01', gender = 'man',
   bio = null, open_to_couples = false, alcohol_free_icons = false,
   verification_status = 'pending', verified_at = null,
   location = private.snap_point(44.866516, -0.577594), location_source = 'device', country_code = 'FR',
+  department_code = '33', region_code = '75',
   last_active_at = now() - interval '124 hours', is_seed = true, status = 'active'
 where id = '00000000-0000-4000-8000-000000000019';
 insert into public.consents (user_id, type, version) values
@@ -477,17 +515,19 @@ insert into public.profile_prompts (user_id, position, question_code, answer) va
   ('00000000-0000-4000-8000-000000000019', 3, 'simple_pleasure', 'Le pain chaud.');
 
 -- Margaux B., Lille
-insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, raw_app_meta_data, raw_user_meta_data,
+insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, email, email_confirmed_at, raw_app_meta_data, raw_user_meta_data,
   created_at, updated_at, confirmation_token, recovery_token, email_change_token_new, email_change,
   phone_change, phone_change_token, email_change_token_current, reauthentication_token)
-values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000020', 'authenticated', 'authenticated', '33639981019', now(),
-  '{"provider":"phone","providers":["phone"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
+values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000020', 'authenticated', 'authenticated', '33639981019', now(), 'seed-020@attractr.test', now(),
+  '{"provider":"phone","providers":["phone","email"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
 insert into auth.identities (provider_id, user_id, identity_data, provider, created_at, updated_at)
-values ('00000000-0000-4000-8000-000000000020', '00000000-0000-4000-8000-000000000020', '{"sub":"00000000-0000-4000-8000-000000000020","phone":"33639981019"}', 'phone', now(), now());
+values ('00000000-0000-4000-8000-000000000020', '00000000-0000-4000-8000-000000000020', '{"sub":"00000000-0000-4000-8000-000000000020","phone":"33639981019"}', 'phone', now(), now()),
+  ('00000000-0000-4000-8000-000000000020', '00000000-0000-4000-8000-000000000020', '{"sub":"00000000-0000-4000-8000-000000000020","email":"seed-020@attractr.test","email_verified":true}', 'email', now(), now());
 update public.profiles set first_name = 'Margaux B.', birth_date = '1990-01-19', gender = 'woman',
   bio = null, open_to_couples = false, alcohol_free_icons = false,
   verification_status = 'verified', verified_at = now(),
   location = private.snap_point(50.596488, 3.08536), location_source = 'device', country_code = 'FR',
+  department_code = '59', region_code = '32',
   last_active_at = now() - interval '45 hours', is_seed = true, status = 'active'
 where id = '00000000-0000-4000-8000-000000000020';
 insert into public.consents (user_id, type, version) values
@@ -502,17 +542,19 @@ insert into public.profile_prompts (user_id, position, question_code, answer) va
   ('00000000-0000-4000-8000-000000000020', 3, 'simple_pleasure', 'Le pain chaud.');
 
 -- Alice D., Paris
-insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, raw_app_meta_data, raw_user_meta_data,
+insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, email, email_confirmed_at, raw_app_meta_data, raw_user_meta_data,
   created_at, updated_at, confirmation_token, recovery_token, email_change_token_new, email_change,
   phone_change, phone_change_token, email_change_token_current, reauthentication_token)
-values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000021', 'authenticated', 'authenticated', '33639981020', now(),
-  '{"provider":"phone","providers":["phone"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
+values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000021', 'authenticated', 'authenticated', '33639981020', now(), 'seed-021@attractr.test', now(),
+  '{"provider":"phone","providers":["phone","email"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
 insert into auth.identities (provider_id, user_id, identity_data, provider, created_at, updated_at)
-values ('00000000-0000-4000-8000-000000000021', '00000000-0000-4000-8000-000000000021', '{"sub":"00000000-0000-4000-8000-000000000021","phone":"33639981020"}', 'phone', now(), now());
+values ('00000000-0000-4000-8000-000000000021', '00000000-0000-4000-8000-000000000021', '{"sub":"00000000-0000-4000-8000-000000000021","phone":"33639981020"}', 'phone', now(), now()),
+  ('00000000-0000-4000-8000-000000000021', '00000000-0000-4000-8000-000000000021', '{"sub":"00000000-0000-4000-8000-000000000021","email":"seed-021@attractr.test","email_verified":true}', 'email', now(), now());
 update public.profiles set first_name = 'Alice D.', birth_date = '1999-06-21', gender = 'woman',
   bio = null, open_to_couples = false, alcohol_free_icons = false,
   verification_status = 'pending', verified_at = null,
   location = private.snap_point(48.88151, 2.391555), location_source = 'device', country_code = 'FR',
+  department_code = '75', region_code = '11',
   last_active_at = now() - interval '48 hours', is_seed = true, status = 'active'
 where id = '00000000-0000-4000-8000-000000000021';
 insert into public.consents (user_id, type, version) values
@@ -527,17 +569,19 @@ insert into public.profile_prompts (user_id, position, question_code, answer) va
   ('00000000-0000-4000-8000-000000000021', 3, 'green_flag', 'Quelqu''un qui pose des questions.');
 
 -- Jade B., Marseille
-insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, raw_app_meta_data, raw_user_meta_data,
+insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, email, email_confirmed_at, raw_app_meta_data, raw_user_meta_data,
   created_at, updated_at, confirmation_token, recovery_token, email_change_token_new, email_change,
   phone_change, phone_change_token, email_change_token_current, reauthentication_token)
-values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000022', 'authenticated', 'authenticated', '33639981021', now(),
-  '{"provider":"phone","providers":["phone"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
+values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000022', 'authenticated', 'authenticated', '33639981021', now(), 'seed-022@attractr.test', now(),
+  '{"provider":"phone","providers":["phone","email"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
 insert into auth.identities (provider_id, user_id, identity_data, provider, created_at, updated_at)
-values ('00000000-0000-4000-8000-000000000022', '00000000-0000-4000-8000-000000000022', '{"sub":"00000000-0000-4000-8000-000000000022","phone":"33639981021"}', 'phone', now(), now());
+values ('00000000-0000-4000-8000-000000000022', '00000000-0000-4000-8000-000000000022', '{"sub":"00000000-0000-4000-8000-000000000022","phone":"33639981021"}', 'phone', now(), now()),
+  ('00000000-0000-4000-8000-000000000022', '00000000-0000-4000-8000-000000000022', '{"sub":"00000000-0000-4000-8000-000000000022","email":"seed-022@attractr.test","email_verified":true}', 'email', now(), now());
 update public.profiles set first_name = 'Jade B.', birth_date = '1980-11-15', gender = 'woman',
   bio = 'Nouvelle ville, nouvelles rencontres.', open_to_couples = false, alcohol_free_icons = false,
   verification_status = 'pending', verified_at = null,
   location = private.snap_point(43.255973, 5.348838), location_source = 'device', country_code = 'FR',
+  department_code = '13', region_code = '93',
   last_active_at = now() - interval '93 hours', is_seed = true, status = 'active'
 where id = '00000000-0000-4000-8000-000000000022';
 insert into public.consents (user_id, type, version) values
@@ -552,17 +596,19 @@ insert into public.profile_prompts (user_id, position, question_code, answer) va
   ('00000000-0000-4000-8000-000000000022', 3, 'currently_learning', 'La poterie.');
 
 -- Jules, Lyon
-insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, raw_app_meta_data, raw_user_meta_data,
+insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, email, email_confirmed_at, raw_app_meta_data, raw_user_meta_data,
   created_at, updated_at, confirmation_token, recovery_token, email_change_token_new, email_change,
   phone_change, phone_change_token, email_change_token_current, reauthentication_token)
-values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000023', 'authenticated', 'authenticated', '33639981022', now(),
-  '{"provider":"phone","providers":["phone"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
+values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000023', 'authenticated', 'authenticated', '33639981022', now(), 'seed-023@attractr.test', now(),
+  '{"provider":"phone","providers":["phone","email"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
 insert into auth.identities (provider_id, user_id, identity_data, provider, created_at, updated_at)
-values ('00000000-0000-4000-8000-000000000023', '00000000-0000-4000-8000-000000000023', '{"sub":"00000000-0000-4000-8000-000000000023","phone":"33639981022"}', 'phone', now(), now());
+values ('00000000-0000-4000-8000-000000000023', '00000000-0000-4000-8000-000000000023', '{"sub":"00000000-0000-4000-8000-000000000023","phone":"33639981022"}', 'phone', now(), now()),
+  ('00000000-0000-4000-8000-000000000023', '00000000-0000-4000-8000-000000000023', '{"sub":"00000000-0000-4000-8000-000000000023","email":"seed-023@attractr.test","email_verified":true}', 'email', now(), now());
 update public.profiles set first_name = 'Jules', birth_date = '1971-01-15', gender = 'man',
   bio = null, open_to_couples = false, alcohol_free_icons = false,
   verification_status = 'verified', verified_at = now(),
   location = private.snap_point(45.776733, 4.815621), location_source = 'device', country_code = 'FR',
+  department_code = '69', region_code = '84',
   last_active_at = now() - interval '210 hours', is_seed = true, status = 'active'
 where id = '00000000-0000-4000-8000-000000000023';
 insert into public.consents (user_id, type, version) values
@@ -577,17 +623,19 @@ insert into public.profile_prompts (user_id, position, question_code, answer) va
   ('00000000-0000-4000-8000-000000000023', 3, 'looking_for_someone_who', 'Aime les discussions tard le soir.');
 
 -- Yanis, Toulouse
-insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, raw_app_meta_data, raw_user_meta_data,
+insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, email, email_confirmed_at, raw_app_meta_data, raw_user_meta_data,
   created_at, updated_at, confirmation_token, recovery_token, email_change_token_new, email_change,
   phone_change, phone_change_token, email_change_token_current, reauthentication_token)
-values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000024', 'authenticated', 'authenticated', '33639981023', now(),
-  '{"provider":"phone","providers":["phone"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
+values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000024', 'authenticated', 'authenticated', '33639981023', now(), 'seed-024@attractr.test', now(),
+  '{"provider":"phone","providers":["phone","email"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
 insert into auth.identities (provider_id, user_id, identity_data, provider, created_at, updated_at)
-values ('00000000-0000-4000-8000-000000000024', '00000000-0000-4000-8000-000000000024', '{"sub":"00000000-0000-4000-8000-000000000024","phone":"33639981023"}', 'phone', now(), now());
+values ('00000000-0000-4000-8000-000000000024', '00000000-0000-4000-8000-000000000024', '{"sub":"00000000-0000-4000-8000-000000000024","phone":"33639981023"}', 'phone', now(), now()),
+  ('00000000-0000-4000-8000-000000000024', '00000000-0000-4000-8000-000000000024', '{"sub":"00000000-0000-4000-8000-000000000024","email":"seed-024@attractr.test","email_verified":true}', 'email', now(), now());
 update public.profiles set first_name = 'Yanis', birth_date = '2003-11-04', gender = 'man',
   bio = null, open_to_couples = true, alcohol_free_icons = false,
   verification_status = 'verified', verified_at = now(),
   location = private.snap_point(43.605919, 1.412806), location_source = 'device', country_code = 'FR',
+  department_code = '31', region_code = '76',
   last_active_at = now() - interval '21 hours', is_seed = true, status = 'active'
 where id = '00000000-0000-4000-8000-000000000024';
 insert into public.consents (user_id, type, version) values
@@ -602,17 +650,19 @@ insert into public.profile_prompts (user_id, position, question_code, answer) va
   ('00000000-0000-4000-8000-000000000024', 3, 'green_flag', 'Être à l''heure.');
 
 -- Nora B., Nice
-insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, raw_app_meta_data, raw_user_meta_data,
+insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, email, email_confirmed_at, raw_app_meta_data, raw_user_meta_data,
   created_at, updated_at, confirmation_token, recovery_token, email_change_token_new, email_change,
   phone_change, phone_change_token, email_change_token_current, reauthentication_token)
-values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000025', 'authenticated', 'authenticated', '33639981024', now(),
-  '{"provider":"phone","providers":["phone"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
+values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000025', 'authenticated', 'authenticated', '33639981024', now(), 'seed-025@attractr.test', now(),
+  '{"provider":"phone","providers":["phone","email"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
 insert into auth.identities (provider_id, user_id, identity_data, provider, created_at, updated_at)
-values ('00000000-0000-4000-8000-000000000025', '00000000-0000-4000-8000-000000000025', '{"sub":"00000000-0000-4000-8000-000000000025","phone":"33639981024"}', 'phone', now(), now());
+values ('00000000-0000-4000-8000-000000000025', '00000000-0000-4000-8000-000000000025', '{"sub":"00000000-0000-4000-8000-000000000025","phone":"33639981024"}', 'phone', now(), now()),
+  ('00000000-0000-4000-8000-000000000025', '00000000-0000-4000-8000-000000000025', '{"sub":"00000000-0000-4000-8000-000000000025","email":"seed-025@attractr.test","email_verified":true}', 'email', now(), now());
 update public.profiles set first_name = 'Nora B.', birth_date = '2003-10-08', gender = 'woman',
   bio = 'Curieux·se de tout, surtout des gens.', open_to_couples = false, alcohol_free_icons = false,
   verification_status = 'pending', verified_at = null,
   location = private.snap_point(43.692096, 7.267587), location_source = 'device', country_code = 'FR',
+  department_code = '06', region_code = '93',
   last_active_at = now() - interval '186 hours', is_seed = true, status = 'active'
 where id = '00000000-0000-4000-8000-000000000025';
 insert into public.consents (user_id, type, version) values
@@ -627,17 +677,19 @@ insert into public.profile_prompts (user_id, position, question_code, answer) va
   ('00000000-0000-4000-8000-000000000025', 3, 'best_travel_memory', 'Camper en Bretagne sous la pluie.');
 
 -- Clara, Nantes
-insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, raw_app_meta_data, raw_user_meta_data,
+insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, email, email_confirmed_at, raw_app_meta_data, raw_user_meta_data,
   created_at, updated_at, confirmation_token, recovery_token, email_change_token_new, email_change,
   phone_change, phone_change_token, email_change_token_current, reauthentication_token)
-values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000026', 'authenticated', 'authenticated', '33639981025', now(),
-  '{"provider":"phone","providers":["phone"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
+values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000026', 'authenticated', 'authenticated', '33639981025', now(), 'seed-026@attractr.test', now(),
+  '{"provider":"phone","providers":["phone","email"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
 insert into auth.identities (provider_id, user_id, identity_data, provider, created_at, updated_at)
-values ('00000000-0000-4000-8000-000000000026', '00000000-0000-4000-8000-000000000026', '{"sub":"00000000-0000-4000-8000-000000000026","phone":"33639981025"}', 'phone', now(), now());
+values ('00000000-0000-4000-8000-000000000026', '00000000-0000-4000-8000-000000000026', '{"sub":"00000000-0000-4000-8000-000000000026","phone":"33639981025"}', 'phone', now(), now()),
+  ('00000000-0000-4000-8000-000000000026', '00000000-0000-4000-8000-000000000026', '{"sub":"00000000-0000-4000-8000-000000000026","email":"seed-026@attractr.test","email_verified":true}', 'email', now(), now());
 update public.profiles set first_name = 'Clara', birth_date = '1978-08-04', gender = 'woman',
   bio = 'Toujours partant·e pour une expo ou un ciné.', open_to_couples = false, alcohol_free_icons = false,
   verification_status = 'verified', verified_at = now(),
   location = private.snap_point(47.194976, -1.603723), location_source = 'device', country_code = 'FR',
+  department_code = '44', region_code = '52',
   last_active_at = now() - interval '13 hours', is_seed = true, status = 'active'
 where id = '00000000-0000-4000-8000-000000000026';
 insert into public.consents (user_id, type, version) values
@@ -652,17 +704,19 @@ insert into public.profile_prompts (user_id, position, question_code, answer) va
   ('00000000-0000-4000-8000-000000000026', 3, 'looking_for_someone_who', 'Aime bouger le week-end.');
 
 -- Jade C., Montpellier
-insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, raw_app_meta_data, raw_user_meta_data,
+insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, email, email_confirmed_at, raw_app_meta_data, raw_user_meta_data,
   created_at, updated_at, confirmation_token, recovery_token, email_change_token_new, email_change,
   phone_change, phone_change_token, email_change_token_current, reauthentication_token)
-values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000027', 'authenticated', 'authenticated', '33639981026', now(),
-  '{"provider":"phone","providers":["phone"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
+values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000027', 'authenticated', 'authenticated', '33639981026', now(), 'seed-027@attractr.test', now(),
+  '{"provider":"phone","providers":["phone","email"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
 insert into auth.identities (provider_id, user_id, identity_data, provider, created_at, updated_at)
-values ('00000000-0000-4000-8000-000000000027', '00000000-0000-4000-8000-000000000027', '{"sub":"00000000-0000-4000-8000-000000000027","phone":"33639981026"}', 'phone', now(), now());
+values ('00000000-0000-4000-8000-000000000027', '00000000-0000-4000-8000-000000000027', '{"sub":"00000000-0000-4000-8000-000000000027","phone":"33639981026"}', 'phone', now(), now()),
+  ('00000000-0000-4000-8000-000000000027', '00000000-0000-4000-8000-000000000027', '{"sub":"00000000-0000-4000-8000-000000000027","email":"seed-027@attractr.test","email_verified":true}', 'email', now(), now());
 update public.profiles set first_name = 'Jade C.', birth_date = '2005-08-07', gender = 'woman',
   bio = 'Nouvelle ville, nouvelles rencontres.', open_to_couples = false, alcohol_free_icons = false,
   verification_status = 'pending', verified_at = null,
   location = private.snap_point(43.644604, 3.903245), location_source = 'device', country_code = 'FR',
+  department_code = '34', region_code = '76',
   last_active_at = now() - interval '121 hours', is_seed = true, status = 'active'
 where id = '00000000-0000-4000-8000-000000000027';
 insert into public.consents (user_id, type, version) values
@@ -677,17 +731,19 @@ insert into public.profile_prompts (user_id, position, question_code, answer) va
   ('00000000-0000-4000-8000-000000000027', 3, 'best_travel_memory', 'Un train de nuit en Italie.');
 
 -- Elsa, Strasbourg
-insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, raw_app_meta_data, raw_user_meta_data,
+insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, email, email_confirmed_at, raw_app_meta_data, raw_user_meta_data,
   created_at, updated_at, confirmation_token, recovery_token, email_change_token_new, email_change,
   phone_change, phone_change_token, email_change_token_current, reauthentication_token)
-values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000028', 'authenticated', 'authenticated', '33639981027', now(),
-  '{"provider":"phone","providers":["phone"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
+values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000028', 'authenticated', 'authenticated', '33639981027', now(), 'seed-028@attractr.test', now(),
+  '{"provider":"phone","providers":["phone","email"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
 insert into auth.identities (provider_id, user_id, identity_data, provider, created_at, updated_at)
-values ('00000000-0000-4000-8000-000000000028', '00000000-0000-4000-8000-000000000028', '{"sub":"00000000-0000-4000-8000-000000000028","phone":"33639981027"}', 'phone', now(), now());
+values ('00000000-0000-4000-8000-000000000028', '00000000-0000-4000-8000-000000000028', '{"sub":"00000000-0000-4000-8000-000000000028","phone":"33639981027"}', 'phone', now(), now()),
+  ('00000000-0000-4000-8000-000000000028', '00000000-0000-4000-8000-000000000028', '{"sub":"00000000-0000-4000-8000-000000000028","email":"seed-028@attractr.test","email_verified":true}', 'email', now(), now());
 update public.profiles set first_name = 'Elsa', birth_date = '1971-06-12', gender = 'woman',
   bio = null, open_to_couples = false, alcohol_free_icons = false,
   verification_status = 'pending', verified_at = null,
   location = private.snap_point(48.577964, 7.752028), location_source = 'device', country_code = 'FR',
+  department_code = '67', region_code = '44',
   last_active_at = now() - interval '31 hours', is_seed = true, status = 'active'
 where id = '00000000-0000-4000-8000-000000000028';
 insert into public.consents (user_id, type, version) values
@@ -702,17 +758,19 @@ insert into public.profile_prompts (user_id, position, question_code, answer) va
   ('00000000-0000-4000-8000-000000000028', 3, 'simple_pleasure', 'Le pain chaud.');
 
 -- Manon, Bordeaux
-insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, raw_app_meta_data, raw_user_meta_data,
+insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, email, email_confirmed_at, raw_app_meta_data, raw_user_meta_data,
   created_at, updated_at, confirmation_token, recovery_token, email_change_token_new, email_change,
   phone_change, phone_change_token, email_change_token_current, reauthentication_token)
-values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000029', 'authenticated', 'authenticated', '33639981028', now(),
-  '{"provider":"phone","providers":["phone"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
+values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000029', 'authenticated', 'authenticated', '33639981028', now(), 'seed-029@attractr.test', now(),
+  '{"provider":"phone","providers":["phone","email"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
 insert into auth.identities (provider_id, user_id, identity_data, provider, created_at, updated_at)
-values ('00000000-0000-4000-8000-000000000029', '00000000-0000-4000-8000-000000000029', '{"sub":"00000000-0000-4000-8000-000000000029","phone":"33639981028"}', 'phone', now(), now());
+values ('00000000-0000-4000-8000-000000000029', '00000000-0000-4000-8000-000000000029', '{"sub":"00000000-0000-4000-8000-000000000029","phone":"33639981028"}', 'phone', now(), now()),
+  ('00000000-0000-4000-8000-000000000029', '00000000-0000-4000-8000-000000000029', '{"sub":"00000000-0000-4000-8000-000000000029","email":"seed-029@attractr.test","email_verified":true}', 'email', now(), now());
 update public.profiles set first_name = 'Manon', birth_date = '1971-09-16', gender = 'woman',
   bio = 'Je cuisine mieux que je ne danse.', open_to_couples = false, alcohol_free_icons = false,
   verification_status = 'verified', verified_at = now(),
   location = private.snap_point(44.839575, -0.641662), location_source = 'device', country_code = 'FR',
+  department_code = '33', region_code = '75',
   last_active_at = now() - interval '237 hours', is_seed = true, status = 'active'
 where id = '00000000-0000-4000-8000-000000000029';
 insert into public.consents (user_id, type, version) values
@@ -727,17 +785,19 @@ insert into public.profile_prompts (user_id, position, question_code, answer) va
   ('00000000-0000-4000-8000-000000000029', 3, 'makes_me_laugh', 'Mes amis, surtout.');
 
 -- Mehdi B., Lille
-insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, raw_app_meta_data, raw_user_meta_data,
+insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, email, email_confirmed_at, raw_app_meta_data, raw_user_meta_data,
   created_at, updated_at, confirmation_token, recovery_token, email_change_token_new, email_change,
   phone_change, phone_change_token, email_change_token_current, reauthentication_token)
-values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000030', 'authenticated', 'authenticated', '33639981029', now(),
-  '{"provider":"phone","providers":["phone"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
+values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000030', 'authenticated', 'authenticated', '33639981029', now(), 'seed-030@attractr.test', now(),
+  '{"provider":"phone","providers":["phone","email"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
 insert into auth.identities (provider_id, user_id, identity_data, provider, created_at, updated_at)
-values ('00000000-0000-4000-8000-000000000030', '00000000-0000-4000-8000-000000000030', '{"sub":"00000000-0000-4000-8000-000000000030","phone":"33639981029"}', 'phone', now(), now());
+values ('00000000-0000-4000-8000-000000000030', '00000000-0000-4000-8000-000000000030', '{"sub":"00000000-0000-4000-8000-000000000030","phone":"33639981029"}', 'phone', now(), now()),
+  ('00000000-0000-4000-8000-000000000030', '00000000-0000-4000-8000-000000000030', '{"sub":"00000000-0000-4000-8000-000000000030","email":"seed-030@attractr.test","email_verified":true}', 'email', now(), now());
 update public.profiles set first_name = 'Mehdi B.', birth_date = '1998-09-13', gender = 'man',
   bio = null, open_to_couples = false, alcohol_free_icons = false,
   verification_status = 'pending', verified_at = null,
   location = private.snap_point(50.617793, 3.083119), location_source = 'device', country_code = 'FR',
+  department_code = '59', region_code = '32',
   last_active_at = now() - interval '12 hours', is_seed = true, status = 'active'
 where id = '00000000-0000-4000-8000-000000000030';
 insert into public.consents (user_id, type, version) values
@@ -752,17 +812,19 @@ insert into public.profile_prompts (user_id, position, question_code, answer) va
   ('00000000-0000-4000-8000-000000000030', 3, 'simple_pleasure', 'Les draps propres.');
 
 -- Léa B., Paris
-insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, raw_app_meta_data, raw_user_meta_data,
+insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, email, email_confirmed_at, raw_app_meta_data, raw_user_meta_data,
   created_at, updated_at, confirmation_token, recovery_token, email_change_token_new, email_change,
   phone_change, phone_change_token, email_change_token_current, reauthentication_token)
-values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000031', 'authenticated', 'authenticated', '33639981030', now(),
-  '{"provider":"phone","providers":["phone"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
+values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000031', 'authenticated', 'authenticated', '33639981030', now(), 'seed-031@attractr.test', now(),
+  '{"provider":"phone","providers":["phone","email"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
 insert into auth.identities (provider_id, user_id, identity_data, provider, created_at, updated_at)
-values ('00000000-0000-4000-8000-000000000031', '00000000-0000-4000-8000-000000000031', '{"sub":"00000000-0000-4000-8000-000000000031","phone":"33639981030"}', 'phone', now(), now());
+values ('00000000-0000-4000-8000-000000000031', '00000000-0000-4000-8000-000000000031', '{"sub":"00000000-0000-4000-8000-000000000031","phone":"33639981030"}', 'phone', now(), now()),
+  ('00000000-0000-4000-8000-000000000031', '00000000-0000-4000-8000-000000000031', '{"sub":"00000000-0000-4000-8000-000000000031","email":"seed-031@attractr.test","email_verified":true}', 'email', now(), now());
 update public.profiles set first_name = 'Léa B.', birth_date = '1978-04-28', gender = 'woman',
   bio = 'Fan de randonnée et de jeux de société.', open_to_couples = false, alcohol_free_icons = false,
   verification_status = 'verified', verified_at = now(),
   location = private.snap_point(48.853654, 2.419894), location_source = 'device', country_code = 'FR',
+  department_code = '75', region_code = '11',
   last_active_at = now() - interval '63 hours', is_seed = true, status = 'active'
 where id = '00000000-0000-4000-8000-000000000031';
 insert into public.consents (user_id, type, version) values
@@ -777,17 +839,19 @@ insert into public.profile_prompts (user_id, position, question_code, answer) va
   ('00000000-0000-4000-8000-000000000031', 3, 'looking_for_someone_who', 'Ne se prend pas trop au sérieux.');
 
 -- Martin B., Marseille
-insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, raw_app_meta_data, raw_user_meta_data,
+insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, email, email_confirmed_at, raw_app_meta_data, raw_user_meta_data,
   created_at, updated_at, confirmation_token, recovery_token, email_change_token_new, email_change,
   phone_change, phone_change_token, email_change_token_current, reauthentication_token)
-values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000032', 'authenticated', 'authenticated', '33639981031', now(),
-  '{"provider":"phone","providers":["phone"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
+values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000032', 'authenticated', 'authenticated', '33639981031', now(), 'seed-032@attractr.test', now(),
+  '{"provider":"phone","providers":["phone","email"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
 insert into auth.identities (provider_id, user_id, identity_data, provider, created_at, updated_at)
-values ('00000000-0000-4000-8000-000000000032', '00000000-0000-4000-8000-000000000032', '{"sub":"00000000-0000-4000-8000-000000000032","phone":"33639981031"}', 'phone', now(), now());
+values ('00000000-0000-4000-8000-000000000032', '00000000-0000-4000-8000-000000000032', '{"sub":"00000000-0000-4000-8000-000000000032","phone":"33639981031"}', 'phone', now(), now()),
+  ('00000000-0000-4000-8000-000000000032', '00000000-0000-4000-8000-000000000032', '{"sub":"00000000-0000-4000-8000-000000000032","email":"seed-032@attractr.test","email_verified":true}', 'email', now(), now());
 update public.profiles set first_name = 'Martin B.', birth_date = '1978-02-14', gender = 'man',
   bio = null, open_to_couples = false, alcohol_free_icons = true,
   verification_status = 'verified', verified_at = now(),
   location = private.snap_point(43.292207, 5.383052), location_source = 'device', country_code = 'FR',
+  department_code = '13', region_code = '93',
   last_active_at = now() - interval '31 hours', is_seed = true, status = 'active'
 where id = '00000000-0000-4000-8000-000000000032';
 insert into public.consents (user_id, type, version) values
@@ -802,17 +866,19 @@ insert into public.profile_prompts (user_id, position, question_code, answer) va
   ('00000000-0000-4000-8000-000000000032', 3, 'looking_for_someone_who', 'Aime bouger le week-end.');
 
 -- Léa C., Lyon
-insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, raw_app_meta_data, raw_user_meta_data,
+insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, email, email_confirmed_at, raw_app_meta_data, raw_user_meta_data,
   created_at, updated_at, confirmation_token, recovery_token, email_change_token_new, email_change,
   phone_change, phone_change_token, email_change_token_current, reauthentication_token)
-values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000033', 'authenticated', 'authenticated', '33639981032', now(),
-  '{"provider":"phone","providers":["phone"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
+values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000033', 'authenticated', 'authenticated', '33639981032', now(), 'seed-033@attractr.test', now(),
+  '{"provider":"phone","providers":["phone","email"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
 insert into auth.identities (provider_id, user_id, identity_data, provider, created_at, updated_at)
-values ('00000000-0000-4000-8000-000000000033', '00000000-0000-4000-8000-000000000033', '{"sub":"00000000-0000-4000-8000-000000000033","phone":"33639981032"}', 'phone', now(), now());
+values ('00000000-0000-4000-8000-000000000033', '00000000-0000-4000-8000-000000000033', '{"sub":"00000000-0000-4000-8000-000000000033","phone":"33639981032"}', 'phone', now(), now()),
+  ('00000000-0000-4000-8000-000000000033', '00000000-0000-4000-8000-000000000033', '{"sub":"00000000-0000-4000-8000-000000000033","email":"seed-033@attractr.test","email_verified":true}', 'email', now(), now());
 update public.profiles set first_name = 'Léa C.', birth_date = '2000-05-25', gender = 'woman',
   bio = null, open_to_couples = false, alcohol_free_icons = false,
   verification_status = 'verified', verified_at = now(),
   location = private.snap_point(45.722673, 4.862162), location_source = 'device', country_code = 'FR',
+  department_code = '69', region_code = '84',
   last_active_at = now() - interval '223 hours', is_seed = true, status = 'active'
 where id = '00000000-0000-4000-8000-000000000033';
 insert into public.consents (user_id, type, version) values
@@ -827,17 +893,19 @@ insert into public.profile_prompts (user_id, position, question_code, answer) va
   ('00000000-0000-4000-8000-000000000033', 3, 'green_flag', 'Quelqu''un qui pose des questions.');
 
 -- Julie, Toulouse
-insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, raw_app_meta_data, raw_user_meta_data,
+insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, email, email_confirmed_at, raw_app_meta_data, raw_user_meta_data,
   created_at, updated_at, confirmation_token, recovery_token, email_change_token_new, email_change,
   phone_change, phone_change_token, email_change_token_current, reauthentication_token)
-values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000034', 'authenticated', 'authenticated', '33639981033', now(),
-  '{"provider":"phone","providers":["phone"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
+values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000034', 'authenticated', 'authenticated', '33639981033', now(), 'seed-034@attractr.test', now(),
+  '{"provider":"phone","providers":["phone","email"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
 insert into auth.identities (provider_id, user_id, identity_data, provider, created_at, updated_at)
-values ('00000000-0000-4000-8000-000000000034', '00000000-0000-4000-8000-000000000034', '{"sub":"00000000-0000-4000-8000-000000000034","phone":"33639981033"}', 'phone', now(), now());
+values ('00000000-0000-4000-8000-000000000034', '00000000-0000-4000-8000-000000000034', '{"sub":"00000000-0000-4000-8000-000000000034","phone":"33639981033"}', 'phone', now(), now()),
+  ('00000000-0000-4000-8000-000000000034', '00000000-0000-4000-8000-000000000034', '{"sub":"00000000-0000-4000-8000-000000000034","email":"seed-034@attractr.test","email_verified":true}', 'email', now(), now());
 update public.profiles set first_name = 'Julie', birth_date = '2000-04-11', gender = 'woman',
   bio = 'Toujours partant·e pour une expo ou un ciné.', open_to_couples = true, alcohol_free_icons = false,
   verification_status = 'verified', verified_at = now(),
   location = private.snap_point(43.642252, 1.403354), location_source = 'device', country_code = 'FR',
+  department_code = '31', region_code = '76',
   last_active_at = now() - interval '166 hours', is_seed = true, status = 'active'
 where id = '00000000-0000-4000-8000-000000000034';
 insert into public.consents (user_id, type, version) values
@@ -852,17 +920,19 @@ insert into public.profile_prompts (user_id, position, question_code, answer) va
   ('00000000-0000-4000-8000-000000000034', 3, 'green_flag', 'Quelqu''un qui pose des questions.');
 
 -- Rose, Nice
-insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, raw_app_meta_data, raw_user_meta_data,
+insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, email, email_confirmed_at, raw_app_meta_data, raw_user_meta_data,
   created_at, updated_at, confirmation_token, recovery_token, email_change_token_new, email_change,
   phone_change, phone_change_token, email_change_token_current, reauthentication_token)
-values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000035', 'authenticated', 'authenticated', '33639981034', now(),
-  '{"provider":"phone","providers":["phone"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
+values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000035', 'authenticated', 'authenticated', '33639981034', now(), 'seed-035@attractr.test', now(),
+  '{"provider":"phone","providers":["phone","email"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
 insert into auth.identities (provider_id, user_id, identity_data, provider, created_at, updated_at)
-values ('00000000-0000-4000-8000-000000000035', '00000000-0000-4000-8000-000000000035', '{"sub":"00000000-0000-4000-8000-000000000035","phone":"33639981034"}', 'phone', now(), now());
+values ('00000000-0000-4000-8000-000000000035', '00000000-0000-4000-8000-000000000035', '{"sub":"00000000-0000-4000-8000-000000000035","phone":"33639981034"}', 'phone', now(), now()),
+  ('00000000-0000-4000-8000-000000000035', '00000000-0000-4000-8000-000000000035', '{"sub":"00000000-0000-4000-8000-000000000035","email":"seed-035@attractr.test","email_verified":true}', 'email', now(), now());
 update public.profiles set first_name = 'Rose', birth_date = '1986-02-22', gender = 'woman',
   bio = 'Nouvelle ville, nouvelles rencontres.', open_to_couples = true, alcohol_free_icons = true,
   verification_status = 'pending', verified_at = null,
   location = private.snap_point(43.726638, 7.332799), location_source = 'device', country_code = 'FR',
+  department_code = '06', region_code = '93',
   last_active_at = now() - interval '102 hours', is_seed = true, status = 'active'
 where id = '00000000-0000-4000-8000-000000000035';
 insert into public.consents (user_id, type, version) values
@@ -877,17 +947,19 @@ insert into public.profile_prompts (user_id, position, question_code, answer) va
   ('00000000-0000-4000-8000-000000000035', 3, 'simple_pleasure', 'Les draps propres.');
 
 -- Théo B., Nantes
-insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, raw_app_meta_data, raw_user_meta_data,
+insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, email, email_confirmed_at, raw_app_meta_data, raw_user_meta_data,
   created_at, updated_at, confirmation_token, recovery_token, email_change_token_new, email_change,
   phone_change, phone_change_token, email_change_token_current, reauthentication_token)
-values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000036', 'authenticated', 'authenticated', '33639981035', now(),
-  '{"provider":"phone","providers":["phone"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
+values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000036', 'authenticated', 'authenticated', '33639981035', now(), 'seed-036@attractr.test', now(),
+  '{"provider":"phone","providers":["phone","email"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
 insert into auth.identities (provider_id, user_id, identity_data, provider, created_at, updated_at)
-values ('00000000-0000-4000-8000-000000000036', '00000000-0000-4000-8000-000000000036', '{"sub":"00000000-0000-4000-8000-000000000036","phone":"33639981035"}', 'phone', now(), now());
+values ('00000000-0000-4000-8000-000000000036', '00000000-0000-4000-8000-000000000036', '{"sub":"00000000-0000-4000-8000-000000000036","phone":"33639981035"}', 'phone', now(), now()),
+  ('00000000-0000-4000-8000-000000000036', '00000000-0000-4000-8000-000000000036', '{"sub":"00000000-0000-4000-8000-000000000036","email":"seed-036@attractr.test","email_verified":true}', 'email', now(), now());
 update public.profiles set first_name = 'Théo B.', birth_date = '1975-12-06', gender = 'man',
   bio = 'Curieux·se de tout, surtout des gens.', open_to_couples = false, alcohol_free_icons = true,
   verification_status = 'verified', verified_at = now(),
   location = private.snap_point(47.165442, -1.547819), location_source = 'device', country_code = 'FR',
+  department_code = '44', region_code = '52',
   last_active_at = now() - interval '135 hours', is_seed = true, status = 'active'
 where id = '00000000-0000-4000-8000-000000000036';
 insert into public.consents (user_id, type, version) values
@@ -902,17 +974,19 @@ insert into public.profile_prompts (user_id, position, question_code, answer) va
   ('00000000-0000-4000-8000-000000000036', 3, 'unpopular_opinion', 'Les séries sont trop longues.');
 
 -- Manon B., Montpellier
-insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, raw_app_meta_data, raw_user_meta_data,
+insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, email, email_confirmed_at, raw_app_meta_data, raw_user_meta_data,
   created_at, updated_at, confirmation_token, recovery_token, email_change_token_new, email_change,
   phone_change, phone_change_token, email_change_token_current, reauthentication_token)
-values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000037', 'authenticated', 'authenticated', '33639981036', now(),
-  '{"provider":"phone","providers":["phone"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
+values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000037', 'authenticated', 'authenticated', '33639981036', now(), 'seed-037@attractr.test', now(),
+  '{"provider":"phone","providers":["phone","email"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
 insert into auth.identities (provider_id, user_id, identity_data, provider, created_at, updated_at)
-values ('00000000-0000-4000-8000-000000000037', '00000000-0000-4000-8000-000000000037', '{"sub":"00000000-0000-4000-8000-000000000037","phone":"33639981036"}', 'phone', now(), now());
+values ('00000000-0000-4000-8000-000000000037', '00000000-0000-4000-8000-000000000037', '{"sub":"00000000-0000-4000-8000-000000000037","phone":"33639981036"}', 'phone', now(), now()),
+  ('00000000-0000-4000-8000-000000000037', '00000000-0000-4000-8000-000000000037', '{"sub":"00000000-0000-4000-8000-000000000037","email":"seed-037@attractr.test","email_verified":true}', 'email', now(), now());
 update public.profiles set first_name = 'Manon B.', birth_date = '1995-10-12', gender = 'woman',
   bio = null, open_to_couples = false, alcohol_free_icons = false,
   verification_status = 'verified', verified_at = now(),
   location = private.snap_point(43.629696, 3.83033), location_source = 'device', country_code = 'FR',
+  department_code = '34', region_code = '76',
   last_active_at = now() - interval '216 hours', is_seed = true, status = 'active'
 where id = '00000000-0000-4000-8000-000000000037';
 insert into public.consents (user_id, type, version) values
@@ -927,17 +1001,19 @@ insert into public.profile_prompts (user_id, position, question_code, answer) va
   ('00000000-0000-4000-8000-000000000037', 3, 'ideal_first_date', 'Une balade et une glace.');
 
 -- Julie B., Strasbourg
-insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, raw_app_meta_data, raw_user_meta_data,
+insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, email, email_confirmed_at, raw_app_meta_data, raw_user_meta_data,
   created_at, updated_at, confirmation_token, recovery_token, email_change_token_new, email_change,
   phone_change, phone_change_token, email_change_token_current, reauthentication_token)
-values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000038', 'authenticated', 'authenticated', '33639981037', now(),
-  '{"provider":"phone","providers":["phone"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
+values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000038', 'authenticated', 'authenticated', '33639981037', now(), 'seed-038@attractr.test', now(),
+  '{"provider":"phone","providers":["phone","email"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
 insert into auth.identities (provider_id, user_id, identity_data, provider, created_at, updated_at)
-values ('00000000-0000-4000-8000-000000000038', '00000000-0000-4000-8000-000000000038', '{"sub":"00000000-0000-4000-8000-000000000038","phone":"33639981037"}', 'phone', now(), now());
+values ('00000000-0000-4000-8000-000000000038', '00000000-0000-4000-8000-000000000038', '{"sub":"00000000-0000-4000-8000-000000000038","phone":"33639981037"}', 'phone', now(), now()),
+  ('00000000-0000-4000-8000-000000000038', '00000000-0000-4000-8000-000000000038', '{"sub":"00000000-0000-4000-8000-000000000038","email":"seed-038@attractr.test","email_verified":true}', 'email', now(), now());
 update public.profiles set first_name = 'Julie B.', birth_date = '2005-08-08', gender = 'woman',
   bio = 'Fan de randonnée et de jeux de société.', open_to_couples = false, alcohol_free_icons = false,
   verification_status = 'pending', verified_at = null,
   location = private.snap_point(48.602078, 7.774235), location_source = 'device', country_code = 'FR',
+  department_code = '67', region_code = '44',
   last_active_at = now() - interval '150 hours', is_seed = true, status = 'active'
 where id = '00000000-0000-4000-8000-000000000038';
 insert into public.consents (user_id, type, version) values
@@ -952,17 +1028,19 @@ insert into public.profile_prompts (user_id, position, question_code, answer) va
   ('00000000-0000-4000-8000-000000000038', 3, 'simple_pleasure', 'Les draps propres.');
 
 -- Charlie, Bordeaux
-insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, raw_app_meta_data, raw_user_meta_data,
+insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, email, email_confirmed_at, raw_app_meta_data, raw_user_meta_data,
   created_at, updated_at, confirmation_token, recovery_token, email_change_token_new, email_change,
   phone_change, phone_change_token, email_change_token_current, reauthentication_token)
-values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000039', 'authenticated', 'authenticated', '33639981038', now(),
-  '{"provider":"phone","providers":["phone"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
+values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000039', 'authenticated', 'authenticated', '33639981038', now(), 'seed-039@attractr.test', now(),
+  '{"provider":"phone","providers":["phone","email"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
 insert into auth.identities (provider_id, user_id, identity_data, provider, created_at, updated_at)
-values ('00000000-0000-4000-8000-000000000039', '00000000-0000-4000-8000-000000000039', '{"sub":"00000000-0000-4000-8000-000000000039","phone":"33639981038"}', 'phone', now(), now());
+values ('00000000-0000-4000-8000-000000000039', '00000000-0000-4000-8000-000000000039', '{"sub":"00000000-0000-4000-8000-000000000039","phone":"33639981038"}', 'phone', now(), now()),
+  ('00000000-0000-4000-8000-000000000039', '00000000-0000-4000-8000-000000000039', '{"sub":"00000000-0000-4000-8000-000000000039","email":"seed-039@attractr.test","email_verified":true}', 'email', now(), now());
 update public.profiles set first_name = 'Charlie', birth_date = '2005-05-12', gender = 'non_binary',
   bio = null, open_to_couples = true, alcohol_free_icons = true,
   verification_status = 'verified', verified_at = now(),
   location = private.snap_point(44.825832, -0.511108), location_source = 'device', country_code = 'FR',
+  department_code = '33', region_code = '75',
   last_active_at = now() - interval '223 hours', is_seed = true, status = 'active'
 where id = '00000000-0000-4000-8000-000000000039';
 insert into public.consents (user_id, type, version) values
@@ -977,17 +1055,19 @@ insert into public.profile_prompts (user_id, position, question_code, answer) va
   ('00000000-0000-4000-8000-000000000039', 3, 'simple_pleasure', 'Les draps propres.');
 
 -- Mila, Lille
-insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, raw_app_meta_data, raw_user_meta_data,
+insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, email, email_confirmed_at, raw_app_meta_data, raw_user_meta_data,
   created_at, updated_at, confirmation_token, recovery_token, email_change_token_new, email_change,
   phone_change, phone_change_token, email_change_token_current, reauthentication_token)
-values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000040', 'authenticated', 'authenticated', '33639981039', now(),
-  '{"provider":"phone","providers":["phone"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
+values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000040', 'authenticated', 'authenticated', '33639981039', now(), 'seed-040@attractr.test', now(),
+  '{"provider":"phone","providers":["phone","email"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
 insert into auth.identities (provider_id, user_id, identity_data, provider, created_at, updated_at)
-values ('00000000-0000-4000-8000-000000000040', '00000000-0000-4000-8000-000000000040', '{"sub":"00000000-0000-4000-8000-000000000040","phone":"33639981039"}', 'phone', now(), now());
+values ('00000000-0000-4000-8000-000000000040', '00000000-0000-4000-8000-000000000040', '{"sub":"00000000-0000-4000-8000-000000000040","phone":"33639981039"}', 'phone', now(), now()),
+  ('00000000-0000-4000-8000-000000000040', '00000000-0000-4000-8000-000000000040', '{"sub":"00000000-0000-4000-8000-000000000040","email":"seed-040@attractr.test","email_verified":true}', 'email', now(), now());
 update public.profiles set first_name = 'Mila', birth_date = '1989-01-04', gender = 'woman',
   bio = 'Fan de randonnée et de jeux de société.', open_to_couples = false, alcohol_free_icons = true,
   verification_status = 'verified', verified_at = now(),
   location = private.snap_point(50.620093, 3.00847), location_source = 'device', country_code = 'FR',
+  department_code = '59', region_code = '32',
   last_active_at = now() - interval '171 hours', is_seed = true, status = 'active'
 where id = '00000000-0000-4000-8000-000000000040';
 insert into public.consents (user_id, type, version) values
@@ -1002,17 +1082,19 @@ insert into public.profile_prompts (user_id, position, question_code, answer) va
   ('00000000-0000-4000-8000-000000000040', 3, 'currently_learning', 'L''espagnol avec une appli.');
 
 -- Léa D., Paris
-insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, raw_app_meta_data, raw_user_meta_data,
+insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, email, email_confirmed_at, raw_app_meta_data, raw_user_meta_data,
   created_at, updated_at, confirmation_token, recovery_token, email_change_token_new, email_change,
   phone_change, phone_change_token, email_change_token_current, reauthentication_token)
-values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000041', 'authenticated', 'authenticated', '33639981040', now(),
-  '{"provider":"phone","providers":["phone"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
+values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000041', 'authenticated', 'authenticated', '33639981040', now(), 'seed-041@attractr.test', now(),
+  '{"provider":"phone","providers":["phone","email"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
 insert into auth.identities (provider_id, user_id, identity_data, provider, created_at, updated_at)
-values ('00000000-0000-4000-8000-000000000041', '00000000-0000-4000-8000-000000000041', '{"sub":"00000000-0000-4000-8000-000000000041","phone":"33639981040"}', 'phone', now(), now());
+values ('00000000-0000-4000-8000-000000000041', '00000000-0000-4000-8000-000000000041', '{"sub":"00000000-0000-4000-8000-000000000041","phone":"33639981040"}', 'phone', now(), now()),
+  ('00000000-0000-4000-8000-000000000041', '00000000-0000-4000-8000-000000000041', '{"sub":"00000000-0000-4000-8000-000000000041","email":"seed-041@attractr.test","email_verified":true}', 'email', now(), now());
 update public.profiles set first_name = 'Léa D.', birth_date = '1986-10-04', gender = 'woman',
   bio = 'Curieux·se de tout, surtout des gens.', open_to_couples = false, alcohol_free_icons = true,
   verification_status = 'verified', verified_at = now(),
   location = private.snap_point(48.846188, 2.372118), location_source = 'device', country_code = 'FR',
+  department_code = '75', region_code = '11',
   last_active_at = now() - interval '96 hours', is_seed = true, status = 'active'
 where id = '00000000-0000-4000-8000-000000000041';
 insert into public.consents (user_id, type, version) values
@@ -1027,17 +1109,19 @@ insert into public.profile_prompts (user_id, position, question_code, answer) va
   ('00000000-0000-4000-8000-000000000041', 3, 'makes_me_laugh', 'Mes amis, surtout.');
 
 -- Raphaël, Marseille
-insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, raw_app_meta_data, raw_user_meta_data,
+insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, email, email_confirmed_at, raw_app_meta_data, raw_user_meta_data,
   created_at, updated_at, confirmation_token, recovery_token, email_change_token_new, email_change,
   phone_change, phone_change_token, email_change_token_current, reauthentication_token)
-values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000042', 'authenticated', 'authenticated', '33639981041', now(),
-  '{"provider":"phone","providers":["phone"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
+values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000042', 'authenticated', 'authenticated', '33639981041', now(), 'seed-042@attractr.test', now(),
+  '{"provider":"phone","providers":["phone","email"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
 insert into auth.identities (provider_id, user_id, identity_data, provider, created_at, updated_at)
-values ('00000000-0000-4000-8000-000000000042', '00000000-0000-4000-8000-000000000042', '{"sub":"00000000-0000-4000-8000-000000000042","phone":"33639981041"}', 'phone', now(), now());
+values ('00000000-0000-4000-8000-000000000042', '00000000-0000-4000-8000-000000000042', '{"sub":"00000000-0000-4000-8000-000000000042","phone":"33639981041"}', 'phone', now(), now()),
+  ('00000000-0000-4000-8000-000000000042', '00000000-0000-4000-8000-000000000042', '{"sub":"00000000-0000-4000-8000-000000000042","email":"seed-042@attractr.test","email_verified":true}', 'email', now(), now());
 update public.profiles set first_name = 'Raphaël', birth_date = '1971-12-27', gender = 'man',
   bio = 'Toujours partant·e pour une expo ou un ciné.', open_to_couples = false, alcohol_free_icons = false,
   verification_status = 'verified', verified_at = now(),
   location = private.snap_point(43.335169, 5.336945), location_source = 'device', country_code = 'FR',
+  department_code = '13', region_code = '93',
   last_active_at = now() - interval '157 hours', is_seed = true, status = 'active'
 where id = '00000000-0000-4000-8000-000000000042';
 insert into public.consents (user_id, type, version) values
@@ -1052,17 +1136,19 @@ insert into public.profile_prompts (user_id, position, question_code, answer) va
   ('00000000-0000-4000-8000-000000000042', 3, 'makes_me_laugh', 'Les jeux de mots nuls.');
 
 -- Julie C., Lyon
-insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, raw_app_meta_data, raw_user_meta_data,
+insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, email, email_confirmed_at, raw_app_meta_data, raw_user_meta_data,
   created_at, updated_at, confirmation_token, recovery_token, email_change_token_new, email_change,
   phone_change, phone_change_token, email_change_token_current, reauthentication_token)
-values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000043', 'authenticated', 'authenticated', '33639981042', now(),
-  '{"provider":"phone","providers":["phone"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
+values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000043', 'authenticated', 'authenticated', '33639981042', now(), 'seed-043@attractr.test', now(),
+  '{"provider":"phone","providers":["phone","email"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
 insert into auth.identities (provider_id, user_id, identity_data, provider, created_at, updated_at)
-values ('00000000-0000-4000-8000-000000000043', '00000000-0000-4000-8000-000000000043', '{"sub":"00000000-0000-4000-8000-000000000043","phone":"33639981042"}', 'phone', now(), now());
+values ('00000000-0000-4000-8000-000000000043', '00000000-0000-4000-8000-000000000043', '{"sub":"00000000-0000-4000-8000-000000000043","phone":"33639981042"}', 'phone', now(), now()),
+  ('00000000-0000-4000-8000-000000000043', '00000000-0000-4000-8000-000000000043', '{"sub":"00000000-0000-4000-8000-000000000043","email":"seed-043@attractr.test","email_verified":true}', 'email', now(), now());
 update public.profiles set first_name = 'Julie C.', birth_date = '1987-10-19', gender = 'woman',
   bio = 'Fan de randonnée et de jeux de société.', open_to_couples = false, alcohol_free_icons = false,
   verification_status = 'verified', verified_at = now(),
   location = private.snap_point(45.773252, 4.871109), location_source = 'device', country_code = 'FR',
+  department_code = '69', region_code = '84',
   last_active_at = now() - interval '35 hours', is_seed = true, status = 'active'
 where id = '00000000-0000-4000-8000-000000000043';
 insert into public.consents (user_id, type, version) values
@@ -1077,17 +1163,19 @@ insert into public.profile_prompts (user_id, position, question_code, answer) va
   ('00000000-0000-4000-8000-000000000043', 3, 'looking_for_someone_who', 'Aime les discussions tard le soir.');
 
 -- Nora C., Toulouse
-insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, raw_app_meta_data, raw_user_meta_data,
+insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, email, email_confirmed_at, raw_app_meta_data, raw_user_meta_data,
   created_at, updated_at, confirmation_token, recovery_token, email_change_token_new, email_change,
   phone_change, phone_change_token, email_change_token_current, reauthentication_token)
-values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000044', 'authenticated', 'authenticated', '33639981043', now(),
-  '{"provider":"phone","providers":["phone"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
+values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000044', 'authenticated', 'authenticated', '33639981043', now(), 'seed-044@attractr.test', now(),
+  '{"provider":"phone","providers":["phone","email"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
 insert into auth.identities (provider_id, user_id, identity_data, provider, created_at, updated_at)
-values ('00000000-0000-4000-8000-000000000044', '00000000-0000-4000-8000-000000000044', '{"sub":"00000000-0000-4000-8000-000000000044","phone":"33639981043"}', 'phone', now(), now());
+values ('00000000-0000-4000-8000-000000000044', '00000000-0000-4000-8000-000000000044', '{"sub":"00000000-0000-4000-8000-000000000044","phone":"33639981043"}', 'phone', now(), now()),
+  ('00000000-0000-4000-8000-000000000044', '00000000-0000-4000-8000-000000000044', '{"sub":"00000000-0000-4000-8000-000000000044","email":"seed-044@attractr.test","email_verified":true}', 'email', now(), now());
 update public.profiles set first_name = 'Nora C.', birth_date = '1976-04-24', gender = 'woman',
   bio = 'Curieux·se de tout, surtout des gens.', open_to_couples = false, alcohol_free_icons = false,
   verification_status = 'verified', verified_at = now(),
   location = private.snap_point(43.564278, 1.466072), location_source = 'device', country_code = 'FR',
+  department_code = '31', region_code = '76',
   last_active_at = now() - interval '85 hours', is_seed = true, status = 'active'
 where id = '00000000-0000-4000-8000-000000000044';
 insert into public.consents (user_id, type, version) values
@@ -1102,17 +1190,19 @@ insert into public.profile_prompts (user_id, position, question_code, answer) va
   ('00000000-0000-4000-8000-000000000044', 3, 'green_flag', 'Quelqu''un qui pose des questions.');
 
 -- Victor, Nice
-insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, raw_app_meta_data, raw_user_meta_data,
+insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, email, email_confirmed_at, raw_app_meta_data, raw_user_meta_data,
   created_at, updated_at, confirmation_token, recovery_token, email_change_token_new, email_change,
   phone_change, phone_change_token, email_change_token_current, reauthentication_token)
-values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000045', 'authenticated', 'authenticated', '33639981044', now(),
-  '{"provider":"phone","providers":["phone"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
+values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000045', 'authenticated', 'authenticated', '33639981044', now(), 'seed-045@attractr.test', now(),
+  '{"provider":"phone","providers":["phone","email"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
 insert into auth.identities (provider_id, user_id, identity_data, provider, created_at, updated_at)
-values ('00000000-0000-4000-8000-000000000045', '00000000-0000-4000-8000-000000000045', '{"sub":"00000000-0000-4000-8000-000000000045","phone":"33639981044"}', 'phone', now(), now());
+values ('00000000-0000-4000-8000-000000000045', '00000000-0000-4000-8000-000000000045', '{"sub":"00000000-0000-4000-8000-000000000045","phone":"33639981044"}', 'phone', now(), now()),
+  ('00000000-0000-4000-8000-000000000045', '00000000-0000-4000-8000-000000000045', '{"sub":"00000000-0000-4000-8000-000000000045","email":"seed-045@attractr.test","email_verified":true}', 'email', now(), now());
 update public.profiles set first_name = 'Victor', birth_date = '1994-09-15', gender = 'man',
   bio = 'Curieux·se de tout, surtout des gens.', open_to_couples = true, alcohol_free_icons = true,
   verification_status = 'verified', verified_at = now(),
   location = private.snap_point(43.669215, 7.235353), location_source = 'device', country_code = 'FR',
+  department_code = '06', region_code = '93',
   last_active_at = now() - interval '201 hours', is_seed = true, status = 'active'
 where id = '00000000-0000-4000-8000-000000000045';
 insert into public.consents (user_id, type, version) values
@@ -1127,17 +1217,19 @@ insert into public.profile_prompts (user_id, position, question_code, answer) va
   ('00000000-0000-4000-8000-000000000045', 3, 'unpopular_opinion', 'Le ketchup va avec tout.');
 
 -- Adam, Nantes
-insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, raw_app_meta_data, raw_user_meta_data,
+insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, email, email_confirmed_at, raw_app_meta_data, raw_user_meta_data,
   created_at, updated_at, confirmation_token, recovery_token, email_change_token_new, email_change,
   phone_change, phone_change_token, email_change_token_current, reauthentication_token)
-values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000046', 'authenticated', 'authenticated', '33639981045', now(),
-  '{"provider":"phone","providers":["phone"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
+values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000046', 'authenticated', 'authenticated', '33639981045', now(), 'seed-046@attractr.test', now(),
+  '{"provider":"phone","providers":["phone","email"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
 insert into auth.identities (provider_id, user_id, identity_data, provider, created_at, updated_at)
-values ('00000000-0000-4000-8000-000000000046', '00000000-0000-4000-8000-000000000046', '{"sub":"00000000-0000-4000-8000-000000000046","phone":"33639981045"}', 'phone', now(), now());
+values ('00000000-0000-4000-8000-000000000046', '00000000-0000-4000-8000-000000000046', '{"sub":"00000000-0000-4000-8000-000000000046","phone":"33639981045"}', 'phone', now(), now()),
+  ('00000000-0000-4000-8000-000000000046', '00000000-0000-4000-8000-000000000046', '{"sub":"00000000-0000-4000-8000-000000000046","email":"seed-046@attractr.test","email_verified":true}', 'email', now(), now());
 update public.profiles set first_name = 'Adam', birth_date = '1980-03-01', gender = 'man',
   bio = 'Curieux·se de tout, surtout des gens.', open_to_couples = true, alcohol_free_icons = false,
   verification_status = 'verified', verified_at = now(),
   location = private.snap_point(47.214663, -1.483839), location_source = 'device', country_code = 'FR',
+  department_code = '44', region_code = '52',
   last_active_at = now() - interval '7 hours', is_seed = true, status = 'active'
 where id = '00000000-0000-4000-8000-000000000046';
 insert into public.consents (user_id, type, version) values
@@ -1152,17 +1244,19 @@ insert into public.profile_prompts (user_id, position, question_code, answer) va
   ('00000000-0000-4000-8000-000000000046', 3, 'best_travel_memory', 'Camper en Bretagne sous la pluie.');
 
 -- Mehdi C., Montpellier
-insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, raw_app_meta_data, raw_user_meta_data,
+insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, email, email_confirmed_at, raw_app_meta_data, raw_user_meta_data,
   created_at, updated_at, confirmation_token, recovery_token, email_change_token_new, email_change,
   phone_change, phone_change_token, email_change_token_current, reauthentication_token)
-values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000047', 'authenticated', 'authenticated', '33639981046', now(),
-  '{"provider":"phone","providers":["phone"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
+values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000047', 'authenticated', 'authenticated', '33639981046', now(), 'seed-047@attractr.test', now(),
+  '{"provider":"phone","providers":["phone","email"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
 insert into auth.identities (provider_id, user_id, identity_data, provider, created_at, updated_at)
-values ('00000000-0000-4000-8000-000000000047', '00000000-0000-4000-8000-000000000047', '{"sub":"00000000-0000-4000-8000-000000000047","phone":"33639981046"}', 'phone', now(), now());
+values ('00000000-0000-4000-8000-000000000047', '00000000-0000-4000-8000-000000000047', '{"sub":"00000000-0000-4000-8000-000000000047","phone":"33639981046"}', 'phone', now(), now()),
+  ('00000000-0000-4000-8000-000000000047', '00000000-0000-4000-8000-000000000047', '{"sub":"00000000-0000-4000-8000-000000000047","email":"seed-047@attractr.test","email_verified":true}', 'email', now(), now());
 update public.profiles set first_name = 'Mehdi C.', birth_date = '1969-07-10', gender = 'man',
   bio = 'Fan de randonnée et de jeux de société.', open_to_couples = false, alcohol_free_icons = false,
   verification_status = 'verified', verified_at = now(),
   location = private.snap_point(43.631787, 3.857874), location_source = 'device', country_code = 'FR',
+  department_code = '34', region_code = '76',
   last_active_at = now() - interval '164 hours', is_seed = true, status = 'active'
 where id = '00000000-0000-4000-8000-000000000047';
 insert into public.consents (user_id, type, version) values
@@ -1177,17 +1271,19 @@ insert into public.profile_prompts (user_id, position, question_code, answer) va
   ('00000000-0000-4000-8000-000000000047', 3, 'looking_for_someone_who', 'Aime bouger le week-end.');
 
 -- Théo C., Strasbourg
-insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, raw_app_meta_data, raw_user_meta_data,
+insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, email, email_confirmed_at, raw_app_meta_data, raw_user_meta_data,
   created_at, updated_at, confirmation_token, recovery_token, email_change_token_new, email_change,
   phone_change, phone_change_token, email_change_token_current, reauthentication_token)
-values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000048', 'authenticated', 'authenticated', '33639981047', now(),
-  '{"provider":"phone","providers":["phone"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
+values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000048', 'authenticated', 'authenticated', '33639981047', now(), 'seed-048@attractr.test', now(),
+  '{"provider":"phone","providers":["phone","email"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
 insert into auth.identities (provider_id, user_id, identity_data, provider, created_at, updated_at)
-values ('00000000-0000-4000-8000-000000000048', '00000000-0000-4000-8000-000000000048', '{"sub":"00000000-0000-4000-8000-000000000048","phone":"33639981047"}', 'phone', now(), now());
+values ('00000000-0000-4000-8000-000000000048', '00000000-0000-4000-8000-000000000048', '{"sub":"00000000-0000-4000-8000-000000000048","phone":"33639981047"}', 'phone', now(), now()),
+  ('00000000-0000-4000-8000-000000000048', '00000000-0000-4000-8000-000000000048', '{"sub":"00000000-0000-4000-8000-000000000048","email":"seed-048@attractr.test","email_verified":true}', 'email', now(), now());
 update public.profiles set first_name = 'Théo C.', birth_date = '2001-10-05', gender = 'man',
   bio = null, open_to_couples = true, alcohol_free_icons = false,
   verification_status = 'verified', verified_at = now(),
   location = private.snap_point(48.594658, 7.756175), location_source = 'device', country_code = 'FR',
+  department_code = '67', region_code = '44',
   last_active_at = now() - interval '163 hours', is_seed = true, status = 'active'
 where id = '00000000-0000-4000-8000-000000000048';
 insert into public.consents (user_id, type, version) values
@@ -1202,17 +1298,19 @@ insert into public.profile_prompts (user_id, position, question_code, answer) va
   ('00000000-0000-4000-8000-000000000048', 3, 'never_without', 'Mon vélo.');
 
 -- Victor B., Bordeaux
-insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, raw_app_meta_data, raw_user_meta_data,
+insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, email, email_confirmed_at, raw_app_meta_data, raw_user_meta_data,
   created_at, updated_at, confirmation_token, recovery_token, email_change_token_new, email_change,
   phone_change, phone_change_token, email_change_token_current, reauthentication_token)
-values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000049', 'authenticated', 'authenticated', '33639981048', now(),
-  '{"provider":"phone","providers":["phone"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
+values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000049', 'authenticated', 'authenticated', '33639981048', now(), 'seed-049@attractr.test', now(),
+  '{"provider":"phone","providers":["phone","email"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
 insert into auth.identities (provider_id, user_id, identity_data, provider, created_at, updated_at)
-values ('00000000-0000-4000-8000-000000000049', '00000000-0000-4000-8000-000000000049', '{"sub":"00000000-0000-4000-8000-000000000049","phone":"33639981048"}', 'phone', now(), now());
+values ('00000000-0000-4000-8000-000000000049', '00000000-0000-4000-8000-000000000049', '{"sub":"00000000-0000-4000-8000-000000000049","phone":"33639981048"}', 'phone', now(), now()),
+  ('00000000-0000-4000-8000-000000000049', '00000000-0000-4000-8000-000000000049', '{"sub":"00000000-0000-4000-8000-000000000049","email":"seed-049@attractr.test","email_verified":true}', 'email', now(), now());
 update public.profiles set first_name = 'Victor B.', birth_date = '1989-05-12', gender = 'man',
   bio = null, open_to_couples = false, alcohol_free_icons = false,
   verification_status = 'verified', verified_at = now(),
   location = private.snap_point(44.872491, -0.567507), location_source = 'device', country_code = 'FR',
+  department_code = '33', region_code = '75',
   last_active_at = now() - interval '116 hours', is_seed = true, status = 'active'
 where id = '00000000-0000-4000-8000-000000000049';
 insert into public.consents (user_id, type, version) values
@@ -1227,17 +1325,19 @@ insert into public.profile_prompts (user_id, position, question_code, answer) va
   ('00000000-0000-4000-8000-000000000049', 3, 'green_flag', 'Quelqu''un qui pose des questions.');
 
 -- Hugo B., Lille
-insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, raw_app_meta_data, raw_user_meta_data,
+insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, email, email_confirmed_at, raw_app_meta_data, raw_user_meta_data,
   created_at, updated_at, confirmation_token, recovery_token, email_change_token_new, email_change,
   phone_change, phone_change_token, email_change_token_current, reauthentication_token)
-values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000050', 'authenticated', 'authenticated', '33639981049', now(),
-  '{"provider":"phone","providers":["phone"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
+values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000050', 'authenticated', 'authenticated', '33639981049', now(), 'seed-050@attractr.test', now(),
+  '{"provider":"phone","providers":["phone","email"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
 insert into auth.identities (provider_id, user_id, identity_data, provider, created_at, updated_at)
-values ('00000000-0000-4000-8000-000000000050', '00000000-0000-4000-8000-000000000050', '{"sub":"00000000-0000-4000-8000-000000000050","phone":"33639981049"}', 'phone', now(), now());
+values ('00000000-0000-4000-8000-000000000050', '00000000-0000-4000-8000-000000000050', '{"sub":"00000000-0000-4000-8000-000000000050","phone":"33639981049"}', 'phone', now(), now()),
+  ('00000000-0000-4000-8000-000000000050', '00000000-0000-4000-8000-000000000050', '{"sub":"00000000-0000-4000-8000-000000000050","email":"seed-050@attractr.test","email_verified":true}', 'email', now(), now());
 update public.profiles set first_name = 'Hugo B.', birth_date = '1998-02-26', gender = 'man',
   bio = 'Nouvelle ville, nouvelles rencontres.', open_to_couples = false, alcohol_free_icons = false,
   verification_status = 'verified', verified_at = now(),
   location = private.snap_point(50.657782, 3.034816), location_source = 'device', country_code = 'FR',
+  department_code = '59', region_code = '32',
   last_active_at = now() - interval '7 hours', is_seed = true, status = 'active'
 where id = '00000000-0000-4000-8000-000000000050';
 insert into public.consents (user_id, type, version) values
@@ -1252,17 +1352,19 @@ insert into public.profile_prompts (user_id, position, question_code, answer) va
   ('00000000-0000-4000-8000-000000000050', 3, 'simple_pleasure', 'Une terrasse au soleil.');
 
 -- Mehdi D., Paris
-insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, raw_app_meta_data, raw_user_meta_data,
+insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, email, email_confirmed_at, raw_app_meta_data, raw_user_meta_data,
   created_at, updated_at, confirmation_token, recovery_token, email_change_token_new, email_change,
   phone_change, phone_change_token, email_change_token_current, reauthentication_token)
-values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000051', 'authenticated', 'authenticated', '33639981050', now(),
-  '{"provider":"phone","providers":["phone"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
+values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000051', 'authenticated', 'authenticated', '33639981050', now(), 'seed-051@attractr.test', now(),
+  '{"provider":"phone","providers":["phone","email"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
 insert into auth.identities (provider_id, user_id, identity_data, provider, created_at, updated_at)
-values ('00000000-0000-4000-8000-000000000051', '00000000-0000-4000-8000-000000000051', '{"sub":"00000000-0000-4000-8000-000000000051","phone":"33639981050"}', 'phone', now(), now());
+values ('00000000-0000-4000-8000-000000000051', '00000000-0000-4000-8000-000000000051', '{"sub":"00000000-0000-4000-8000-000000000051","phone":"33639981050"}', 'phone', now(), now()),
+  ('00000000-0000-4000-8000-000000000051', '00000000-0000-4000-8000-000000000051', '{"sub":"00000000-0000-4000-8000-000000000051","email":"seed-051@attractr.test","email_verified":true}', 'email', now(), now());
 update public.profiles set first_name = 'Mehdi D.', birth_date = '1990-09-17', gender = 'man',
   bio = null, open_to_couples = false, alcohol_free_icons = false,
   verification_status = 'verified', verified_at = now(),
   location = private.snap_point(48.825675, 2.374596), location_source = 'device', country_code = 'FR',
+  department_code = '75', region_code = '11',
   last_active_at = now() - interval '110 hours', is_seed = true, status = 'active'
 where id = '00000000-0000-4000-8000-000000000051';
 insert into public.consents (user_id, type, version) values
@@ -1277,17 +1379,19 @@ insert into public.profile_prompts (user_id, position, question_code, answer) va
   ('00000000-0000-4000-8000-000000000051', 3, 'currently_learning', 'L''espagnol avec une appli.');
 
 -- Julie D., Marseille
-insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, raw_app_meta_data, raw_user_meta_data,
+insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, email, email_confirmed_at, raw_app_meta_data, raw_user_meta_data,
   created_at, updated_at, confirmation_token, recovery_token, email_change_token_new, email_change,
   phone_change, phone_change_token, email_change_token_current, reauthentication_token)
-values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000052', 'authenticated', 'authenticated', '33639981051', now(),
-  '{"provider":"phone","providers":["phone"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
+values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000052', 'authenticated', 'authenticated', '33639981051', now(), 'seed-052@attractr.test', now(),
+  '{"provider":"phone","providers":["phone","email"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
 insert into auth.identities (provider_id, user_id, identity_data, provider, created_at, updated_at)
-values ('00000000-0000-4000-8000-000000000052', '00000000-0000-4000-8000-000000000052', '{"sub":"00000000-0000-4000-8000-000000000052","phone":"33639981051"}', 'phone', now(), now());
+values ('00000000-0000-4000-8000-000000000052', '00000000-0000-4000-8000-000000000052', '{"sub":"00000000-0000-4000-8000-000000000052","phone":"33639981051"}', 'phone', now(), now()),
+  ('00000000-0000-4000-8000-000000000052', '00000000-0000-4000-8000-000000000052', '{"sub":"00000000-0000-4000-8000-000000000052","email":"seed-052@attractr.test","email_verified":true}', 'email', now(), now());
 update public.profiles set first_name = 'Julie D.', birth_date = '1971-06-07', gender = 'woman',
   bio = null, open_to_couples = false, alcohol_free_icons = false,
   verification_status = 'verified', verified_at = now(),
   location = private.snap_point(43.278074, 5.397742), location_source = 'device', country_code = 'FR',
+  department_code = '13', region_code = '93',
   last_active_at = now() - interval '124 hours', is_seed = true, status = 'active'
 where id = '00000000-0000-4000-8000-000000000052';
 insert into public.consents (user_id, type, version) values
@@ -1302,17 +1406,19 @@ insert into public.profile_prompts (user_id, position, question_code, answer) va
   ('00000000-0000-4000-8000-000000000052', 3, 'perfect_sunday', 'Marché le matin, sieste l''après-midi.');
 
 -- Malik, Lyon
-insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, raw_app_meta_data, raw_user_meta_data,
+insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, email, email_confirmed_at, raw_app_meta_data, raw_user_meta_data,
   created_at, updated_at, confirmation_token, recovery_token, email_change_token_new, email_change,
   phone_change, phone_change_token, email_change_token_current, reauthentication_token)
-values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000053', 'authenticated', 'authenticated', '33639981052', now(),
-  '{"provider":"phone","providers":["phone"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
+values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000053', 'authenticated', 'authenticated', '33639981052', now(), 'seed-053@attractr.test', now(),
+  '{"provider":"phone","providers":["phone","email"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
 insert into auth.identities (provider_id, user_id, identity_data, provider, created_at, updated_at)
-values ('00000000-0000-4000-8000-000000000053', '00000000-0000-4000-8000-000000000053', '{"sub":"00000000-0000-4000-8000-000000000053","phone":"33639981052"}', 'phone', now(), now());
+values ('00000000-0000-4000-8000-000000000053', '00000000-0000-4000-8000-000000000053', '{"sub":"00000000-0000-4000-8000-000000000053","phone":"33639981052"}', 'phone', now(), now()),
+  ('00000000-0000-4000-8000-000000000053', '00000000-0000-4000-8000-000000000053', '{"sub":"00000000-0000-4000-8000-000000000053","email":"seed-053@attractr.test","email_verified":true}', 'email', now(), now());
 update public.profiles set first_name = 'Malik', birth_date = '1992-06-19', gender = 'man',
   bio = 'Je cuisine mieux que je ne danse.', open_to_couples = false, alcohol_free_icons = false,
   verification_status = 'verified', verified_at = now(),
   location = private.snap_point(45.758685, 4.909578), location_source = 'device', country_code = 'FR',
+  department_code = '69', region_code = '84',
   last_active_at = now() - interval '78 hours', is_seed = true, status = 'active'
 where id = '00000000-0000-4000-8000-000000000053';
 insert into public.consents (user_id, type, version) values
@@ -1327,17 +1433,19 @@ insert into public.profile_prompts (user_id, position, question_code, answer) va
   ('00000000-0000-4000-8000-000000000053', 3, 'ideal_first_date', 'Un concert dans une petite salle.');
 
 -- Victor C., Toulouse
-insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, raw_app_meta_data, raw_user_meta_data,
+insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, email, email_confirmed_at, raw_app_meta_data, raw_user_meta_data,
   created_at, updated_at, confirmation_token, recovery_token, email_change_token_new, email_change,
   phone_change, phone_change_token, email_change_token_current, reauthentication_token)
-values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000054', 'authenticated', 'authenticated', '33639981053', now(),
-  '{"provider":"phone","providers":["phone"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
+values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000054', 'authenticated', 'authenticated', '33639981053', now(), 'seed-054@attractr.test', now(),
+  '{"provider":"phone","providers":["phone","email"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
 insert into auth.identities (provider_id, user_id, identity_data, provider, created_at, updated_at)
-values ('00000000-0000-4000-8000-000000000054', '00000000-0000-4000-8000-000000000054', '{"sub":"00000000-0000-4000-8000-000000000054","phone":"33639981053"}', 'phone', now(), now());
+values ('00000000-0000-4000-8000-000000000054', '00000000-0000-4000-8000-000000000054', '{"sub":"00000000-0000-4000-8000-000000000054","phone":"33639981053"}', 'phone', now(), now()),
+  ('00000000-0000-4000-8000-000000000054', '00000000-0000-4000-8000-000000000054', '{"sub":"00000000-0000-4000-8000-000000000054","email":"seed-054@attractr.test","email_verified":true}', 'email', now(), now());
 update public.profiles set first_name = 'Victor C.', birth_date = '1991-07-05', gender = 'man',
   bio = 'Je cuisine mieux que je ne danse.', open_to_couples = true, alcohol_free_icons = false,
   verification_status = 'verified', verified_at = now(),
   location = private.snap_point(43.592402, 1.391594), location_source = 'device', country_code = 'FR',
+  department_code = '31', region_code = '76',
   last_active_at = now() - interval '130 hours', is_seed = true, status = 'active'
 where id = '00000000-0000-4000-8000-000000000054';
 insert into public.consents (user_id, type, version) values
@@ -1352,17 +1460,19 @@ insert into public.profile_prompts (user_id, position, question_code, answer) va
   ('00000000-0000-4000-8000-000000000054', 3, 'never_without', 'Mon vélo.');
 
 -- Maxime, Nice
-insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, raw_app_meta_data, raw_user_meta_data,
+insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, email, email_confirmed_at, raw_app_meta_data, raw_user_meta_data,
   created_at, updated_at, confirmation_token, recovery_token, email_change_token_new, email_change,
   phone_change, phone_change_token, email_change_token_current, reauthentication_token)
-values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000055', 'authenticated', 'authenticated', '33639981054', now(),
-  '{"provider":"phone","providers":["phone"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
+values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000055', 'authenticated', 'authenticated', '33639981054', now(), 'seed-055@attractr.test', now(),
+  '{"provider":"phone","providers":["phone","email"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
 insert into auth.identities (provider_id, user_id, identity_data, provider, created_at, updated_at)
-values ('00000000-0000-4000-8000-000000000055', '00000000-0000-4000-8000-000000000055', '{"sub":"00000000-0000-4000-8000-000000000055","phone":"33639981054"}', 'phone', now(), now());
+values ('00000000-0000-4000-8000-000000000055', '00000000-0000-4000-8000-000000000055', '{"sub":"00000000-0000-4000-8000-000000000055","phone":"33639981054"}', 'phone', now(), now()),
+  ('00000000-0000-4000-8000-000000000055', '00000000-0000-4000-8000-000000000055', '{"sub":"00000000-0000-4000-8000-000000000055","email":"seed-055@attractr.test","email_verified":true}', 'email', now(), now());
 update public.profiles set first_name = 'Maxime', birth_date = '1995-12-27', gender = 'non_binary',
   bio = 'Fan de randonnée et de jeux de société.', open_to_couples = false, alcohol_free_icons = false,
   verification_status = 'verified', verified_at = now(),
   location = private.snap_point(43.729658, 7.212252), location_source = 'device', country_code = 'FR',
+  department_code = '06', region_code = '93',
   last_active_at = now() - interval '93 hours', is_seed = true, status = 'active'
 where id = '00000000-0000-4000-8000-000000000055';
 insert into public.consents (user_id, type, version) values
@@ -1377,17 +1487,19 @@ insert into public.profile_prompts (user_id, position, question_code, answer) va
   ('00000000-0000-4000-8000-000000000055', 3, 'perfect_sunday', 'Une rando et un bon repas.');
 
 -- Louise, Nantes
-insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, raw_app_meta_data, raw_user_meta_data,
+insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, email, email_confirmed_at, raw_app_meta_data, raw_user_meta_data,
   created_at, updated_at, confirmation_token, recovery_token, email_change_token_new, email_change,
   phone_change, phone_change_token, email_change_token_current, reauthentication_token)
-values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000056', 'authenticated', 'authenticated', '33639981055', now(),
-  '{"provider":"phone","providers":["phone"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
+values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000056', 'authenticated', 'authenticated', '33639981055', now(), 'seed-056@attractr.test', now(),
+  '{"provider":"phone","providers":["phone","email"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
 insert into auth.identities (provider_id, user_id, identity_data, provider, created_at, updated_at)
-values ('00000000-0000-4000-8000-000000000056', '00000000-0000-4000-8000-000000000056', '{"sub":"00000000-0000-4000-8000-000000000056","phone":"33639981055"}', 'phone', now(), now());
+values ('00000000-0000-4000-8000-000000000056', '00000000-0000-4000-8000-000000000056', '{"sub":"00000000-0000-4000-8000-000000000056","phone":"33639981055"}', 'phone', now(), now()),
+  ('00000000-0000-4000-8000-000000000056', '00000000-0000-4000-8000-000000000056', '{"sub":"00000000-0000-4000-8000-000000000056","email":"seed-056@attractr.test","email_verified":true}', 'email', now(), now());
 update public.profiles set first_name = 'Louise', birth_date = '1988-08-23', gender = 'woman',
   bio = null, open_to_couples = false, alcohol_free_icons = false,
   verification_status = 'verified', verified_at = now(),
   location = private.snap_point(47.227382, -1.566688), location_source = 'device', country_code = 'FR',
+  department_code = '44', region_code = '52',
   last_active_at = now() - interval '175 hours', is_seed = true, status = 'active'
 where id = '00000000-0000-4000-8000-000000000056';
 insert into public.consents (user_id, type, version) values
@@ -1402,17 +1514,19 @@ insert into public.profile_prompts (user_id, position, question_code, answer) va
   ('00000000-0000-4000-8000-000000000056', 3, 'best_travel_memory', 'Camper en Bretagne sous la pluie.');
 
 -- Lucie B., Montpellier
-insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, raw_app_meta_data, raw_user_meta_data,
+insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, email, email_confirmed_at, raw_app_meta_data, raw_user_meta_data,
   created_at, updated_at, confirmation_token, recovery_token, email_change_token_new, email_change,
   phone_change, phone_change_token, email_change_token_current, reauthentication_token)
-values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000057', 'authenticated', 'authenticated', '33639981056', now(),
-  '{"provider":"phone","providers":["phone"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
+values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000057', 'authenticated', 'authenticated', '33639981056', now(), 'seed-057@attractr.test', now(),
+  '{"provider":"phone","providers":["phone","email"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
 insert into auth.identities (provider_id, user_id, identity_data, provider, created_at, updated_at)
-values ('00000000-0000-4000-8000-000000000057', '00000000-0000-4000-8000-000000000057', '{"sub":"00000000-0000-4000-8000-000000000057","phone":"33639981056"}', 'phone', now(), now());
+values ('00000000-0000-4000-8000-000000000057', '00000000-0000-4000-8000-000000000057', '{"sub":"00000000-0000-4000-8000-000000000057","phone":"33639981056"}', 'phone', now(), now()),
+  ('00000000-0000-4000-8000-000000000057', '00000000-0000-4000-8000-000000000057', '{"sub":"00000000-0000-4000-8000-000000000057","email":"seed-057@attractr.test","email_verified":true}', 'email', now(), now());
 update public.profiles set first_name = 'Lucie B.', birth_date = '1978-02-28', gender = 'woman',
   bio = null, open_to_couples = false, alcohol_free_icons = false,
   verification_status = 'verified', verified_at = now(),
   location = private.snap_point(43.576153, 3.839411), location_source = 'device', country_code = 'FR',
+  department_code = '34', region_code = '76',
   last_active_at = now() - interval '193 hours', is_seed = true, status = 'active'
 where id = '00000000-0000-4000-8000-000000000057';
 insert into public.consents (user_id, type, version) values
@@ -1427,17 +1541,19 @@ insert into public.profile_prompts (user_id, position, question_code, answer) va
   ('00000000-0000-4000-8000-000000000057', 3, 'best_travel_memory', 'Un train de nuit en Italie.');
 
 -- Clara B., Strasbourg
-insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, raw_app_meta_data, raw_user_meta_data,
+insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, email, email_confirmed_at, raw_app_meta_data, raw_user_meta_data,
   created_at, updated_at, confirmation_token, recovery_token, email_change_token_new, email_change,
   phone_change, phone_change_token, email_change_token_current, reauthentication_token)
-values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000058', 'authenticated', 'authenticated', '33639981057', now(),
-  '{"provider":"phone","providers":["phone"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
+values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000058', 'authenticated', 'authenticated', '33639981057', now(), 'seed-058@attractr.test', now(),
+  '{"provider":"phone","providers":["phone","email"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
 insert into auth.identities (provider_id, user_id, identity_data, provider, created_at, updated_at)
-values ('00000000-0000-4000-8000-000000000058', '00000000-0000-4000-8000-000000000058', '{"sub":"00000000-0000-4000-8000-000000000058","phone":"33639981057"}', 'phone', now(), now());
+values ('00000000-0000-4000-8000-000000000058', '00000000-0000-4000-8000-000000000058', '{"sub":"00000000-0000-4000-8000-000000000058","phone":"33639981057"}', 'phone', now(), now()),
+  ('00000000-0000-4000-8000-000000000058', '00000000-0000-4000-8000-000000000058', '{"sub":"00000000-0000-4000-8000-000000000058","email":"seed-058@attractr.test","email_verified":true}', 'email', now(), now());
 update public.profiles set first_name = 'Clara B.', birth_date = '1996-08-22', gender = 'woman',
   bio = null, open_to_couples = false, alcohol_free_icons = false,
   verification_status = 'pending', verified_at = null,
   location = private.snap_point(48.578096, 7.787161), location_source = 'device', country_code = 'FR',
+  department_code = '67', region_code = '44',
   last_active_at = now() - interval '170 hours', is_seed = true, status = 'active'
 where id = '00000000-0000-4000-8000-000000000058';
 insert into public.consents (user_id, type, version) values
@@ -1452,17 +1568,19 @@ insert into public.profile_prompts (user_id, position, question_code, answer) va
   ('00000000-0000-4000-8000-000000000058', 3, 'simple_pleasure', 'Les draps propres.');
 
 -- Nora D., Bordeaux
-insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, raw_app_meta_data, raw_user_meta_data,
+insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, email, email_confirmed_at, raw_app_meta_data, raw_user_meta_data,
   created_at, updated_at, confirmation_token, recovery_token, email_change_token_new, email_change,
   phone_change, phone_change_token, email_change_token_current, reauthentication_token)
-values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000059', 'authenticated', 'authenticated', '33639981058', now(),
-  '{"provider":"phone","providers":["phone"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
+values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000059', 'authenticated', 'authenticated', '33639981058', now(), 'seed-059@attractr.test', now(),
+  '{"provider":"phone","providers":["phone","email"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
 insert into auth.identities (provider_id, user_id, identity_data, provider, created_at, updated_at)
-values ('00000000-0000-4000-8000-000000000059', '00000000-0000-4000-8000-000000000059', '{"sub":"00000000-0000-4000-8000-000000000059","phone":"33639981058"}', 'phone', now(), now());
+values ('00000000-0000-4000-8000-000000000059', '00000000-0000-4000-8000-000000000059', '{"sub":"00000000-0000-4000-8000-000000000059","phone":"33639981058"}', 'phone', now(), now()),
+  ('00000000-0000-4000-8000-000000000059', '00000000-0000-4000-8000-000000000059', '{"sub":"00000000-0000-4000-8000-000000000059","email":"seed-059@attractr.test","email_verified":true}', 'email', now(), now());
 update public.profiles set first_name = 'Nora D.', birth_date = '2003-04-26', gender = 'woman',
   bio = 'Je cuisine mieux que je ne danse.', open_to_couples = false, alcohol_free_icons = false,
   verification_status = 'verified', verified_at = now(),
   location = private.snap_point(44.859588, -0.530447), location_source = 'device', country_code = 'FR',
+  department_code = '33', region_code = '75',
   last_active_at = now() - interval '89 hours', is_seed = true, status = 'active'
 where id = '00000000-0000-4000-8000-000000000059';
 insert into public.consents (user_id, type, version) values
@@ -1477,17 +1595,19 @@ insert into public.profile_prompts (user_id, position, question_code, answer) va
   ('00000000-0000-4000-8000-000000000059', 3, 'looking_for_someone_who', 'Ne se prend pas trop au sérieux.');
 
 -- Martin C., Lille
-insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, raw_app_meta_data, raw_user_meta_data,
+insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, email, email_confirmed_at, raw_app_meta_data, raw_user_meta_data,
   created_at, updated_at, confirmation_token, recovery_token, email_change_token_new, email_change,
   phone_change, phone_change_token, email_change_token_current, reauthentication_token)
-values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000060', 'authenticated', 'authenticated', '33639981059', now(),
-  '{"provider":"phone","providers":["phone"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
+values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000060', 'authenticated', 'authenticated', '33639981059', now(), 'seed-060@attractr.test', now(),
+  '{"provider":"phone","providers":["phone","email"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
 insert into auth.identities (provider_id, user_id, identity_data, provider, created_at, updated_at)
-values ('00000000-0000-4000-8000-000000000060', '00000000-0000-4000-8000-000000000060', '{"sub":"00000000-0000-4000-8000-000000000060","phone":"33639981059"}', 'phone', now(), now());
+values ('00000000-0000-4000-8000-000000000060', '00000000-0000-4000-8000-000000000060', '{"sub":"00000000-0000-4000-8000-000000000060","phone":"33639981059"}', 'phone', now(), now()),
+  ('00000000-0000-4000-8000-000000000060', '00000000-0000-4000-8000-000000000060', '{"sub":"00000000-0000-4000-8000-000000000060","email":"seed-060@attractr.test","email_verified":true}', 'email', now(), now());
 update public.profiles set first_name = 'Martin C.', birth_date = '2005-01-11', gender = 'man',
   bio = 'Curieux·se de tout, surtout des gens.', open_to_couples = false, alcohol_free_icons = false,
   verification_status = 'pending', verified_at = null,
   location = private.snap_point(50.655533, 3.019524), location_source = 'device', country_code = 'FR',
+  department_code = '59', region_code = '32',
   last_active_at = now() - interval '123 hours', is_seed = true, status = 'active'
 where id = '00000000-0000-4000-8000-000000000060';
 insert into public.consents (user_id, type, version) values
@@ -1502,17 +1622,19 @@ insert into public.profile_prompts (user_id, position, question_code, answer) va
   ('00000000-0000-4000-8000-000000000060', 3, 'green_flag', 'Quelqu''un qui pose des questions.');
 
 -- Andréa, Paris
-insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, raw_app_meta_data, raw_user_meta_data,
+insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, email, email_confirmed_at, raw_app_meta_data, raw_user_meta_data,
   created_at, updated_at, confirmation_token, recovery_token, email_change_token_new, email_change,
   phone_change, phone_change_token, email_change_token_current, reauthentication_token)
-values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000061', 'authenticated', 'authenticated', '33639981060', now(),
-  '{"provider":"phone","providers":["phone"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
+values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000061', 'authenticated', 'authenticated', '33639981060', now(), 'seed-061@attractr.test', now(),
+  '{"provider":"phone","providers":["phone","email"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
 insert into auth.identities (provider_id, user_id, identity_data, provider, created_at, updated_at)
-values ('00000000-0000-4000-8000-000000000061', '00000000-0000-4000-8000-000000000061', '{"sub":"00000000-0000-4000-8000-000000000061","phone":"33639981060"}', 'phone', now(), now());
+values ('00000000-0000-4000-8000-000000000061', '00000000-0000-4000-8000-000000000061', '{"sub":"00000000-0000-4000-8000-000000000061","phone":"33639981060"}', 'phone', now(), now()),
+  ('00000000-0000-4000-8000-000000000061', '00000000-0000-4000-8000-000000000061', '{"sub":"00000000-0000-4000-8000-000000000061","email":"seed-061@attractr.test","email_verified":true}', 'email', now(), now());
 update public.profiles set first_name = 'Andréa', birth_date = '1982-08-08', gender = 'non_binary',
   bio = 'Nouvelle ville, nouvelles rencontres.', open_to_couples = false, alcohol_free_icons = false,
   verification_status = 'verified', verified_at = now(),
   location = private.snap_point(48.833903, 2.397003), location_source = 'device', country_code = 'FR',
+  department_code = '75', region_code = '11',
   last_active_at = now() - interval '220 hours', is_seed = true, status = 'active'
 where id = '00000000-0000-4000-8000-000000000061';
 insert into public.consents (user_id, type, version) values
@@ -1527,17 +1649,19 @@ insert into public.profile_prompts (user_id, position, question_code, answer) va
   ('00000000-0000-4000-8000-000000000061', 3, 'perfect_sunday', 'Une rando et un bon repas.');
 
 -- Louise B., Marseille
-insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, raw_app_meta_data, raw_user_meta_data,
+insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, email, email_confirmed_at, raw_app_meta_data, raw_user_meta_data,
   created_at, updated_at, confirmation_token, recovery_token, email_change_token_new, email_change,
   phone_change, phone_change_token, email_change_token_current, reauthentication_token)
-values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000062', 'authenticated', 'authenticated', '33639981061', now(),
-  '{"provider":"phone","providers":["phone"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
+values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000062', 'authenticated', 'authenticated', '33639981061', now(), 'seed-062@attractr.test', now(),
+  '{"provider":"phone","providers":["phone","email"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
 insert into auth.identities (provider_id, user_id, identity_data, provider, created_at, updated_at)
-values ('00000000-0000-4000-8000-000000000062', '00000000-0000-4000-8000-000000000062', '{"sub":"00000000-0000-4000-8000-000000000062","phone":"33639981061"}', 'phone', now(), now());
+values ('00000000-0000-4000-8000-000000000062', '00000000-0000-4000-8000-000000000062', '{"sub":"00000000-0000-4000-8000-000000000062","phone":"33639981061"}', 'phone', now(), now()),
+  ('00000000-0000-4000-8000-000000000062', '00000000-0000-4000-8000-000000000062', '{"sub":"00000000-0000-4000-8000-000000000062","email":"seed-062@attractr.test","email_verified":true}', 'email', now(), now());
 update public.profiles set first_name = 'Louise B.', birth_date = '1984-07-11', gender = 'woman',
   bio = null, open_to_couples = false, alcohol_free_icons = true,
   verification_status = 'verified', verified_at = now(),
   location = private.snap_point(43.31826, 5.335762), location_source = 'device', country_code = 'FR',
+  department_code = '13', region_code = '93',
   last_active_at = now() - interval '109 hours', is_seed = true, status = 'active'
 where id = '00000000-0000-4000-8000-000000000062';
 insert into public.consents (user_id, type, version) values
@@ -1552,17 +1676,19 @@ insert into public.profile_prompts (user_id, position, question_code, answer) va
   ('00000000-0000-4000-8000-000000000062', 3, 'never_without', 'Mes écouteurs.');
 
 -- Adam B., Lyon
-insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, raw_app_meta_data, raw_user_meta_data,
+insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, email, email_confirmed_at, raw_app_meta_data, raw_user_meta_data,
   created_at, updated_at, confirmation_token, recovery_token, email_change_token_new, email_change,
   phone_change, phone_change_token, email_change_token_current, reauthentication_token)
-values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000063', 'authenticated', 'authenticated', '33639981062', now(),
-  '{"provider":"phone","providers":["phone"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
+values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000063', 'authenticated', 'authenticated', '33639981062', now(), 'seed-063@attractr.test', now(),
+  '{"provider":"phone","providers":["phone","email"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
 insert into auth.identities (provider_id, user_id, identity_data, provider, created_at, updated_at)
-values ('00000000-0000-4000-8000-000000000063', '00000000-0000-4000-8000-000000000063', '{"sub":"00000000-0000-4000-8000-000000000063","phone":"33639981062"}', 'phone', now(), now());
+values ('00000000-0000-4000-8000-000000000063', '00000000-0000-4000-8000-000000000063', '{"sub":"00000000-0000-4000-8000-000000000063","phone":"33639981062"}', 'phone', now(), now()),
+  ('00000000-0000-4000-8000-000000000063', '00000000-0000-4000-8000-000000000063', '{"sub":"00000000-0000-4000-8000-000000000063","email":"seed-063@attractr.test","email_verified":true}', 'email', now(), now());
 update public.profiles set first_name = 'Adam B.', birth_date = '1975-02-23', gender = 'man',
   bio = 'Je cuisine mieux que je ne danse.', open_to_couples = false, alcohol_free_icons = false,
   verification_status = 'verified', verified_at = now(),
   location = private.snap_point(45.737657, 4.785352), location_source = 'device', country_code = 'FR',
+  department_code = '69', region_code = '84',
   last_active_at = now() - interval '6 hours', is_seed = true, status = 'active'
 where id = '00000000-0000-4000-8000-000000000063';
 insert into public.consents (user_id, type, version) values
@@ -1577,17 +1703,19 @@ insert into public.profile_prompts (user_id, position, question_code, answer) va
   ('00000000-0000-4000-8000-000000000063', 3, 'never_without', 'Un livre dans le sac.');
 
 -- Hugo C., Toulouse
-insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, raw_app_meta_data, raw_user_meta_data,
+insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, email, email_confirmed_at, raw_app_meta_data, raw_user_meta_data,
   created_at, updated_at, confirmation_token, recovery_token, email_change_token_new, email_change,
   phone_change, phone_change_token, email_change_token_current, reauthentication_token)
-values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000064', 'authenticated', 'authenticated', '33639981063', now(),
-  '{"provider":"phone","providers":["phone"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
+values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000064', 'authenticated', 'authenticated', '33639981063', now(), 'seed-064@attractr.test', now(),
+  '{"provider":"phone","providers":["phone","email"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
 insert into auth.identities (provider_id, user_id, identity_data, provider, created_at, updated_at)
-values ('00000000-0000-4000-8000-000000000064', '00000000-0000-4000-8000-000000000064', '{"sub":"00000000-0000-4000-8000-000000000064","phone":"33639981063"}', 'phone', now(), now());
+values ('00000000-0000-4000-8000-000000000064', '00000000-0000-4000-8000-000000000064', '{"sub":"00000000-0000-4000-8000-000000000064","phone":"33639981063"}', 'phone', now(), now()),
+  ('00000000-0000-4000-8000-000000000064', '00000000-0000-4000-8000-000000000064', '{"sub":"00000000-0000-4000-8000-000000000064","email":"seed-064@attractr.test","email_verified":true}', 'email', now(), now());
 update public.profiles set first_name = 'Hugo C.', birth_date = '2000-01-18', gender = 'man',
   bio = null, open_to_couples = true, alcohol_free_icons = false,
   verification_status = 'verified', verified_at = now(),
   location = private.snap_point(43.642664, 1.485878), location_source = 'device', country_code = 'FR',
+  department_code = '31', region_code = '76',
   last_active_at = now() - interval '111 hours', is_seed = true, status = 'active'
 where id = '00000000-0000-4000-8000-000000000064';
 insert into public.consents (user_id, type, version) values
@@ -1602,17 +1730,19 @@ insert into public.profile_prompts (user_id, position, question_code, answer) va
   ('00000000-0000-4000-8000-000000000064', 3, 'unpopular_opinion', 'Les séries sont trop longues.');
 
 -- Camille, Nice
-insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, raw_app_meta_data, raw_user_meta_data,
+insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, email, email_confirmed_at, raw_app_meta_data, raw_user_meta_data,
   created_at, updated_at, confirmation_token, recovery_token, email_change_token_new, email_change,
   phone_change, phone_change_token, email_change_token_current, reauthentication_token)
-values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000065', 'authenticated', 'authenticated', '33639981064', now(),
-  '{"provider":"phone","providers":["phone"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
+values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000065', 'authenticated', 'authenticated', '33639981064', now(), 'seed-065@attractr.test', now(),
+  '{"provider":"phone","providers":["phone","email"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
 insert into auth.identities (provider_id, user_id, identity_data, provider, created_at, updated_at)
-values ('00000000-0000-4000-8000-000000000065', '00000000-0000-4000-8000-000000000065', '{"sub":"00000000-0000-4000-8000-000000000065","phone":"33639981064"}', 'phone', now(), now());
+values ('00000000-0000-4000-8000-000000000065', '00000000-0000-4000-8000-000000000065', '{"sub":"00000000-0000-4000-8000-000000000065","phone":"33639981064"}', 'phone', now(), now()),
+  ('00000000-0000-4000-8000-000000000065', '00000000-0000-4000-8000-000000000065', '{"sub":"00000000-0000-4000-8000-000000000065","email":"seed-065@attractr.test","email_verified":true}', 'email', now(), now());
 update public.profiles set first_name = 'Camille', birth_date = '1994-06-15', gender = 'non_binary',
   bio = 'Nouvelle ville, nouvelles rencontres.', open_to_couples = false, alcohol_free_icons = false,
   verification_status = 'verified', verified_at = now(),
   location = private.snap_point(43.763058, 7.27676), location_source = 'device', country_code = 'FR',
+  department_code = '06', region_code = '93',
   last_active_at = now() - interval '154 hours', is_seed = true, status = 'active'
 where id = '00000000-0000-4000-8000-000000000065';
 insert into public.consents (user_id, type, version) values
@@ -1627,17 +1757,19 @@ insert into public.profile_prompts (user_id, position, question_code, answer) va
   ('00000000-0000-4000-8000-000000000065', 3, 'currently_learning', 'La poterie.');
 
 -- Camille B., Nantes
-insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, raw_app_meta_data, raw_user_meta_data,
+insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, email, email_confirmed_at, raw_app_meta_data, raw_user_meta_data,
   created_at, updated_at, confirmation_token, recovery_token, email_change_token_new, email_change,
   phone_change, phone_change_token, email_change_token_current, reauthentication_token)
-values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000066', 'authenticated', 'authenticated', '33639981065', now(),
-  '{"provider":"phone","providers":["phone"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
+values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000066', 'authenticated', 'authenticated', '33639981065', now(), 'seed-066@attractr.test', now(),
+  '{"provider":"phone","providers":["phone","email"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
 insert into auth.identities (provider_id, user_id, identity_data, provider, created_at, updated_at)
-values ('00000000-0000-4000-8000-000000000066', '00000000-0000-4000-8000-000000000066', '{"sub":"00000000-0000-4000-8000-000000000066","phone":"33639981065"}', 'phone', now(), now());
+values ('00000000-0000-4000-8000-000000000066', '00000000-0000-4000-8000-000000000066', '{"sub":"00000000-0000-4000-8000-000000000066","phone":"33639981065"}', 'phone', now(), now()),
+  ('00000000-0000-4000-8000-000000000066', '00000000-0000-4000-8000-000000000066', '{"sub":"00000000-0000-4000-8000-000000000066","email":"seed-066@attractr.test","email_verified":true}', 'email', now(), now());
 update public.profiles set first_name = 'Camille B.', birth_date = '1999-03-21', gender = 'non_binary',
   bio = 'Toujours partant·e pour une expo ou un ciné.', open_to_couples = false, alcohol_free_icons = false,
   verification_status = 'verified', verified_at = now(),
   location = private.snap_point(47.231343, -1.558135), location_source = 'device', country_code = 'FR',
+  department_code = '44', region_code = '52',
   last_active_at = now() - interval '161 hours', is_seed = true, status = 'active'
 where id = '00000000-0000-4000-8000-000000000066';
 insert into public.consents (user_id, type, version) values
@@ -1652,17 +1784,19 @@ insert into public.profile_prompts (user_id, position, question_code, answer) va
   ('00000000-0000-4000-8000-000000000066', 3, 'perfect_sunday', 'Une rando et un bon repas.');
 
 -- Paul, Montpellier
-insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, raw_app_meta_data, raw_user_meta_data,
+insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, email, email_confirmed_at, raw_app_meta_data, raw_user_meta_data,
   created_at, updated_at, confirmation_token, recovery_token, email_change_token_new, email_change,
   phone_change, phone_change_token, email_change_token_current, reauthentication_token)
-values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000067', 'authenticated', 'authenticated', '33639981066', now(),
-  '{"provider":"phone","providers":["phone"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
+values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000067', 'authenticated', 'authenticated', '33639981066', now(), 'seed-067@attractr.test', now(),
+  '{"provider":"phone","providers":["phone","email"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
 insert into auth.identities (provider_id, user_id, identity_data, provider, created_at, updated_at)
-values ('00000000-0000-4000-8000-000000000067', '00000000-0000-4000-8000-000000000067', '{"sub":"00000000-0000-4000-8000-000000000067","phone":"33639981066"}', 'phone', now(), now());
+values ('00000000-0000-4000-8000-000000000067', '00000000-0000-4000-8000-000000000067', '{"sub":"00000000-0000-4000-8000-000000000067","phone":"33639981066"}', 'phone', now(), now()),
+  ('00000000-0000-4000-8000-000000000067', '00000000-0000-4000-8000-000000000067', '{"sub":"00000000-0000-4000-8000-000000000067","email":"seed-067@attractr.test","email_verified":true}', 'email', now(), now());
 update public.profiles set first_name = 'Paul', birth_date = '1987-06-21', gender = 'man',
   bio = 'Je cuisine mieux que je ne danse.', open_to_couples = true, alcohol_free_icons = false,
   verification_status = 'verified', verified_at = now(),
   location = private.snap_point(43.648816, 3.834147), location_source = 'device', country_code = 'FR',
+  department_code = '34', region_code = '76',
   last_active_at = now() - interval '24 hours', is_seed = true, status = 'active'
 where id = '00000000-0000-4000-8000-000000000067';
 insert into public.consents (user_id, type, version) values
@@ -1677,17 +1811,19 @@ insert into public.profile_prompts (user_id, position, question_code, answer) va
   ('00000000-0000-4000-8000-000000000067', 3, 'simple_pleasure', 'Une terrasse au soleil.');
 
 -- Lucie C., Strasbourg
-insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, raw_app_meta_data, raw_user_meta_data,
+insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, email, email_confirmed_at, raw_app_meta_data, raw_user_meta_data,
   created_at, updated_at, confirmation_token, recovery_token, email_change_token_new, email_change,
   phone_change, phone_change_token, email_change_token_current, reauthentication_token)
-values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000068', 'authenticated', 'authenticated', '33639981067', now(),
-  '{"provider":"phone","providers":["phone"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
+values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000068', 'authenticated', 'authenticated', '33639981067', now(), 'seed-068@attractr.test', now(),
+  '{"provider":"phone","providers":["phone","email"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
 insert into auth.identities (provider_id, user_id, identity_data, provider, created_at, updated_at)
-values ('00000000-0000-4000-8000-000000000068', '00000000-0000-4000-8000-000000000068', '{"sub":"00000000-0000-4000-8000-000000000068","phone":"33639981067"}', 'phone', now(), now());
+values ('00000000-0000-4000-8000-000000000068', '00000000-0000-4000-8000-000000000068', '{"sub":"00000000-0000-4000-8000-000000000068","phone":"33639981067"}', 'phone', now(), now()),
+  ('00000000-0000-4000-8000-000000000068', '00000000-0000-4000-8000-000000000068', '{"sub":"00000000-0000-4000-8000-000000000068","email":"seed-068@attractr.test","email_verified":true}', 'email', now(), now());
 update public.profiles set first_name = 'Lucie C.', birth_date = '1990-07-20', gender = 'woman',
   bio = null, open_to_couples = true, alcohol_free_icons = false,
   verification_status = 'verified', verified_at = now(),
   location = private.snap_point(48.580871, 7.740367), location_source = 'device', country_code = 'FR',
+  department_code = '67', region_code = '44',
   last_active_at = now() - interval '106 hours', is_seed = true, status = 'active'
 where id = '00000000-0000-4000-8000-000000000068';
 insert into public.consents (user_id, type, version) values
@@ -1702,17 +1838,19 @@ insert into public.profile_prompts (user_id, position, question_code, answer) va
   ('00000000-0000-4000-8000-000000000068', 3, 'currently_learning', 'L''espagnol avec une appli.');
 
 -- Julie E., Bordeaux
-insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, raw_app_meta_data, raw_user_meta_data,
+insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, email, email_confirmed_at, raw_app_meta_data, raw_user_meta_data,
   created_at, updated_at, confirmation_token, recovery_token, email_change_token_new, email_change,
   phone_change, phone_change_token, email_change_token_current, reauthentication_token)
-values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000069', 'authenticated', 'authenticated', '33639981068', now(),
-  '{"provider":"phone","providers":["phone"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
+values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000069', 'authenticated', 'authenticated', '33639981068', now(), 'seed-069@attractr.test', now(),
+  '{"provider":"phone","providers":["phone","email"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
 insert into auth.identities (provider_id, user_id, identity_data, provider, created_at, updated_at)
-values ('00000000-0000-4000-8000-000000000069', '00000000-0000-4000-8000-000000000069', '{"sub":"00000000-0000-4000-8000-000000000069","phone":"33639981068"}', 'phone', now(), now());
+values ('00000000-0000-4000-8000-000000000069', '00000000-0000-4000-8000-000000000069', '{"sub":"00000000-0000-4000-8000-000000000069","phone":"33639981068"}', 'phone', now(), now()),
+  ('00000000-0000-4000-8000-000000000069', '00000000-0000-4000-8000-000000000069', '{"sub":"00000000-0000-4000-8000-000000000069","email":"seed-069@attractr.test","email_verified":true}', 'email', now(), now());
 update public.profiles set first_name = 'Julie E.', birth_date = '1984-10-13', gender = 'woman',
   bio = null, open_to_couples = false, alcohol_free_icons = false,
   verification_status = 'verified', verified_at = now(),
   location = private.snap_point(44.836421, -0.556925), location_source = 'device', country_code = 'FR',
+  department_code = '33', region_code = '75',
   last_active_at = now() - interval '161 hours', is_seed = true, status = 'active'
 where id = '00000000-0000-4000-8000-000000000069';
 insert into public.consents (user_id, type, version) values
@@ -1727,17 +1865,19 @@ insert into public.profile_prompts (user_id, position, question_code, answer) va
   ('00000000-0000-4000-8000-000000000069', 3, 'never_without', 'Mes écouteurs.');
 
 -- Antoine, Lille
-insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, raw_app_meta_data, raw_user_meta_data,
+insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, email, email_confirmed_at, raw_app_meta_data, raw_user_meta_data,
   created_at, updated_at, confirmation_token, recovery_token, email_change_token_new, email_change,
   phone_change, phone_change_token, email_change_token_current, reauthentication_token)
-values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000070', 'authenticated', 'authenticated', '33639981069', now(),
-  '{"provider":"phone","providers":["phone"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
+values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000070', 'authenticated', 'authenticated', '33639981069', now(), 'seed-070@attractr.test', now(),
+  '{"provider":"phone","providers":["phone","email"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
 insert into auth.identities (provider_id, user_id, identity_data, provider, created_at, updated_at)
-values ('00000000-0000-4000-8000-000000000070', '00000000-0000-4000-8000-000000000070', '{"sub":"00000000-0000-4000-8000-000000000070","phone":"33639981069"}', 'phone', now(), now());
+values ('00000000-0000-4000-8000-000000000070', '00000000-0000-4000-8000-000000000070', '{"sub":"00000000-0000-4000-8000-000000000070","phone":"33639981069"}', 'phone', now(), now()),
+  ('00000000-0000-4000-8000-000000000070', '00000000-0000-4000-8000-000000000070', '{"sub":"00000000-0000-4000-8000-000000000070","email":"seed-070@attractr.test","email_verified":true}', 'email', now(), now());
 update public.profiles set first_name = 'Antoine', birth_date = '2002-10-21', gender = 'man',
   bio = null, open_to_couples = true, alcohol_free_icons = false,
   verification_status = 'verified', verified_at = now(),
   location = private.snap_point(50.628441, 3.016028), location_source = 'device', country_code = 'FR',
+  department_code = '59', region_code = '32',
   last_active_at = now() - interval '151 hours', is_seed = true, status = 'active'
 where id = '00000000-0000-4000-8000-000000000070';
 insert into public.consents (user_id, type, version) values
@@ -1752,17 +1892,19 @@ insert into public.profile_prompts (user_id, position, question_code, answer) va
   ('00000000-0000-4000-8000-000000000070', 3, 'makes_me_laugh', 'Mes amis, surtout.');
 
 -- Adam C., Paris
-insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, raw_app_meta_data, raw_user_meta_data,
+insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, email, email_confirmed_at, raw_app_meta_data, raw_user_meta_data,
   created_at, updated_at, confirmation_token, recovery_token, email_change_token_new, email_change,
   phone_change, phone_change_token, email_change_token_current, reauthentication_token)
-values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000071', 'authenticated', 'authenticated', '33639981070', now(),
-  '{"provider":"phone","providers":["phone"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
+values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000071', 'authenticated', 'authenticated', '33639981070', now(), 'seed-071@attractr.test', now(),
+  '{"provider":"phone","providers":["phone","email"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
 insert into auth.identities (provider_id, user_id, identity_data, provider, created_at, updated_at)
-values ('00000000-0000-4000-8000-000000000071', '00000000-0000-4000-8000-000000000071', '{"sub":"00000000-0000-4000-8000-000000000071","phone":"33639981070"}', 'phone', now(), now());
+values ('00000000-0000-4000-8000-000000000071', '00000000-0000-4000-8000-000000000071', '{"sub":"00000000-0000-4000-8000-000000000071","phone":"33639981070"}', 'phone', now(), now()),
+  ('00000000-0000-4000-8000-000000000071', '00000000-0000-4000-8000-000000000071', '{"sub":"00000000-0000-4000-8000-000000000071","email":"seed-071@attractr.test","email_verified":true}', 'email', now(), now());
 update public.profiles set first_name = 'Adam C.', birth_date = '1994-04-24', gender = 'man',
   bio = null, open_to_couples = true, alcohol_free_icons = false,
   verification_status = 'verified', verified_at = now(),
   location = private.snap_point(48.836589, 2.360265), location_source = 'device', country_code = 'FR',
+  department_code = '75', region_code = '11',
   last_active_at = now() - interval '143 hours', is_seed = true, status = 'active'
 where id = '00000000-0000-4000-8000-000000000071';
 insert into public.consents (user_id, type, version) values
@@ -1777,17 +1919,19 @@ insert into public.profile_prompts (user_id, position, question_code, answer) va
   ('00000000-0000-4000-8000-000000000071', 3, 'perfect_sunday', 'Brunch qui dure jusqu''à 16 h.');
 
 -- Louise C., Marseille
-insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, raw_app_meta_data, raw_user_meta_data,
+insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, email, email_confirmed_at, raw_app_meta_data, raw_user_meta_data,
   created_at, updated_at, confirmation_token, recovery_token, email_change_token_new, email_change,
   phone_change, phone_change_token, email_change_token_current, reauthentication_token)
-values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000072', 'authenticated', 'authenticated', '33639981071', now(),
-  '{"provider":"phone","providers":["phone"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
+values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000072', 'authenticated', 'authenticated', '33639981071', now(), 'seed-072@attractr.test', now(),
+  '{"provider":"phone","providers":["phone","email"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
 insert into auth.identities (provider_id, user_id, identity_data, provider, created_at, updated_at)
-values ('00000000-0000-4000-8000-000000000072', '00000000-0000-4000-8000-000000000072', '{"sub":"00000000-0000-4000-8000-000000000072","phone":"33639981071"}', 'phone', now(), now());
+values ('00000000-0000-4000-8000-000000000072', '00000000-0000-4000-8000-000000000072', '{"sub":"00000000-0000-4000-8000-000000000072","phone":"33639981071"}', 'phone', now(), now()),
+  ('00000000-0000-4000-8000-000000000072', '00000000-0000-4000-8000-000000000072', '{"sub":"00000000-0000-4000-8000-000000000072","email":"seed-072@attractr.test","email_verified":true}', 'email', now(), now());
 update public.profiles set first_name = 'Louise C.', birth_date = '1985-10-14', gender = 'woman',
   bio = 'Toujours partant·e pour une expo ou un ciné.', open_to_couples = false, alcohol_free_icons = true,
   verification_status = 'pending', verified_at = null,
   location = private.snap_point(43.297839, 5.400885), location_source = 'device', country_code = 'FR',
+  department_code = '13', region_code = '93',
   last_active_at = now() - interval '125 hours', is_seed = true, status = 'active'
 where id = '00000000-0000-4000-8000-000000000072';
 insert into public.consents (user_id, type, version) values
@@ -1802,17 +1946,19 @@ insert into public.profile_prompts (user_id, position, question_code, answer) va
   ('00000000-0000-4000-8000-000000000072', 3, 'never_without', 'Mon vélo.');
 
 -- Jules B., Lyon
-insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, raw_app_meta_data, raw_user_meta_data,
+insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, email, email_confirmed_at, raw_app_meta_data, raw_user_meta_data,
   created_at, updated_at, confirmation_token, recovery_token, email_change_token_new, email_change,
   phone_change, phone_change_token, email_change_token_current, reauthentication_token)
-values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000073', 'authenticated', 'authenticated', '33639981072', now(),
-  '{"provider":"phone","providers":["phone"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
+values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000073', 'authenticated', 'authenticated', '33639981072', now(), 'seed-073@attractr.test', now(),
+  '{"provider":"phone","providers":["phone","email"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
 insert into auth.identities (provider_id, user_id, identity_data, provider, created_at, updated_at)
-values ('00000000-0000-4000-8000-000000000073', '00000000-0000-4000-8000-000000000073', '{"sub":"00000000-0000-4000-8000-000000000073","phone":"33639981072"}', 'phone', now(), now());
+values ('00000000-0000-4000-8000-000000000073', '00000000-0000-4000-8000-000000000073', '{"sub":"00000000-0000-4000-8000-000000000073","phone":"33639981072"}', 'phone', now(), now()),
+  ('00000000-0000-4000-8000-000000000073', '00000000-0000-4000-8000-000000000073', '{"sub":"00000000-0000-4000-8000-000000000073","email":"seed-073@attractr.test","email_verified":true}', 'email', now(), now());
 update public.profiles set first_name = 'Jules B.', birth_date = '1972-07-26', gender = 'man',
   bio = null, open_to_couples = true, alcohol_free_icons = false,
   verification_status = 'verified', verified_at = now(),
   location = private.snap_point(45.721798, 4.795089), location_source = 'device', country_code = 'FR',
+  department_code = '69', region_code = '84',
   last_active_at = now() - interval '201 hours', is_seed = true, status = 'active'
 where id = '00000000-0000-4000-8000-000000000073';
 insert into public.consents (user_id, type, version) values
@@ -1827,17 +1973,19 @@ insert into public.profile_prompts (user_id, position, question_code, answer) va
   ('00000000-0000-4000-8000-000000000073', 3, 'best_travel_memory', 'Un train de nuit en Italie.');
 
 -- Karim, Toulouse
-insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, raw_app_meta_data, raw_user_meta_data,
+insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, email, email_confirmed_at, raw_app_meta_data, raw_user_meta_data,
   created_at, updated_at, confirmation_token, recovery_token, email_change_token_new, email_change,
   phone_change, phone_change_token, email_change_token_current, reauthentication_token)
-values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000074', 'authenticated', 'authenticated', '33639981073', now(),
-  '{"provider":"phone","providers":["phone"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
+values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000074', 'authenticated', 'authenticated', '33639981073', now(), 'seed-074@attractr.test', now(),
+  '{"provider":"phone","providers":["phone","email"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
 insert into auth.identities (provider_id, user_id, identity_data, provider, created_at, updated_at)
-values ('00000000-0000-4000-8000-000000000074', '00000000-0000-4000-8000-000000000074', '{"sub":"00000000-0000-4000-8000-000000000074","phone":"33639981073"}', 'phone', now(), now());
+values ('00000000-0000-4000-8000-000000000074', '00000000-0000-4000-8000-000000000074', '{"sub":"00000000-0000-4000-8000-000000000074","phone":"33639981073"}', 'phone', now(), now()),
+  ('00000000-0000-4000-8000-000000000074', '00000000-0000-4000-8000-000000000074', '{"sub":"00000000-0000-4000-8000-000000000074","email":"seed-074@attractr.test","email_verified":true}', 'email', now(), now());
 update public.profiles set first_name = 'Karim', birth_date = '1982-08-15', gender = 'man',
   bio = 'Fan de randonnée et de jeux de société.', open_to_couples = true, alcohol_free_icons = false,
   verification_status = 'verified', verified_at = now(),
   location = private.snap_point(43.55128, 1.435194), location_source = 'device', country_code = 'FR',
+  department_code = '31', region_code = '76',
   last_active_at = now() - interval '185 hours', is_seed = true, status = 'active'
 where id = '00000000-0000-4000-8000-000000000074';
 insert into public.consents (user_id, type, version) values
@@ -1852,17 +2000,19 @@ insert into public.profile_prompts (user_id, position, question_code, answer) va
   ('00000000-0000-4000-8000-000000000074', 3, 'best_travel_memory', 'Camper en Bretagne sous la pluie.');
 
 -- Anaïs, Nice
-insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, raw_app_meta_data, raw_user_meta_data,
+insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, email, email_confirmed_at, raw_app_meta_data, raw_user_meta_data,
   created_at, updated_at, confirmation_token, recovery_token, email_change_token_new, email_change,
   phone_change, phone_change_token, email_change_token_current, reauthentication_token)
-values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000075', 'authenticated', 'authenticated', '33639981074', now(),
-  '{"provider":"phone","providers":["phone"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
+values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000075', 'authenticated', 'authenticated', '33639981074', now(), 'seed-075@attractr.test', now(),
+  '{"provider":"phone","providers":["phone","email"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
 insert into auth.identities (provider_id, user_id, identity_data, provider, created_at, updated_at)
-values ('00000000-0000-4000-8000-000000000075', '00000000-0000-4000-8000-000000000075', '{"sub":"00000000-0000-4000-8000-000000000075","phone":"33639981074"}', 'phone', now(), now());
+values ('00000000-0000-4000-8000-000000000075', '00000000-0000-4000-8000-000000000075', '{"sub":"00000000-0000-4000-8000-000000000075","phone":"33639981074"}', 'phone', now(), now()),
+  ('00000000-0000-4000-8000-000000000075', '00000000-0000-4000-8000-000000000075', '{"sub":"00000000-0000-4000-8000-000000000075","email":"seed-075@attractr.test","email_verified":true}', 'email', now(), now());
 update public.profiles set first_name = 'Anaïs', birth_date = '2006-03-21', gender = 'woman',
   bio = null, open_to_couples = false, alcohol_free_icons = false,
   verification_status = 'verified', verified_at = now(),
   location = private.snap_point(43.746019, 7.224025), location_source = 'device', country_code = 'FR',
+  department_code = '06', region_code = '93',
   last_active_at = now() - interval '177 hours', is_seed = true, status = 'active'
 where id = '00000000-0000-4000-8000-000000000075';
 insert into public.consents (user_id, type, version) values
@@ -1877,17 +2027,19 @@ insert into public.profile_prompts (user_id, position, question_code, answer) va
   ('00000000-0000-4000-8000-000000000075', 3, 'green_flag', 'Être à l''heure.');
 
 -- Paul B., Nantes
-insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, raw_app_meta_data, raw_user_meta_data,
+insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, email, email_confirmed_at, raw_app_meta_data, raw_user_meta_data,
   created_at, updated_at, confirmation_token, recovery_token, email_change_token_new, email_change,
   phone_change, phone_change_token, email_change_token_current, reauthentication_token)
-values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000076', 'authenticated', 'authenticated', '33639981075', now(),
-  '{"provider":"phone","providers":["phone"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
+values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000076', 'authenticated', 'authenticated', '33639981075', now(), 'seed-076@attractr.test', now(),
+  '{"provider":"phone","providers":["phone","email"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
 insert into auth.identities (provider_id, user_id, identity_data, provider, created_at, updated_at)
-values ('00000000-0000-4000-8000-000000000076', '00000000-0000-4000-8000-000000000076', '{"sub":"00000000-0000-4000-8000-000000000076","phone":"33639981075"}', 'phone', now(), now());
+values ('00000000-0000-4000-8000-000000000076', '00000000-0000-4000-8000-000000000076', '{"sub":"00000000-0000-4000-8000-000000000076","phone":"33639981075"}', 'phone', now(), now()),
+  ('00000000-0000-4000-8000-000000000076', '00000000-0000-4000-8000-000000000076', '{"sub":"00000000-0000-4000-8000-000000000076","email":"seed-076@attractr.test","email_verified":true}', 'email', now(), now());
 update public.profiles set first_name = 'Paul B.', birth_date = '1991-02-14', gender = 'man',
   bio = 'Nouvelle ville, nouvelles rencontres.', open_to_couples = false, alcohol_free_icons = false,
   verification_status = 'verified', verified_at = now(),
   location = private.snap_point(47.224528, -1.480675), location_source = 'device', country_code = 'FR',
+  department_code = '44', region_code = '52',
   last_active_at = now() - interval '166 hours', is_seed = true, status = 'active'
 where id = '00000000-0000-4000-8000-000000000076';
 insert into public.consents (user_id, type, version) values
@@ -1902,17 +2054,19 @@ insert into public.profile_prompts (user_id, position, question_code, answer) va
   ('00000000-0000-4000-8000-000000000076', 3, 'never_without', 'Mes écouteurs.');
 
 -- Lucie D., Montpellier
-insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, raw_app_meta_data, raw_user_meta_data,
+insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, email, email_confirmed_at, raw_app_meta_data, raw_user_meta_data,
   created_at, updated_at, confirmation_token, recovery_token, email_change_token_new, email_change,
   phone_change, phone_change_token, email_change_token_current, reauthentication_token)
-values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000077', 'authenticated', 'authenticated', '33639981076', now(),
-  '{"provider":"phone","providers":["phone"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
+values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000077', 'authenticated', 'authenticated', '33639981076', now(), 'seed-077@attractr.test', now(),
+  '{"provider":"phone","providers":["phone","email"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
 insert into auth.identities (provider_id, user_id, identity_data, provider, created_at, updated_at)
-values ('00000000-0000-4000-8000-000000000077', '00000000-0000-4000-8000-000000000077', '{"sub":"00000000-0000-4000-8000-000000000077","phone":"33639981076"}', 'phone', now(), now());
+values ('00000000-0000-4000-8000-000000000077', '00000000-0000-4000-8000-000000000077', '{"sub":"00000000-0000-4000-8000-000000000077","phone":"33639981076"}', 'phone', now(), now()),
+  ('00000000-0000-4000-8000-000000000077', '00000000-0000-4000-8000-000000000077', '{"sub":"00000000-0000-4000-8000-000000000077","email":"seed-077@attractr.test","email_verified":true}', 'email', now(), now());
 update public.profiles set first_name = 'Lucie D.', birth_date = '1972-08-16', gender = 'woman',
   bio = 'Nouvelle ville, nouvelles rencontres.', open_to_couples = false, alcohol_free_icons = false,
   verification_status = 'verified', verified_at = now(),
   location = private.snap_point(43.586647, 3.826657), location_source = 'device', country_code = 'FR',
+  department_code = '34', region_code = '76',
   last_active_at = now() - interval '39 hours', is_seed = true, status = 'active'
 where id = '00000000-0000-4000-8000-000000000077';
 insert into public.consents (user_id, type, version) values
@@ -1927,17 +2081,19 @@ insert into public.profile_prompts (user_id, position, question_code, answer) va
   ('00000000-0000-4000-8000-000000000077', 3, 'looking_for_someone_who', 'Ne se prend pas trop au sérieux.');
 
 -- Nathan B., Strasbourg
-insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, raw_app_meta_data, raw_user_meta_data,
+insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, email, email_confirmed_at, raw_app_meta_data, raw_user_meta_data,
   created_at, updated_at, confirmation_token, recovery_token, email_change_token_new, email_change,
   phone_change, phone_change_token, email_change_token_current, reauthentication_token)
-values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000078', 'authenticated', 'authenticated', '33639981077', now(),
-  '{"provider":"phone","providers":["phone"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
+values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000078', 'authenticated', 'authenticated', '33639981077', now(), 'seed-078@attractr.test', now(),
+  '{"provider":"phone","providers":["phone","email"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
 insert into auth.identities (provider_id, user_id, identity_data, provider, created_at, updated_at)
-values ('00000000-0000-4000-8000-000000000078', '00000000-0000-4000-8000-000000000078', '{"sub":"00000000-0000-4000-8000-000000000078","phone":"33639981077"}', 'phone', now(), now());
+values ('00000000-0000-4000-8000-000000000078', '00000000-0000-4000-8000-000000000078', '{"sub":"00000000-0000-4000-8000-000000000078","phone":"33639981077"}', 'phone', now(), now()),
+  ('00000000-0000-4000-8000-000000000078', '00000000-0000-4000-8000-000000000078', '{"sub":"00000000-0000-4000-8000-000000000078","email":"seed-078@attractr.test","email_verified":true}', 'email', now(), now());
 update public.profiles set first_name = 'Nathan B.', birth_date = '1995-11-14', gender = 'man',
   bio = null, open_to_couples = false, alcohol_free_icons = false,
   verification_status = 'verified', verified_at = now(),
   location = private.snap_point(48.539627, 7.724389), location_source = 'device', country_code = 'FR',
+  department_code = '67', region_code = '44',
   last_active_at = now() - interval '151 hours', is_seed = true, status = 'active'
 where id = '00000000-0000-4000-8000-000000000078';
 insert into public.consents (user_id, type, version) values
@@ -1952,17 +2108,19 @@ insert into public.profile_prompts (user_id, position, question_code, answer) va
   ('00000000-0000-4000-8000-000000000078', 3, 'unpopular_opinion', 'L''hiver est la meilleure saison.');
 
 -- Zoé, Bordeaux
-insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, raw_app_meta_data, raw_user_meta_data,
+insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, email, email_confirmed_at, raw_app_meta_data, raw_user_meta_data,
   created_at, updated_at, confirmation_token, recovery_token, email_change_token_new, email_change,
   phone_change, phone_change_token, email_change_token_current, reauthentication_token)
-values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000079', 'authenticated', 'authenticated', '33639981078', now(),
-  '{"provider":"phone","providers":["phone"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
+values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000079', 'authenticated', 'authenticated', '33639981078', now(), 'seed-079@attractr.test', now(),
+  '{"provider":"phone","providers":["phone","email"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
 insert into auth.identities (provider_id, user_id, identity_data, provider, created_at, updated_at)
-values ('00000000-0000-4000-8000-000000000079', '00000000-0000-4000-8000-000000000079', '{"sub":"00000000-0000-4000-8000-000000000079","phone":"33639981078"}', 'phone', now(), now());
+values ('00000000-0000-4000-8000-000000000079', '00000000-0000-4000-8000-000000000079', '{"sub":"00000000-0000-4000-8000-000000000079","phone":"33639981078"}', 'phone', now(), now()),
+  ('00000000-0000-4000-8000-000000000079', '00000000-0000-4000-8000-000000000079', '{"sub":"00000000-0000-4000-8000-000000000079","email":"seed-079@attractr.test","email_verified":true}', 'email', now(), now());
 update public.profiles set first_name = 'Zoé', birth_date = '2000-08-07', gender = 'woman',
   bio = 'Curieux·se de tout, surtout des gens.', open_to_couples = false, alcohol_free_icons = false,
   verification_status = 'verified', verified_at = now(),
   location = private.snap_point(44.821889, -0.541504), location_source = 'device', country_code = 'FR',
+  department_code = '33', region_code = '75',
   last_active_at = now() - interval '8 hours', is_seed = true, status = 'active'
 where id = '00000000-0000-4000-8000-000000000079';
 insert into public.consents (user_id, type, version) values
@@ -1977,17 +2135,19 @@ insert into public.profile_prompts (user_id, position, question_code, answer) va
   ('00000000-0000-4000-8000-000000000079', 3, 'looking_for_someone_who', 'Ne se prend pas trop au sérieux.');
 
 -- Yanis B., Lille
-insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, raw_app_meta_data, raw_user_meta_data,
+insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, email, email_confirmed_at, raw_app_meta_data, raw_user_meta_data,
   created_at, updated_at, confirmation_token, recovery_token, email_change_token_new, email_change,
   phone_change, phone_change_token, email_change_token_current, reauthentication_token)
-values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000080', 'authenticated', 'authenticated', '33639981079', now(),
-  '{"provider":"phone","providers":["phone"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
+values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000080', 'authenticated', 'authenticated', '33639981079', now(), 'seed-080@attractr.test', now(),
+  '{"provider":"phone","providers":["phone","email"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
 insert into auth.identities (provider_id, user_id, identity_data, provider, created_at, updated_at)
-values ('00000000-0000-4000-8000-000000000080', '00000000-0000-4000-8000-000000000080', '{"sub":"00000000-0000-4000-8000-000000000080","phone":"33639981079"}', 'phone', now(), now());
+values ('00000000-0000-4000-8000-000000000080', '00000000-0000-4000-8000-000000000080', '{"sub":"00000000-0000-4000-8000-000000000080","phone":"33639981079"}', 'phone', now(), now()),
+  ('00000000-0000-4000-8000-000000000080', '00000000-0000-4000-8000-000000000080', '{"sub":"00000000-0000-4000-8000-000000000080","email":"seed-080@attractr.test","email_verified":true}', 'email', now(), now());
 update public.profiles set first_name = 'Yanis B.', birth_date = '1969-04-13', gender = 'man',
   bio = null, open_to_couples = true, alcohol_free_icons = false,
   verification_status = 'verified', verified_at = now(),
   location = private.snap_point(50.606371, 2.992589), location_source = 'device', country_code = 'FR',
+  department_code = '59', region_code = '32',
   last_active_at = now() - interval '26 hours', is_seed = true, status = 'active'
 where id = '00000000-0000-4000-8000-000000000080';
 insert into public.consents (user_id, type, version) values
@@ -2002,17 +2162,19 @@ insert into public.profile_prompts (user_id, position, question_code, answer) va
   ('00000000-0000-4000-8000-000000000080', 3, 'perfect_sunday', 'Marché le matin, sieste l''après-midi.');
 
 -- Chloé, Paris
-insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, raw_app_meta_data, raw_user_meta_data,
+insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, email, email_confirmed_at, raw_app_meta_data, raw_user_meta_data,
   created_at, updated_at, confirmation_token, recovery_token, email_change_token_new, email_change,
   phone_change, phone_change_token, email_change_token_current, reauthentication_token)
-values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000081', 'authenticated', 'authenticated', '33639981080', now(),
-  '{"provider":"phone","providers":["phone"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
+values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000081', 'authenticated', 'authenticated', '33639981080', now(), 'seed-081@attractr.test', now(),
+  '{"provider":"phone","providers":["phone","email"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
 insert into auth.identities (provider_id, user_id, identity_data, provider, created_at, updated_at)
-values ('00000000-0000-4000-8000-000000000081', '00000000-0000-4000-8000-000000000081', '{"sub":"00000000-0000-4000-8000-000000000081","phone":"33639981080"}', 'phone', now(), now());
+values ('00000000-0000-4000-8000-000000000081', '00000000-0000-4000-8000-000000000081', '{"sub":"00000000-0000-4000-8000-000000000081","phone":"33639981080"}', 'phone', now(), now()),
+  ('00000000-0000-4000-8000-000000000081', '00000000-0000-4000-8000-000000000081', '{"sub":"00000000-0000-4000-8000-000000000081","email":"seed-081@attractr.test","email_verified":true}', 'email', now(), now());
 update public.profiles set first_name = 'Chloé', birth_date = '1988-09-25', gender = 'woman',
   bio = 'Toujours partant·e pour une expo ou un ciné.', open_to_couples = false, alcohol_free_icons = false,
   verification_status = 'pending', verified_at = null,
   location = private.snap_point(48.822889, 2.301656), location_source = 'device', country_code = 'FR',
+  department_code = '75', region_code = '11',
   last_active_at = now() - interval '179 hours', is_seed = true, status = 'active'
 where id = '00000000-0000-4000-8000-000000000081';
 insert into public.consents (user_id, type, version) values
@@ -2027,17 +2189,19 @@ insert into public.profile_prompts (user_id, position, question_code, answer) va
   ('00000000-0000-4000-8000-000000000081', 3, 'currently_learning', 'L''espagnol avec une appli.');
 
 -- Camille C., Marseille
-insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, raw_app_meta_data, raw_user_meta_data,
+insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, email, email_confirmed_at, raw_app_meta_data, raw_user_meta_data,
   created_at, updated_at, confirmation_token, recovery_token, email_change_token_new, email_change,
   phone_change, phone_change_token, email_change_token_current, reauthentication_token)
-values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000082', 'authenticated', 'authenticated', '33639981081', now(),
-  '{"provider":"phone","providers":["phone"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
+values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000082', 'authenticated', 'authenticated', '33639981081', now(), 'seed-082@attractr.test', now(),
+  '{"provider":"phone","providers":["phone","email"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
 insert into auth.identities (provider_id, user_id, identity_data, provider, created_at, updated_at)
-values ('00000000-0000-4000-8000-000000000082', '00000000-0000-4000-8000-000000000082', '{"sub":"00000000-0000-4000-8000-000000000082","phone":"33639981081"}', 'phone', now(), now());
+values ('00000000-0000-4000-8000-000000000082', '00000000-0000-4000-8000-000000000082', '{"sub":"00000000-0000-4000-8000-000000000082","phone":"33639981081"}', 'phone', now(), now()),
+  ('00000000-0000-4000-8000-000000000082', '00000000-0000-4000-8000-000000000082', '{"sub":"00000000-0000-4000-8000-000000000082","email":"seed-082@attractr.test","email_verified":true}', 'email', now(), now());
 update public.profiles set first_name = 'Camille C.', birth_date = '1973-11-04', gender = 'non_binary',
   bio = 'Je cuisine mieux que je ne danse.', open_to_couples = false, alcohol_free_icons = false,
   verification_status = 'verified', verified_at = now(),
   location = private.snap_point(43.258352, 5.408717), location_source = 'device', country_code = 'FR',
+  department_code = '13', region_code = '93',
   last_active_at = now() - interval '143 hours', is_seed = true, status = 'active'
 where id = '00000000-0000-4000-8000-000000000082';
 insert into public.consents (user_id, type, version) values
@@ -2052,17 +2216,19 @@ insert into public.profile_prompts (user_id, position, question_code, answer) va
   ('00000000-0000-4000-8000-000000000082', 3, 'ideal_first_date', 'Un concert dans une petite salle.');
 
 -- Charlie B., Lyon
-insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, raw_app_meta_data, raw_user_meta_data,
+insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, email, email_confirmed_at, raw_app_meta_data, raw_user_meta_data,
   created_at, updated_at, confirmation_token, recovery_token, email_change_token_new, email_change,
   phone_change, phone_change_token, email_change_token_current, reauthentication_token)
-values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000083', 'authenticated', 'authenticated', '33639981082', now(),
-  '{"provider":"phone","providers":["phone"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
+values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000083', 'authenticated', 'authenticated', '33639981082', now(), 'seed-083@attractr.test', now(),
+  '{"provider":"phone","providers":["phone","email"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
 insert into auth.identities (provider_id, user_id, identity_data, provider, created_at, updated_at)
-values ('00000000-0000-4000-8000-000000000083', '00000000-0000-4000-8000-000000000083', '{"sub":"00000000-0000-4000-8000-000000000083","phone":"33639981082"}', 'phone', now(), now());
+values ('00000000-0000-4000-8000-000000000083', '00000000-0000-4000-8000-000000000083', '{"sub":"00000000-0000-4000-8000-000000000083","phone":"33639981082"}', 'phone', now(), now()),
+  ('00000000-0000-4000-8000-000000000083', '00000000-0000-4000-8000-000000000083', '{"sub":"00000000-0000-4000-8000-000000000083","email":"seed-083@attractr.test","email_verified":true}', 'email', now(), now());
 update public.profiles set first_name = 'Charlie B.', birth_date = '1979-12-27', gender = 'non_binary',
   bio = null, open_to_couples = false, alcohol_free_icons = false,
   verification_status = 'verified', verified_at = now(),
   location = private.snap_point(45.742294, 4.812276), location_source = 'device', country_code = 'FR',
+  department_code = '69', region_code = '84',
   last_active_at = now() - interval '230 hours', is_seed = true, status = 'active'
 where id = '00000000-0000-4000-8000-000000000083';
 insert into public.consents (user_id, type, version) values
@@ -2077,17 +2243,19 @@ insert into public.profile_prompts (user_id, position, question_code, answer) va
   ('00000000-0000-4000-8000-000000000083', 3, 'green_flag', 'Rire de ses propres blagues ratées.');
 
 -- Zoé B., Toulouse
-insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, raw_app_meta_data, raw_user_meta_data,
+insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, email, email_confirmed_at, raw_app_meta_data, raw_user_meta_data,
   created_at, updated_at, confirmation_token, recovery_token, email_change_token_new, email_change,
   phone_change, phone_change_token, email_change_token_current, reauthentication_token)
-values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000084', 'authenticated', 'authenticated', '33639981083', now(),
-  '{"provider":"phone","providers":["phone"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
+values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000084', 'authenticated', 'authenticated', '33639981083', now(), 'seed-084@attractr.test', now(),
+  '{"provider":"phone","providers":["phone","email"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
 insert into auth.identities (provider_id, user_id, identity_data, provider, created_at, updated_at)
-values ('00000000-0000-4000-8000-000000000084', '00000000-0000-4000-8000-000000000084', '{"sub":"00000000-0000-4000-8000-000000000084","phone":"33639981083"}', 'phone', now(), now());
+values ('00000000-0000-4000-8000-000000000084', '00000000-0000-4000-8000-000000000084', '{"sub":"00000000-0000-4000-8000-000000000084","phone":"33639981083"}', 'phone', now(), now()),
+  ('00000000-0000-4000-8000-000000000084', '00000000-0000-4000-8000-000000000084', '{"sub":"00000000-0000-4000-8000-000000000084","email":"seed-084@attractr.test","email_verified":true}', 'email', now(), now());
 update public.profiles set first_name = 'Zoé B.', birth_date = '1993-03-15', gender = 'woman',
   bio = 'Toujours partant·e pour une expo ou un ciné.', open_to_couples = false, alcohol_free_icons = false,
   verification_status = 'verified', verified_at = now(),
   location = private.snap_point(43.61383, 1.423829), location_source = 'device', country_code = 'FR',
+  department_code = '31', region_code = '76',
   last_active_at = now() - interval '78 hours', is_seed = true, status = 'active'
 where id = '00000000-0000-4000-8000-000000000084';
 insert into public.consents (user_id, type, version) values
@@ -2102,17 +2270,19 @@ insert into public.profile_prompts (user_id, position, question_code, answer) va
   ('00000000-0000-4000-8000-000000000084', 3, 'perfect_sunday', 'Marché le matin, sieste l''après-midi.');
 
 -- Hugo D., Nice
-insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, raw_app_meta_data, raw_user_meta_data,
+insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, email, email_confirmed_at, raw_app_meta_data, raw_user_meta_data,
   created_at, updated_at, confirmation_token, recovery_token, email_change_token_new, email_change,
   phone_change, phone_change_token, email_change_token_current, reauthentication_token)
-values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000085', 'authenticated', 'authenticated', '33639981084', now(),
-  '{"provider":"phone","providers":["phone"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
+values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000085', 'authenticated', 'authenticated', '33639981084', now(), 'seed-085@attractr.test', now(),
+  '{"provider":"phone","providers":["phone","email"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
 insert into auth.identities (provider_id, user_id, identity_data, provider, created_at, updated_at)
-values ('00000000-0000-4000-8000-000000000085', '00000000-0000-4000-8000-000000000085', '{"sub":"00000000-0000-4000-8000-000000000085","phone":"33639981084"}', 'phone', now(), now());
+values ('00000000-0000-4000-8000-000000000085', '00000000-0000-4000-8000-000000000085', '{"sub":"00000000-0000-4000-8000-000000000085","phone":"33639981084"}', 'phone', now(), now()),
+  ('00000000-0000-4000-8000-000000000085', '00000000-0000-4000-8000-000000000085', '{"sub":"00000000-0000-4000-8000-000000000085","email":"seed-085@attractr.test","email_verified":true}', 'email', now(), now());
 update public.profiles set first_name = 'Hugo D.', birth_date = '1971-11-17', gender = 'man',
   bio = null, open_to_couples = false, alcohol_free_icons = false,
   verification_status = 'verified', verified_at = now(),
   location = private.snap_point(43.736823, 7.273693), location_source = 'device', country_code = 'FR',
+  department_code = '06', region_code = '93',
   last_active_at = now() - interval '21 hours', is_seed = true, status = 'active'
 where id = '00000000-0000-4000-8000-000000000085';
 insert into public.consents (user_id, type, version) values
@@ -2127,17 +2297,19 @@ insert into public.profile_prompts (user_id, position, question_code, answer) va
   ('00000000-0000-4000-8000-000000000085', 3, 'makes_me_laugh', 'Les jeux de mots nuls.');
 
 -- Inès, Nantes
-insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, raw_app_meta_data, raw_user_meta_data,
+insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, email, email_confirmed_at, raw_app_meta_data, raw_user_meta_data,
   created_at, updated_at, confirmation_token, recovery_token, email_change_token_new, email_change,
   phone_change, phone_change_token, email_change_token_current, reauthentication_token)
-values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000086', 'authenticated', 'authenticated', '33639981085', now(),
-  '{"provider":"phone","providers":["phone"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
+values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000086', 'authenticated', 'authenticated', '33639981085', now(), 'seed-086@attractr.test', now(),
+  '{"provider":"phone","providers":["phone","email"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
 insert into auth.identities (provider_id, user_id, identity_data, provider, created_at, updated_at)
-values ('00000000-0000-4000-8000-000000000086', '00000000-0000-4000-8000-000000000086', '{"sub":"00000000-0000-4000-8000-000000000086","phone":"33639981085"}', 'phone', now(), now());
+values ('00000000-0000-4000-8000-000000000086', '00000000-0000-4000-8000-000000000086', '{"sub":"00000000-0000-4000-8000-000000000086","phone":"33639981085"}', 'phone', now(), now()),
+  ('00000000-0000-4000-8000-000000000086', '00000000-0000-4000-8000-000000000086', '{"sub":"00000000-0000-4000-8000-000000000086","email":"seed-086@attractr.test","email_verified":true}', 'email', now(), now());
 update public.profiles set first_name = 'Inès', birth_date = '1968-11-26', gender = 'woman',
   bio = null, open_to_couples = false, alcohol_free_icons = false,
   verification_status = 'verified', verified_at = now(),
   location = private.snap_point(47.177371, -1.555861), location_source = 'device', country_code = 'FR',
+  department_code = '44', region_code = '52',
   last_active_at = now() - interval '153 hours', is_seed = true, status = 'active'
 where id = '00000000-0000-4000-8000-000000000086';
 insert into public.consents (user_id, type, version) values
@@ -2152,17 +2324,19 @@ insert into public.profile_prompts (user_id, position, question_code, answer) va
   ('00000000-0000-4000-8000-000000000086', 3, 'ideal_first_date', 'Un musée puis un café.');
 
 -- Alice E., Montpellier
-insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, raw_app_meta_data, raw_user_meta_data,
+insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, email, email_confirmed_at, raw_app_meta_data, raw_user_meta_data,
   created_at, updated_at, confirmation_token, recovery_token, email_change_token_new, email_change,
   phone_change, phone_change_token, email_change_token_current, reauthentication_token)
-values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000087', 'authenticated', 'authenticated', '33639981086', now(),
-  '{"provider":"phone","providers":["phone"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
+values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000087', 'authenticated', 'authenticated', '33639981086', now(), 'seed-087@attractr.test', now(),
+  '{"provider":"phone","providers":["phone","email"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
 insert into auth.identities (provider_id, user_id, identity_data, provider, created_at, updated_at)
-values ('00000000-0000-4000-8000-000000000087', '00000000-0000-4000-8000-000000000087', '{"sub":"00000000-0000-4000-8000-000000000087","phone":"33639981086"}', 'phone', now(), now());
+values ('00000000-0000-4000-8000-000000000087', '00000000-0000-4000-8000-000000000087', '{"sub":"00000000-0000-4000-8000-000000000087","phone":"33639981086"}', 'phone', now(), now()),
+  ('00000000-0000-4000-8000-000000000087', '00000000-0000-4000-8000-000000000087', '{"sub":"00000000-0000-4000-8000-000000000087","email":"seed-087@attractr.test","email_verified":true}', 'email', now(), now());
 update public.profiles set first_name = 'Alice E.', birth_date = '1968-08-26', gender = 'woman',
   bio = null, open_to_couples = true, alcohol_free_icons = false,
   verification_status = 'verified', verified_at = now(),
   location = private.snap_point(43.583431, 3.872661), location_source = 'device', country_code = 'FR',
+  department_code = '34', region_code = '76',
   last_active_at = now() - interval '95 hours', is_seed = true, status = 'active'
 where id = '00000000-0000-4000-8000-000000000087';
 insert into public.consents (user_id, type, version) values
@@ -2177,17 +2351,19 @@ insert into public.profile_prompts (user_id, position, question_code, answer) va
   ('00000000-0000-4000-8000-000000000087', 3, 'makes_me_laugh', 'Mes amis, surtout.');
 
 -- Zoé C., Strasbourg
-insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, raw_app_meta_data, raw_user_meta_data,
+insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, email, email_confirmed_at, raw_app_meta_data, raw_user_meta_data,
   created_at, updated_at, confirmation_token, recovery_token, email_change_token_new, email_change,
   phone_change, phone_change_token, email_change_token_current, reauthentication_token)
-values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000088', 'authenticated', 'authenticated', '33639981087', now(),
-  '{"provider":"phone","providers":["phone"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
+values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000088', 'authenticated', 'authenticated', '33639981087', now(), 'seed-088@attractr.test', now(),
+  '{"provider":"phone","providers":["phone","email"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
 insert into auth.identities (provider_id, user_id, identity_data, provider, created_at, updated_at)
-values ('00000000-0000-4000-8000-000000000088', '00000000-0000-4000-8000-000000000088', '{"sub":"00000000-0000-4000-8000-000000000088","phone":"33639981087"}', 'phone', now(), now());
+values ('00000000-0000-4000-8000-000000000088', '00000000-0000-4000-8000-000000000088', '{"sub":"00000000-0000-4000-8000-000000000088","phone":"33639981087"}', 'phone', now(), now()),
+  ('00000000-0000-4000-8000-000000000088', '00000000-0000-4000-8000-000000000088', '{"sub":"00000000-0000-4000-8000-000000000088","email":"seed-088@attractr.test","email_verified":true}', 'email', now(), now());
 update public.profiles set first_name = 'Zoé C.', birth_date = '1975-08-19', gender = 'woman',
   bio = null, open_to_couples = false, alcohol_free_icons = true,
   verification_status = 'pending', verified_at = null,
   location = private.snap_point(48.554727, 7.768856), location_source = 'device', country_code = 'FR',
+  department_code = '67', region_code = '44',
   last_active_at = now() - interval '108 hours', is_seed = true, status = 'active'
 where id = '00000000-0000-4000-8000-000000000088';
 insert into public.consents (user_id, type, version) values
@@ -2202,17 +2378,19 @@ insert into public.profile_prompts (user_id, position, question_code, answer) va
   ('00000000-0000-4000-8000-000000000088', 3, 'makes_me_laugh', 'Mes amis, surtout.');
 
 -- Malik B., Bordeaux
-insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, raw_app_meta_data, raw_user_meta_data,
+insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, email, email_confirmed_at, raw_app_meta_data, raw_user_meta_data,
   created_at, updated_at, confirmation_token, recovery_token, email_change_token_new, email_change,
   phone_change, phone_change_token, email_change_token_current, reauthentication_token)
-values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000089', 'authenticated', 'authenticated', '33639981088', now(),
-  '{"provider":"phone","providers":["phone"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
+values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000089', 'authenticated', 'authenticated', '33639981088', now(), 'seed-089@attractr.test', now(),
+  '{"provider":"phone","providers":["phone","email"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
 insert into auth.identities (provider_id, user_id, identity_data, provider, created_at, updated_at)
-values ('00000000-0000-4000-8000-000000000089', '00000000-0000-4000-8000-000000000089', '{"sub":"00000000-0000-4000-8000-000000000089","phone":"33639981088"}', 'phone', now(), now());
+values ('00000000-0000-4000-8000-000000000089', '00000000-0000-4000-8000-000000000089', '{"sub":"00000000-0000-4000-8000-000000000089","phone":"33639981088"}', 'phone', now(), now()),
+  ('00000000-0000-4000-8000-000000000089', '00000000-0000-4000-8000-000000000089', '{"sub":"00000000-0000-4000-8000-000000000089","email":"seed-089@attractr.test","email_verified":true}', 'email', now(), now());
 update public.profiles set first_name = 'Malik B.', birth_date = '1995-01-10', gender = 'man',
   bio = 'Nouvelle ville, nouvelles rencontres.', open_to_couples = false, alcohol_free_icons = false,
   verification_status = 'verified', verified_at = now(),
   location = private.snap_point(44.786438, -0.582523), location_source = 'device', country_code = 'FR',
+  department_code = '33', region_code = '75',
   last_active_at = now() - interval '32 hours', is_seed = true, status = 'active'
 where id = '00000000-0000-4000-8000-000000000089';
 insert into public.consents (user_id, type, version) values
@@ -2227,17 +2405,19 @@ insert into public.profile_prompts (user_id, position, question_code, answer) va
   ('00000000-0000-4000-8000-000000000089', 3, 'never_without', 'Un livre dans le sac.');
 
 -- Karim B., Lille
-insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, raw_app_meta_data, raw_user_meta_data,
+insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, email, email_confirmed_at, raw_app_meta_data, raw_user_meta_data,
   created_at, updated_at, confirmation_token, recovery_token, email_change_token_new, email_change,
   phone_change, phone_change_token, email_change_token_current, reauthentication_token)
-values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000090', 'authenticated', 'authenticated', '33639981089', now(),
-  '{"provider":"phone","providers":["phone"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
+values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000090', 'authenticated', 'authenticated', '33639981089', now(), 'seed-090@attractr.test', now(),
+  '{"provider":"phone","providers":["phone","email"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
 insert into auth.identities (provider_id, user_id, identity_data, provider, created_at, updated_at)
-values ('00000000-0000-4000-8000-000000000090', '00000000-0000-4000-8000-000000000090', '{"sub":"00000000-0000-4000-8000-000000000090","phone":"33639981089"}', 'phone', now(), now());
+values ('00000000-0000-4000-8000-000000000090', '00000000-0000-4000-8000-000000000090', '{"sub":"00000000-0000-4000-8000-000000000090","phone":"33639981089"}', 'phone', now(), now()),
+  ('00000000-0000-4000-8000-000000000090', '00000000-0000-4000-8000-000000000090', '{"sub":"00000000-0000-4000-8000-000000000090","email":"seed-090@attractr.test","email_verified":true}', 'email', now(), now());
 update public.profiles set first_name = 'Karim B.', birth_date = '1968-04-02', gender = 'man',
   bio = 'Nouvelle ville, nouvelles rencontres.', open_to_couples = false, alcohol_free_icons = true,
   verification_status = 'verified', verified_at = now(),
   location = private.snap_point(50.666885, 3.098193), location_source = 'device', country_code = 'FR',
+  department_code = '59', region_code = '32',
   last_active_at = now() - interval '119 hours', is_seed = true, status = 'active'
 where id = '00000000-0000-4000-8000-000000000090';
 insert into public.consents (user_id, type, version) values
@@ -2252,17 +2432,19 @@ insert into public.profile_prompts (user_id, position, question_code, answer) va
   ('00000000-0000-4000-8000-000000000090', 3, 'simple_pleasure', 'Le pain chaud.');
 
 -- Yasmine, Paris
-insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, raw_app_meta_data, raw_user_meta_data,
+insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, email, email_confirmed_at, raw_app_meta_data, raw_user_meta_data,
   created_at, updated_at, confirmation_token, recovery_token, email_change_token_new, email_change,
   phone_change, phone_change_token, email_change_token_current, reauthentication_token)
-values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000091', 'authenticated', 'authenticated', '33639981090', now(),
-  '{"provider":"phone","providers":["phone"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
+values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000091', 'authenticated', 'authenticated', '33639981090', now(), 'seed-091@attractr.test', now(),
+  '{"provider":"phone","providers":["phone","email"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
 insert into auth.identities (provider_id, user_id, identity_data, provider, created_at, updated_at)
-values ('00000000-0000-4000-8000-000000000091', '00000000-0000-4000-8000-000000000091', '{"sub":"00000000-0000-4000-8000-000000000091","phone":"33639981090"}', 'phone', now(), now());
+values ('00000000-0000-4000-8000-000000000091', '00000000-0000-4000-8000-000000000091', '{"sub":"00000000-0000-4000-8000-000000000091","phone":"33639981090"}', 'phone', now(), now()),
+  ('00000000-0000-4000-8000-000000000091', '00000000-0000-4000-8000-000000000091', '{"sub":"00000000-0000-4000-8000-000000000091","email":"seed-091@attractr.test","email_verified":true}', 'email', now(), now());
 update public.profiles set first_name = 'Yasmine', birth_date = '1972-08-12', gender = 'woman',
   bio = 'Nouvelle ville, nouvelles rencontres.', open_to_couples = false, alcohol_free_icons = false,
   verification_status = 'pending', verified_at = null,
   location = private.snap_point(48.885042, 2.399748), location_source = 'device', country_code = 'FR',
+  department_code = '75', region_code = '11',
   last_active_at = now() - interval '73 hours', is_seed = true, status = 'active'
 where id = '00000000-0000-4000-8000-000000000091';
 insert into public.consents (user_id, type, version) values
@@ -2277,17 +2459,19 @@ insert into public.profile_prompts (user_id, position, question_code, answer) va
   ('00000000-0000-4000-8000-000000000091', 3, 'unpopular_opinion', 'L''hiver est la meilleure saison.');
 
 -- Sarah, Marseille
-insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, raw_app_meta_data, raw_user_meta_data,
+insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, email, email_confirmed_at, raw_app_meta_data, raw_user_meta_data,
   created_at, updated_at, confirmation_token, recovery_token, email_change_token_new, email_change,
   phone_change, phone_change_token, email_change_token_current, reauthentication_token)
-values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000092', 'authenticated', 'authenticated', '33639981091', now(),
-  '{"provider":"phone","providers":["phone"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
+values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000092', 'authenticated', 'authenticated', '33639981091', now(), 'seed-092@attractr.test', now(),
+  '{"provider":"phone","providers":["phone","email"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
 insert into auth.identities (provider_id, user_id, identity_data, provider, created_at, updated_at)
-values ('00000000-0000-4000-8000-000000000092', '00000000-0000-4000-8000-000000000092', '{"sub":"00000000-0000-4000-8000-000000000092","phone":"33639981091"}', 'phone', now(), now());
+values ('00000000-0000-4000-8000-000000000092', '00000000-0000-4000-8000-000000000092', '{"sub":"00000000-0000-4000-8000-000000000092","phone":"33639981091"}', 'phone', now(), now()),
+  ('00000000-0000-4000-8000-000000000092', '00000000-0000-4000-8000-000000000092', '{"sub":"00000000-0000-4000-8000-000000000092","email":"seed-092@attractr.test","email_verified":true}', 'email', now(), now());
 update public.profiles set first_name = 'Sarah', birth_date = '1991-02-17', gender = 'woman',
   bio = null, open_to_couples = true, alcohol_free_icons = false,
   verification_status = 'verified', verified_at = now(),
   location = private.snap_point(43.278387, 5.337976), location_source = 'device', country_code = 'FR',
+  department_code = '13', region_code = '93',
   last_active_at = now() - interval '180 hours', is_seed = true, status = 'active'
 where id = '00000000-0000-4000-8000-000000000092';
 insert into public.consents (user_id, type, version) values
@@ -2302,17 +2486,19 @@ insert into public.profile_prompts (user_id, position, question_code, answer) va
   ('00000000-0000-4000-8000-000000000092', 3, 'never_without', 'Mon vélo.');
 
 -- Louis, Lyon
-insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, raw_app_meta_data, raw_user_meta_data,
+insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, email, email_confirmed_at, raw_app_meta_data, raw_user_meta_data,
   created_at, updated_at, confirmation_token, recovery_token, email_change_token_new, email_change,
   phone_change, phone_change_token, email_change_token_current, reauthentication_token)
-values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000093', 'authenticated', 'authenticated', '33639981092', now(),
-  '{"provider":"phone","providers":["phone"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
+values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000093', 'authenticated', 'authenticated', '33639981092', now(), 'seed-093@attractr.test', now(),
+  '{"provider":"phone","providers":["phone","email"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
 insert into auth.identities (provider_id, user_id, identity_data, provider, created_at, updated_at)
-values ('00000000-0000-4000-8000-000000000093', '00000000-0000-4000-8000-000000000093', '{"sub":"00000000-0000-4000-8000-000000000093","phone":"33639981092"}', 'phone', now(), now());
+values ('00000000-0000-4000-8000-000000000093', '00000000-0000-4000-8000-000000000093', '{"sub":"00000000-0000-4000-8000-000000000093","phone":"33639981092"}', 'phone', now(), now()),
+  ('00000000-0000-4000-8000-000000000093', '00000000-0000-4000-8000-000000000093', '{"sub":"00000000-0000-4000-8000-000000000093","email":"seed-093@attractr.test","email_verified":true}', 'email', now(), now());
 update public.profiles set first_name = 'Louis', birth_date = '1983-09-04', gender = 'man',
   bio = 'Fan de randonnée et de jeux de société.', open_to_couples = true, alcohol_free_icons = false,
   verification_status = 'verified', verified_at = now(),
   location = private.snap_point(45.742804, 4.773722), location_source = 'device', country_code = 'FR',
+  department_code = '69', region_code = '84',
   last_active_at = now() - interval '237 hours', is_seed = true, status = 'active'
 where id = '00000000-0000-4000-8000-000000000093';
 insert into public.consents (user_id, type, version) values
@@ -2327,17 +2513,19 @@ insert into public.profile_prompts (user_id, position, question_code, answer) va
   ('00000000-0000-4000-8000-000000000093', 3, 'ideal_first_date', 'Un musée puis un café.');
 
 -- Alice F., Toulouse
-insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, raw_app_meta_data, raw_user_meta_data,
+insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, email, email_confirmed_at, raw_app_meta_data, raw_user_meta_data,
   created_at, updated_at, confirmation_token, recovery_token, email_change_token_new, email_change,
   phone_change, phone_change_token, email_change_token_current, reauthentication_token)
-values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000094', 'authenticated', 'authenticated', '33639981093', now(),
-  '{"provider":"phone","providers":["phone"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
+values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000094', 'authenticated', 'authenticated', '33639981093', now(), 'seed-094@attractr.test', now(),
+  '{"provider":"phone","providers":["phone","email"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
 insert into auth.identities (provider_id, user_id, identity_data, provider, created_at, updated_at)
-values ('00000000-0000-4000-8000-000000000094', '00000000-0000-4000-8000-000000000094', '{"sub":"00000000-0000-4000-8000-000000000094","phone":"33639981093"}', 'phone', now(), now());
+values ('00000000-0000-4000-8000-000000000094', '00000000-0000-4000-8000-000000000094', '{"sub":"00000000-0000-4000-8000-000000000094","phone":"33639981093"}', 'phone', now(), now()),
+  ('00000000-0000-4000-8000-000000000094', '00000000-0000-4000-8000-000000000094', '{"sub":"00000000-0000-4000-8000-000000000094","email":"seed-094@attractr.test","email_verified":true}', 'email', now(), now());
 update public.profiles set first_name = 'Alice F.', birth_date = '1985-08-15', gender = 'woman',
   bio = 'Nouvelle ville, nouvelles rencontres.', open_to_couples = false, alcohol_free_icons = false,
   verification_status = 'verified', verified_at = now(),
   location = private.snap_point(43.648679, 1.467941), location_source = 'device', country_code = 'FR',
+  department_code = '31', region_code = '76',
   last_active_at = now() - interval '18 hours', is_seed = true, status = 'active'
 where id = '00000000-0000-4000-8000-000000000094';
 insert into public.consents (user_id, type, version) values
@@ -2352,17 +2540,19 @@ insert into public.profile_prompts (user_id, position, question_code, answer) va
   ('00000000-0000-4000-8000-000000000094', 3, 'ideal_first_date', 'Un musée puis un café.');
 
 -- Jules C., Nice
-insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, raw_app_meta_data, raw_user_meta_data,
+insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, email, email_confirmed_at, raw_app_meta_data, raw_user_meta_data,
   created_at, updated_at, confirmation_token, recovery_token, email_change_token_new, email_change,
   phone_change, phone_change_token, email_change_token_current, reauthentication_token)
-values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000095', 'authenticated', 'authenticated', '33639981094', now(),
-  '{"provider":"phone","providers":["phone"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
+values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000095', 'authenticated', 'authenticated', '33639981094', now(), 'seed-095@attractr.test', now(),
+  '{"provider":"phone","providers":["phone","email"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
 insert into auth.identities (provider_id, user_id, identity_data, provider, created_at, updated_at)
-values ('00000000-0000-4000-8000-000000000095', '00000000-0000-4000-8000-000000000095', '{"sub":"00000000-0000-4000-8000-000000000095","phone":"33639981094"}', 'phone', now(), now());
+values ('00000000-0000-4000-8000-000000000095', '00000000-0000-4000-8000-000000000095', '{"sub":"00000000-0000-4000-8000-000000000095","phone":"33639981094"}', 'phone', now(), now()),
+  ('00000000-0000-4000-8000-000000000095', '00000000-0000-4000-8000-000000000095', '{"sub":"00000000-0000-4000-8000-000000000095","email":"seed-095@attractr.test","email_verified":true}', 'email', now(), now());
 update public.profiles set first_name = 'Jules C.', birth_date = '1995-11-23', gender = 'man',
   bio = 'Je cuisine mieux que je ne danse.', open_to_couples = false, alcohol_free_icons = false,
   verification_status = 'verified', verified_at = now(),
   location = private.snap_point(43.733991, 7.327437), location_source = 'device', country_code = 'FR',
+  department_code = '06', region_code = '93',
   last_active_at = now() - interval '103 hours', is_seed = true, status = 'active'
 where id = '00000000-0000-4000-8000-000000000095';
 insert into public.consents (user_id, type, version) values
@@ -2377,17 +2567,19 @@ insert into public.profile_prompts (user_id, position, question_code, answer) va
   ('00000000-0000-4000-8000-000000000095', 3, 'currently_learning', 'L''espagnol avec une appli.');
 
 -- Lucie E., Nantes
-insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, raw_app_meta_data, raw_user_meta_data,
+insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, email, email_confirmed_at, raw_app_meta_data, raw_user_meta_data,
   created_at, updated_at, confirmation_token, recovery_token, email_change_token_new, email_change,
   phone_change, phone_change_token, email_change_token_current, reauthentication_token)
-values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000096', 'authenticated', 'authenticated', '33639981095', now(),
-  '{"provider":"phone","providers":["phone"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
+values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000096', 'authenticated', 'authenticated', '33639981095', now(), 'seed-096@attractr.test', now(),
+  '{"provider":"phone","providers":["phone","email"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
 insert into auth.identities (provider_id, user_id, identity_data, provider, created_at, updated_at)
-values ('00000000-0000-4000-8000-000000000096', '00000000-0000-4000-8000-000000000096', '{"sub":"00000000-0000-4000-8000-000000000096","phone":"33639981095"}', 'phone', now(), now());
+values ('00000000-0000-4000-8000-000000000096', '00000000-0000-4000-8000-000000000096', '{"sub":"00000000-0000-4000-8000-000000000096","phone":"33639981095"}', 'phone', now(), now()),
+  ('00000000-0000-4000-8000-000000000096', '00000000-0000-4000-8000-000000000096', '{"sub":"00000000-0000-4000-8000-000000000096","email":"seed-096@attractr.test","email_verified":true}', 'email', now(), now());
 update public.profiles set first_name = 'Lucie E.', birth_date = '1993-08-21', gender = 'woman',
   bio = null, open_to_couples = false, alcohol_free_icons = false,
   verification_status = 'verified', verified_at = now(),
   location = private.snap_point(47.184238, -1.592362), location_source = 'device', country_code = 'FR',
+  department_code = '44', region_code = '52',
   last_active_at = now() - interval '24 hours', is_seed = true, status = 'active'
 where id = '00000000-0000-4000-8000-000000000096';
 insert into public.consents (user_id, type, version) values
@@ -2402,17 +2594,19 @@ insert into public.profile_prompts (user_id, position, question_code, answer) va
   ('00000000-0000-4000-8000-000000000096', 3, 'looking_for_someone_who', 'Aime les discussions tard le soir.');
 
 -- Jules D., Montpellier
-insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, raw_app_meta_data, raw_user_meta_data,
+insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, email, email_confirmed_at, raw_app_meta_data, raw_user_meta_data,
   created_at, updated_at, confirmation_token, recovery_token, email_change_token_new, email_change,
   phone_change, phone_change_token, email_change_token_current, reauthentication_token)
-values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000097', 'authenticated', 'authenticated', '33639981096', now(),
-  '{"provider":"phone","providers":["phone"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
+values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000097', 'authenticated', 'authenticated', '33639981096', now(), 'seed-097@attractr.test', now(),
+  '{"provider":"phone","providers":["phone","email"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
 insert into auth.identities (provider_id, user_id, identity_data, provider, created_at, updated_at)
-values ('00000000-0000-4000-8000-000000000097', '00000000-0000-4000-8000-000000000097', '{"sub":"00000000-0000-4000-8000-000000000097","phone":"33639981096"}', 'phone', now(), now());
+values ('00000000-0000-4000-8000-000000000097', '00000000-0000-4000-8000-000000000097', '{"sub":"00000000-0000-4000-8000-000000000097","phone":"33639981096"}', 'phone', now(), now()),
+  ('00000000-0000-4000-8000-000000000097', '00000000-0000-4000-8000-000000000097', '{"sub":"00000000-0000-4000-8000-000000000097","email":"seed-097@attractr.test","email_verified":true}', 'email', now(), now());
 update public.profiles set first_name = 'Jules D.', birth_date = '1982-11-07', gender = 'man',
   bio = null, open_to_couples = false, alcohol_free_icons = false,
   verification_status = 'verified', verified_at = now(),
   location = private.snap_point(43.6487, 3.894605), location_source = 'device', country_code = 'FR',
+  department_code = '34', region_code = '76',
   last_active_at = now() - interval '137 hours', is_seed = true, status = 'active'
 where id = '00000000-0000-4000-8000-000000000097';
 insert into public.consents (user_id, type, version) values
@@ -2427,17 +2621,19 @@ insert into public.profile_prompts (user_id, position, question_code, answer) va
   ('00000000-0000-4000-8000-000000000097', 3, 'unpopular_opinion', 'Le ketchup va avec tout.');
 
 -- Maxime B., Strasbourg
-insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, raw_app_meta_data, raw_user_meta_data,
+insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, email, email_confirmed_at, raw_app_meta_data, raw_user_meta_data,
   created_at, updated_at, confirmation_token, recovery_token, email_change_token_new, email_change,
   phone_change, phone_change_token, email_change_token_current, reauthentication_token)
-values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000098', 'authenticated', 'authenticated', '33639981097', now(),
-  '{"provider":"phone","providers":["phone"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
+values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000098', 'authenticated', 'authenticated', '33639981097', now(), 'seed-098@attractr.test', now(),
+  '{"provider":"phone","providers":["phone","email"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
 insert into auth.identities (provider_id, user_id, identity_data, provider, created_at, updated_at)
-values ('00000000-0000-4000-8000-000000000098', '00000000-0000-4000-8000-000000000098', '{"sub":"00000000-0000-4000-8000-000000000098","phone":"33639981097"}', 'phone', now(), now());
+values ('00000000-0000-4000-8000-000000000098', '00000000-0000-4000-8000-000000000098', '{"sub":"00000000-0000-4000-8000-000000000098","phone":"33639981097"}', 'phone', now(), now()),
+  ('00000000-0000-4000-8000-000000000098', '00000000-0000-4000-8000-000000000098', '{"sub":"00000000-0000-4000-8000-000000000098","email":"seed-098@attractr.test","email_verified":true}', 'email', now(), now());
 update public.profiles set first_name = 'Maxime B.', birth_date = '1971-02-22', gender = 'non_binary',
   bio = 'Curieux·se de tout, surtout des gens.', open_to_couples = true, alcohol_free_icons = false,
   verification_status = 'verified', verified_at = now(),
   location = private.snap_point(48.570494, 7.719629), location_source = 'device', country_code = 'FR',
+  department_code = '67', region_code = '44',
   last_active_at = now() - interval '108 hours', is_seed = true, status = 'active'
 where id = '00000000-0000-4000-8000-000000000098';
 insert into public.consents (user_id, type, version) values
@@ -2452,17 +2648,19 @@ insert into public.profile_prompts (user_id, position, question_code, answer) va
   ('00000000-0000-4000-8000-000000000098', 3, 'simple_pleasure', 'Les draps propres.');
 
 -- Anaïs B., Bordeaux
-insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, raw_app_meta_data, raw_user_meta_data,
+insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, email, email_confirmed_at, raw_app_meta_data, raw_user_meta_data,
   created_at, updated_at, confirmation_token, recovery_token, email_change_token_new, email_change,
   phone_change, phone_change_token, email_change_token_current, reauthentication_token)
-values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000099', 'authenticated', 'authenticated', '33639981098', now(),
-  '{"provider":"phone","providers":["phone"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
+values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000099', 'authenticated', 'authenticated', '33639981098', now(), 'seed-099@attractr.test', now(),
+  '{"provider":"phone","providers":["phone","email"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
 insert into auth.identities (provider_id, user_id, identity_data, provider, created_at, updated_at)
-values ('00000000-0000-4000-8000-000000000099', '00000000-0000-4000-8000-000000000099', '{"sub":"00000000-0000-4000-8000-000000000099","phone":"33639981098"}', 'phone', now(), now());
+values ('00000000-0000-4000-8000-000000000099', '00000000-0000-4000-8000-000000000099', '{"sub":"00000000-0000-4000-8000-000000000099","phone":"33639981098"}', 'phone', now(), now()),
+  ('00000000-0000-4000-8000-000000000099', '00000000-0000-4000-8000-000000000099', '{"sub":"00000000-0000-4000-8000-000000000099","email":"seed-099@attractr.test","email_verified":true}', 'email', now(), now());
 update public.profiles set first_name = 'Anaïs B.', birth_date = '1991-10-14', gender = 'woman',
   bio = 'Curieux·se de tout, surtout des gens.', open_to_couples = false, alcohol_free_icons = false,
   verification_status = 'verified', verified_at = now(),
   location = private.snap_point(44.840426, -0.505636), location_source = 'device', country_code = 'FR',
+  department_code = '33', region_code = '75',
   last_active_at = now() - interval '194 hours', is_seed = true, status = 'active'
 where id = '00000000-0000-4000-8000-000000000099';
 insert into public.consents (user_id, type, version) values
@@ -2477,17 +2675,19 @@ insert into public.profile_prompts (user_id, position, question_code, answer) va
   ('00000000-0000-4000-8000-000000000099', 3, 'never_without', 'Un livre dans le sac.');
 
 -- Louis B., Lille
-insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, raw_app_meta_data, raw_user_meta_data,
+insert into auth.users (instance_id, id, aud, role, phone, phone_confirmed_at, email, email_confirmed_at, raw_app_meta_data, raw_user_meta_data,
   created_at, updated_at, confirmation_token, recovery_token, email_change_token_new, email_change,
   phone_change, phone_change_token, email_change_token_current, reauthentication_token)
-values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000100', 'authenticated', 'authenticated', '33639981099', now(),
-  '{"provider":"phone","providers":["phone"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
+values ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-000000000100', 'authenticated', 'authenticated', '33639981099', now(), 'seed-100@attractr.test', now(),
+  '{"provider":"phone","providers":["phone","email"]}', '{}', now(), now(), '', '', '', '', '', '', '', '');
 insert into auth.identities (provider_id, user_id, identity_data, provider, created_at, updated_at)
-values ('00000000-0000-4000-8000-000000000100', '00000000-0000-4000-8000-000000000100', '{"sub":"00000000-0000-4000-8000-000000000100","phone":"33639981099"}', 'phone', now(), now());
+values ('00000000-0000-4000-8000-000000000100', '00000000-0000-4000-8000-000000000100', '{"sub":"00000000-0000-4000-8000-000000000100","phone":"33639981099"}', 'phone', now(), now()),
+  ('00000000-0000-4000-8000-000000000100', '00000000-0000-4000-8000-000000000100', '{"sub":"00000000-0000-4000-8000-000000000100","email":"seed-100@attractr.test","email_verified":true}', 'email', now(), now());
 update public.profiles set first_name = 'Louis B.', birth_date = '2004-10-05', gender = 'man',
   bio = 'Fan de randonnée et de jeux de société.', open_to_couples = true, alcohol_free_icons = false,
   verification_status = 'verified', verified_at = now(),
   location = private.snap_point(50.580507, 3.020977), location_source = 'device', country_code = 'FR',
+  department_code = '59', region_code = '32',
   last_active_at = now() - interval '191 hours', is_seed = true, status = 'active'
 where id = '00000000-0000-4000-8000-000000000100';
 insert into public.consents (user_id, type, version) values

@@ -27,6 +27,10 @@ export interface SeedProfile {
   orientationVisible: boolean;
   verified: boolean;
   city: string;
+  departmentCode: string;
+  regionCode: string;
+  /** Only used by the dev 'tester en tant que' login (magic link), reserved .test domain. */
+  email: string;
   lat: number;
   lon: number;
   bio: string | null;
@@ -36,16 +40,16 @@ export interface SeedProfile {
 }
 
 export const CITIES = [
-  { name: 'Paris', lat: 48.8566, lon: 2.3522 },
-  { name: 'Marseille', lat: 43.2965, lon: 5.3698 },
-  { name: 'Lyon', lat: 45.764, lon: 4.8357 },
-  { name: 'Toulouse', lat: 43.6047, lon: 1.4442 },
-  { name: 'Nice', lat: 43.7102, lon: 7.262 },
-  { name: 'Nantes', lat: 47.2184, lon: -1.5536 },
-  { name: 'Montpellier', lat: 43.6119, lon: 3.8772 },
-  { name: 'Strasbourg', lat: 48.5734, lon: 7.7521 },
-  { name: 'Bordeaux', lat: 44.8378, lon: -0.5792 },
-  { name: 'Lille', lat: 50.6292, lon: 3.0573 },
+  { name: 'Paris', lat: 48.8566, lon: 2.3522, department: '75', region: '11' },
+  { name: 'Marseille', lat: 43.2965, lon: 5.3698, department: '13', region: '93' },
+  { name: 'Lyon', lat: 45.764, lon: 4.8357, department: '69', region: '84' },
+  { name: 'Toulouse', lat: 43.6047, lon: 1.4442, department: '31', region: '76' },
+  { name: 'Nice', lat: 43.7102, lon: 7.262, department: '06', region: '93' },
+  { name: 'Nantes', lat: 47.2184, lon: -1.5536, department: '44', region: '52' },
+  { name: 'Montpellier', lat: 43.6119, lon: 3.8772, department: '34', region: '76' },
+  { name: 'Strasbourg', lat: 48.5734, lon: 7.7521, department: '67', region: '44' },
+  { name: 'Bordeaux', lat: 44.8378, lon: -0.5792, department: '33', region: '75' },
+  { name: 'Lille', lat: 50.6292, lon: 3.0573, department: '59', region: '32' },
 ] as const;
 
 export const PROFILE_COUNT = 100;
@@ -225,6 +229,9 @@ export function buildProfiles(seed = 20261005): SeedProfile[] {
       orientationVisible: hasOrientation && rng.next() < 0.7,
       verified: intent.verified ?? rng.next() < 0.8,
       city: city.name,
+      departmentCode: city.department,
+      regionCode: city.region,
+      email: `seed-${pad(i + 1, 3)}@attractr.test`,
       lat: Number(lat.toFixed(6)),
       lon: Number(lon.toFixed(6)),
       bio: rng.next() < 0.5 ? rng.pick(BIOS) : null,
