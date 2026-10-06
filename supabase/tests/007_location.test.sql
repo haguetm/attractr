@@ -3,8 +3,9 @@ begin;
 select plan(5);
 
 select tests.create_onboarded_user('33639982401', 'a5000000-0000-4000-8000-000000000001');
-select tests.authenticate_as('a5000000-0000-4000-8000-000000000001');
-select public.set_my_location(48.856613, 2.352222);
+-- Positions are written by the update-location Edge Function (service role).
+set local role service_role;
+select public.service_set_location('a5000000-0000-4000-8000-000000000001', 48.856613, 2.352222, 'device', 'FR');
 reset role;
 
 select ok(
