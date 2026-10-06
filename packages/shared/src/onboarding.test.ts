@@ -24,7 +24,7 @@ const draft = (patch: Partial<IntentDraft>): IntentDraft => ({ ...EMPTY_INTENT, 
 describe('applicable steps', () => {
   it('follows the spec order for a polyamorous romantic profile', () => {
     expect(applicableSteps(draft({ drinks: ['wine'], structure: 'polyamorous' }), ALL_ON)).toEqual([
-      'age', 'location', 'identity', 'sensitive_consent', 'account_type', 'situation', 'drinks',
+      'account_type', 'age', 'location', 'identity', 'sensitive_consent', 'situation', 'drinks',
       'structure', 'composition', 'open_to_couples', 'prompts', 'photos', 'selfie', 'orientation',
     ]);
   });
@@ -54,7 +54,9 @@ describe('applicable steps', () => {
     expect(nextStep('drinks', beer, ALL_ON)).toBe('prompts');
     expect(previousStep('prompts', beer, ALL_ON)).toBe('drinks');
     expect(nextStep('orientation', beer, ALL_ON)).toBeNull();
-    expect(previousStep('age', beer, ALL_ON)).toBeNull();
+    expect(previousStep('age', beer, ALL_ON)).toBe('account_type');
+    expect(previousStep('account_type', beer, ALL_ON)).toBeNull();
+    expect(nextStep('sensitive_consent', beer, ALL_ON)).toBe('situation');
   });
 });
 
@@ -125,12 +127,13 @@ describe('resumeStep', () => {
   };
 
   it('walks the steps in order', () => {
+    expect(resumeStep({ ...base, hasTermsConsent: false, birthDate: null })).toBe('account_type');
     expect(resumeStep({ ...base, hasTermsConsent: false })).toBe('age');
     expect(resumeStep({ ...base, hasLocation: false })).toBe('location');
     expect(resumeStep({ ...base, firstName: null })).toBe('identity');
     expect(resumeStep({ ...base, hasSensitiveConsent: false })).toBe('sensitive_consent');
     expect(resumeStep({ ...base, hasSeekingGenders: false })).toBe('identity');
-    expect(resumeStep({ ...base, hasIntent: false })).toBe('account_type');
+    expect(resumeStep({ ...base, hasIntent: false })).toBe('situation');
     expect(resumeStep({ ...base, promptsCount: 2 })).toBe('prompts');
     expect(resumeStep({ ...base, photosCount: 1 })).toBe('photos');
     expect(resumeStep({ ...base, verificationStatus: 'unverified' })).toBe('selfie');

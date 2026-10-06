@@ -1,14 +1,17 @@
 // Screen 2: first name, gender, sought genders. Sought genders are sensitive: they
 // are only sent once the separate consent (screen 3) exists.
+// With a couple account, this is still the person's own profile: the shared profile comes later.
 
 import { GENDERS, type Gender } from '@attractr/shared';
-import { useState } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, Choice, ErrorText, Field, Note, Screen, Section } from '../../components/ui';
 import { useOnboarding } from '../../features/onboarding/OnboardingProvider';
 import { useSession } from '../../features/session/SessionProvider';
 import { api } from '../../lib/api';
 import { errorMessage } from '../../lib/errors';
+import { WANTS_COUPLE_KEY } from '../../lib/referral';
 import { useSubmit } from '../../lib/useSubmit';
 
 export default function IdentityScreen() {
@@ -18,7 +21,14 @@ export default function IdentityScreen() {
   const [firstName, setFirstName] = useState(profile?.first_name ?? '');
   const [gender, setGender] = useState<Gender | null>(profile?.gender ?? null);
   const [detail, setDetail] = useState(profile?.gender_detail ?? '');
+  const [couple, setCouple] = useState(false);
   const { busy, error, run } = useSubmit();
+
+  useEffect(() => {
+    void AsyncStorage.getItem(WANTS_COUPLE_KEY)
+      .then((v) => setCouple(v === '1'))
+      .catch(() => undefined);
+  }, []);
 
   const toggleSeeking = (g: Gender) =>
     setSeeking(seeking.includes(g) ? seeking.filter((x) => x !== g) : [...seeking, g]);
@@ -35,7 +45,7 @@ export default function IdentityScreen() {
   return (
     <Screen
       progress={progress('identity')}
-      title={t('identity.title')}
+      title={t(couple ? 'identity.titleCouple' : 'identity.title')}
       footer={
         <Button
           label={t('common.continue')}
@@ -45,6 +55,7 @@ export default function IdentityScreen() {
         />
       }
     >
+      {couple && <Note>{t('identity.coupleHint')}</Note>}
       <Field label={t('identity.firstName')} value={firstName} onChangeText={setFirstName} maxLength={40} autoComplete="given-name" />
 
       <Section title={t('identity.gender')}>

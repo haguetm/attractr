@@ -52,6 +52,8 @@
   },
   "identity": {
     "title": "Faisons connaissance",
+    "titleCouple": "D'abord, toi",
+    "coupleHint": "Chacun de vous deux crée son propre profil vérifié, avec son prénom. Votre profil commun sera créé juste après, avec ton ou ta partenaire.",
     "firstName": "Ton prénom",
     "gender": "Tu es",
     "genderDetail": "Précision affichée sur ton profil (facultatif)",

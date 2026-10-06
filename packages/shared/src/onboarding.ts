@@ -12,11 +12,11 @@ import {
 import type { IntentFieldSwitches } from './intent';
 
 export const ONBOARDING_STEPS = [
+  'account_type',   // 4. individual or couple, asked first (DECISIONS: the first name screen depends on it)
   'age',            // 1. age, 18+, terms, referral code
   'location',       //    position or home: the country decides which sensitive fields exist (Q21)
   'identity',       // 2. first name, gender, sought genders
   'sensitive_consent', // 3. separate GDPR consent; sought genders are saved after it
-  'account_type',   // 4. individual or couple
   'situation',      // 5.
   'drinks',         // 6.
   'structure',      // 7. skipped with beer only
@@ -152,13 +152,15 @@ export interface OnboardingProgress {
 /** First screen to show when the app reopens, or 'done' once onboarding is over. */
 export function resumeStep(p: OnboardingProgress): OnboardingStep | 'done' {
   if (p.status !== 'onboarding') return 'done';
+  // Nothing saved yet: start over with the account type (kept on the device, not on the server).
+  if (!p.hasTermsConsent && !p.birthDate) return 'account_type';
   if (!p.hasTermsConsent || !p.birthDate) return 'age';
   if (!p.hasLocation) return 'location';
   if (!p.firstName) return 'identity';
   if (!p.hasSensitiveConsent) return 'sensitive_consent';
   // Sought genders are kept in memory until consent: if the app was closed in between, ask again.
   if (!p.hasSeekingGenders) return 'identity';
-  if (!p.hasIntent) return 'account_type';
+  if (!p.hasIntent) return 'situation';
   if (p.promptsCount < 3) return 'prompts';
   if (p.photosCount < p.minPhotos) return 'photos';
   if (p.verificationStatus === 'unverified' || p.verificationStatus === 'rejected') return 'selfie';
