@@ -24,6 +24,10 @@ export default function Index() {
     (async () => {
       const p = profile ?? (await refreshProfile());
       if (!p || cancelled) return;
+      if (p.status === 'suspended' || p.status === 'closed') {
+        setTarget('/suspended');
+        return;
+      }
       const minPhotos = await api.configInt('photos.min_count').catch(() => 2);
       const step = resumeStep(progressFromProfile(p, minPhotos));
       if (!cancelled) setTarget(step === 'done' ? '/feed' : (stepPath(step) as Href));

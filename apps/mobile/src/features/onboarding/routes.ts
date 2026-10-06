@@ -14,7 +14,7 @@ export function progressFromProfile(p: MyProfile, minPhotos: number): Onboarding
     hasSeekingGenders: (p.sensitive.seeking_genders?.length ?? 0) > 0,
     hasIntent: !!p.sensitive.situation && p.drinks.length > 0,
     promptsCount: p.prompts.length,
-    photosCount: p.photos.length,
+    photosCount: p.photos.filter((ph) => ph.moderation_status !== 'rejected').length,
     minPhotos,
     verificationStatus: p.verification_status,
   };

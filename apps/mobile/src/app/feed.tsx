@@ -26,7 +26,7 @@ const defaultTarget = (card: ProfileCard): LikeTarget | null =>
 
 export default function FeedScreen() {
   const { t } = useTranslation();
-  const { profile } = useSession();
+  const { profile, refreshProfile } = useSession();
   const [feed, setFeed] = useState<Feed | null>(null);
   const [index, setIndex] = useState(0);
   const [quota, setQuota] = useState<LikeQuota | null>(null);
@@ -44,11 +44,19 @@ export default function FeedScreen() {
       setUnread(matches.reduce((sum, m) => sum + m.unread_count, 0));
       setIndex(0);
     } catch (e) {
+      // Suspended (or paused/closed) meanwhile: let the entry gate pick the right screen.
+      if (errorCode(e) === 'profile_not_active') {
+        const p = await refreshProfile().catch(() => null);
+        if (p?.status === 'suspended' || p?.status === 'closed') {
+          router.replace('/suspended');
+          return;
+        }
+      }
       setError(e);
     } finally {
       setLoading(false);
     }
-  }, [setError]);
+  }, [setError, refreshProfile]);
 
   // Reload when coming back from search preferences, a chat or a match.
   useFocusEffect(
@@ -120,6 +128,12 @@ export default function FeedScreen() {
               onLike={like}
               likeDisabled={busy || outOfLikes}
             />
+            <Pressable
+              accessibilityRole="button"
+              onPress={() => router.push({ pathname: '/report/[userId]', params: { userId: card.id, name: card.first_name } })}
+            >
+              <Text style={[font.small, styles.center, styles.reportLink]}>{t('safety.reportOrBlock')}</Text>
+            </Pressable>
             <Text style={[font.small, styles.center]}>{t('feed.disclaimer')}</Text>
           </>
         ) : !error ? (
@@ -179,6 +193,7 @@ const styles = StyleSheet.create({
   content: { padding: spacing.lg, gap: spacing.md, paddingBottom: spacing.xl },
   loader: { marginTop: spacing.xl },
   center: { textAlign: 'center' },
+  reportLink: { textDecorationLine: 'underline' },
   waiting: { alignItems: 'center', gap: spacing.md, marginTop: spacing.xl },
   footer: { paddingHorizontal: spacing.lg, paddingTop: spacing.sm, paddingBottom: spacing.md, gap: spacing.xs },
   actions: { flexDirection: 'row', gap: spacing.md },

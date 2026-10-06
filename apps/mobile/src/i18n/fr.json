@@ -166,15 +166,21 @@
     "main": "Principale",
     "uploading": "Envoi en cours…",
     "permission": "Autorise l'accès à tes photos pour en ajouter.",
-    "moderationNote": "Chaque photo est vérifiée avant d'être visible."
+    "moderationNote": "Chaque photo est vérifiée avant d'être visible.",
+    "statusPending": "En vérification",
+    "statusRejected": "Refusée",
+    "rejectedHint": "Une photo refusée n'est pas visible. Retire-la et ajoute-en une autre."
   },
   "selfie": {
     "title": "Selfie de vérification",
     "subtitle": "Il sert uniquement à vérifier que tu es une vraie personne majeure. Il n'est jamais affiché.",
     "take": "Prendre le selfie",
-    "retake": "Reprendre",
+    "retake": "Nous n'avons pas pu vérifier ce selfie. Prends-en un nouveau, visage bien éclairé et de face.",
     "submitted": "Selfie envoyé. La vérification est en cours.",
-    "permission": "Autorise l'accès à la caméra pour prendre ton selfie."
+    "permission": "Autorise l'accès à la caméra pour prendre ton selfie.",
+    "verifying": "Vérification en cours…",
+    "verified": "Selfie vérifié. Merci !",
+    "review": "Notre équipe vérifie ton selfie. Tu peux continuer en attendant."
   },
   "orientation": {
     "title": "Ton orientation",
@@ -275,7 +281,19 @@
     "match_expired": "Le délai pour envoyer le premier message est dépassé.",
     "match_closed": "Cette conversation est fermée.",
     "queue_read_failed": "Erreur interne.",
-    "settle_failed": "Erreur interne."
+    "settle_failed": "Erreur interne.",
+    "identity_blocked": "Impossible de créer un compte avec ce numéro.",
+    "selfie_not_found": "Selfie introuvable. Reprends-en un.",
+    "verification_failed": "La vérification n'a pas abouti. Réessaie dans un instant.",
+    "moderation_failed": "La vérification de la photo n'a pas abouti. Elle sera vérifiée plus tard.",
+    "cannot_block_self": "Action impossible.",
+    "cannot_report_self": "Action impossible.",
+    "invalid_report_reason": "Choisis un motif.",
+    "report_limit_reached": "Tu as envoyé beaucoup de signalements aujourd'hui. Réessaie demain.",
+    "too_many_contacts": "Trop de contacts à traiter en une fois.",
+    "links_not_allowed_yet": "Les liens ne sont pas autorisés dans les premiers messages, pour te protéger des arnaques.",
+    "queue_item_not_found": "Élément introuvable.",
+    "invalid_decision": "Décision invalide."
   },
   "settings": {
     "title": "Réglages",
@@ -287,7 +305,20 @@
     "deleteAccountConfirm": "Ton compte et toutes tes données seront définitivement effacés. Continuer ?",
     "confirm": "Confirmer",
     "signOut": "Se déconnecter",
-    "devTools": "Outils de développement"
+    "devTools": "Outils de développement",
+    "pause": "Mode pause",
+    "pauseHint": "Ton profil n'apparaît plus dans les recherches. Tes matchs et conversations restent ouverts.",
+    "pauseOn": "Mettre en pause",
+    "pauseOff": "Réactiver mon profil",
+    "paused": "Ton profil est en pause.",
+    "contacts": "Bloquer mes contacts",
+    "contactsHint": "Les personnes de ton carnet d'adresses ne te verront pas, et tu ne les verras pas. Les numéros sont transformés sur ton téléphone : ton carnet n'est jamais envoyé ni conservé.",
+    "contactsBlock": "Bloquer mes contacts",
+    "contactsUnblock": "Ne plus bloquer mes contacts",
+    "contactsDone": "Tes contacts sont bloqués.",
+    "contactsPermission": "Autorise l'accès aux contacts pour les bloquer.",
+    "blockedList": "Profils bloqués",
+    "warning": "Tu as reçu un avertissement de notre équipe de modération. Respecte les règles pour éviter une suspension."
   },
   "feed": {
     "search": "Recherche",
@@ -377,6 +408,53 @@
     "confirm": "Confirmer",
     "cancel": "Annuler",
     "empty": "Lance la conversation : un détail de son profil fait souvent un bon début.",
-    "closed": "Cette conversation est fermée."
+    "closed": "Cette conversation est fermée.",
+    "menuProfile": "Voir le profil",
+    "menuReport": "Signaler",
+    "menuBlock": "Bloquer",
+    "menuUnmatch": "Ne plus matcher",
+    "menuClose": "Fermer",
+    "scamTip": "Ne partage jamais d'argent ni de coordonnées bancaires avec un match."
+  },
+  "safety": {
+    "reportOrBlock": "Signaler ou bloquer",
+    "report": "Signaler",
+    "block": "Bloquer",
+    "blockConfirm": "Vous ne vous verrez plus et votre match éventuel sera fermé. Continuer ?",
+    "blocked": "Profil bloqué."
+  },
+  "report": {
+    "title": "Signaler {{name}}",
+    "subtitle": "Ton signalement est anonyme. Notre équipe l'examine.",
+    "reason": "Motif",
+    "reasons": {
+      "suspected_minor": "Je pense que cette personne est mineure",
+      "misleading_intent": "Sa boisson ne correspond pas à ce qu'elle cherche",
+      "scam": "Arnaque ou demande d'argent",
+      "harassment": "Harcèlement ou propos insultants",
+      "inappropriate_photo": "Photo inappropriée",
+      "fake_profile": "Faux profil",
+      "couple_pressure": "Pression exercée par un couple",
+      "other": "Autre"
+    },
+    "minorNote": "Les suspicions de mineur sont traitées en priorité.",
+    "details": "Précisions (facultatif)",
+    "alsoBlock": "Bloquer aussi cette personne",
+    "send": "Envoyer le signalement",
+    "sent": "Merci, ton signalement a été envoyé."
+  },
+  "blocked": {
+    "title": "Profils bloqués",
+    "empty": "Tu n'as bloqué personne.",
+    "unblock": "Débloquer",
+    "contacts": "Tes contacts sont bloqués."
+  },
+  "suspended": {
+    "title": "Compte suspendu",
+    "body": "Ton compte est suspendu le temps d'une vérification par notre équipe, ou à la suite de signalements. Tu ne peux plus voir de profils ni écrire.",
+    "verification": "Nous vérifions ton selfie : cela peut prendre un peu de temps.",
+    "contact": "Pour toute question, écris-nous depuis la page d'aide (bientôt).",
+    "signOut": "Se déconnecter",
+    "deleteAccount": "Supprimer mon compte"
   }
 }

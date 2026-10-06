@@ -38,6 +38,13 @@ export default function MatchScreen() {
       footer={
         <>
           <Button label={t('match.write')} onPress={openChat} disabled={!summary} />
+          {card ? (
+            <Button
+              label={t('safety.reportOrBlock')}
+              variant="ghost"
+              onPress={() => router.push({ pathname: '/report/[userId]', params: { userId: card.id, name: card.first_name, conversationId: summary?.conversation_id } })}
+            />
+          ) : null}
           <Button label={isNew ? t('match.later') : t('common.back')} variant="ghost" onPress={() => router.back()} />
         </>
       }

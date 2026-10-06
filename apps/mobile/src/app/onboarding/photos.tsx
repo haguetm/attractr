@@ -23,6 +23,8 @@ export default function PhotosScreen() {
   const [denied, setDenied] = useState(false);
   const { busy, error, run } = useSubmit();
   const photos = profile?.photos ?? [];
+  // Rejected photos do not count towards the minimum (same rule as complete_onboarding).
+  const usable = photos.filter((p) => p.moderation_status !== 'rejected');
 
   useEffect(() => {
     const missing = photos.filter((p) => !urls[p.id]);
@@ -49,7 +51,9 @@ export default function PhotosScreen() {
       if (result.canceled || !result.assets[0]) return;
       const asset = result.assets[0];
       const path = await uploadImage('photos', profile!.id, asset.uri, asset.mimeType);
-      await api.addPhoto(path);
+      const photoId = await api.addPhoto(path);
+      // Moderation failures are retried by the scheduled batch; the photo stays pending.
+      await api.moderatePhoto(photoId).catch(() => undefined);
       await refreshProfile();
     });
 
@@ -75,7 +79,7 @@ export default function PhotosScreen() {
         <Button
           label={t('common.continue')}
           onPress={() => run(() => goNext('photos'))}
-          disabled={photos.length < photoLimits.min || busy}
+          disabled={usable.length < photoLimits.min || busy}
         />
       }
     >
@@ -84,6 +88,11 @@ export default function PhotosScreen() {
           <View key={p.id} style={styles.tile}>
             {urls[p.id] ? <Image source={{ uri: urls[p.id] }} style={styles.image} contentFit="cover" /> : null}
             {i === 0 ? <Text style={styles.mainBadge}>{t('photos.main')}</Text> : null}
+            {p.moderation_status !== 'approved' ? (
+              <Text style={[styles.status, p.moderation_status === 'rejected' && styles.statusRejected]}>
+                {t(p.moderation_status === 'rejected' ? 'photos.statusRejected' : 'photos.statusPending')}
+              </Text>
+            ) : null}
             <View style={styles.actions}>
               {i > 0 ? (
                 <Pressable accessibilityRole="button" onPress={() => makeMain(p.id)}>
@@ -103,6 +112,7 @@ export default function PhotosScreen() {
         ) : null}
       </View>
       {denied ? <Note>{t('photos.permission')}</Note> : null}
+      {photos.some((p) => p.moderation_status === 'rejected') ? <Note>{t('photos.rejectedHint')}</Note> : null}
       <Note>{t('photos.moderationNote')}</Note>
       <ErrorText message={error ? errorMessage(t, error) : null} />
     </Screen>
@@ -118,4 +128,6 @@ const styles = StyleSheet.create({
   action: { color: colors.white, fontSize: 11, fontWeight: '600', textAlign: 'center' },
   addTile: { alignItems: 'center', justifyContent: 'center', borderWidth: 1.5, borderStyle: 'dashed', borderColor: colors.navy, backgroundColor: colors.white },
   addLabel: { color: colors.navy, fontWeight: '700' },
+  status: { position: 'absolute', top: 6, right: 6, backgroundColor: colors.navy, color: colors.white, fontSize: 10, fontWeight: '700', paddingHorizontal: 6, paddingVertical: 2, borderRadius: radius.pill, overflow: 'hidden' },
+  statusRejected: { backgroundColor: colors.error },
 });

@@ -12,7 +12,8 @@
       "infoPlist": {
         "NSCameraUsageDescription": "La caméra sert à prendre ton selfie de vérification.",
         "NSPhotoLibraryUsageDescription": "L'accès à tes photos sert à ajouter des photos à ton profil.",
-        "NSLocationWhenInUseUsageDescription": "Ta position, arrondie à environ 1 km, sert à te montrer des profils proches."
+        "NSLocationWhenInUseUsageDescription": "Ta position, arrondie à environ 1 km, sert à te montrer des profils proches.",
+        "NSContactsUsageDescription": "Tes contacts servent uniquement à les bloquer. Les numéros sont transformés sur ton téléphone et ne sont jamais conservés."
       }
     },
     "android": {
@@ -25,7 +26,8 @@
       "permissions": [
         "CAMERA",
         "ACCESS_COARSE_LOCATION",
-        "ACCESS_FINE_LOCATION"
+        "ACCESS_FINE_LOCATION",
+        "READ_CONTACTS"
       ]
     },
     "web": {
@@ -59,6 +61,12 @@
         "expo-notifications",
         {
           "color": "#F25459"
+        }
+      ],
+      [
+        "expo-contacts",
+        {
+          "contactsPermission": "Tes contacts servent uniquement à les bloquer. Les numéros sont transformés sur ton téléphone et ne sont jamais conservés."
         }
       ]
     ],

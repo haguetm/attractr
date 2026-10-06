@@ -39,6 +39,8 @@ export interface MyProfile {
   gender: Gender | null;
   gender_detail: string | null;
   verification_status: 'unverified' | 'pending' | 'verified' | 'rejected';
+  verification_in_review: boolean;
+  warnings: number;
   country_code: string | null;
   department_code: string | null;
   region_code: string | null;
@@ -126,6 +128,25 @@ export interface ChatMessage {
   sender_id: string;
   body: string;
   created_at: string;
+}
+
+export const REPORT_REASONS = [
+  'suspected_minor',
+  'misleading_intent',
+  'scam',
+  'harassment',
+  'inappropriate_photo',
+  'fake_profile',
+  'other',
+] as const;
+export type ReportReason = (typeof REPORT_REASONS)[number];
+
+export type SelfieOutcome = 'verified' | 'retake' | 'review';
+export type PhotoOutcome = 'approved' | 'rejected' | 'review' | 'pending';
+
+export interface MyBlocks {
+  profiles: { id: string; first_name: string; blocked_at: string }[];
+  contacts_blocked: boolean;
 }
 
 export interface SeedProfileSummary {
@@ -251,6 +272,24 @@ export const api = {
   sendMessage: (conversationId: string, body: string) =>
     rpc<number>('send_message', { p_conversation_id: conversationId, p_body: body }),
   markRead: (conversationId: string) => rpc('mark_conversation_read', { p_conversation_id: conversationId }),
+
+  verifySelfie: () => invoke<{ outcome: SelfieOutcome }>('verify-selfie', {}),
+  moderatePhoto: (photoId: string) => invoke<{ outcome: PhotoOutcome }>('moderate-photo', { photoId }),
+
+  reportProfile: (p: { targetId: string; reason: ReportReason; details?: string; conversationId?: string; alsoBlock: boolean }) =>
+    rpc<number>('report_profile', {
+      p_target_id: p.targetId,
+      p_reason: p.reason,
+      p_details: p.details?.trim() || null,
+      p_conversation_id: p.conversationId ?? null,
+      p_also_block: p.alsoBlock,
+    }),
+  blockProfile: (targetId: string) => rpc('block_profile', { p_target_id: targetId }),
+  unblockProfile: (targetId: string) => rpc('unblock_profile', { p_target_id: targetId }),
+  getMyBlocks: () => rpc<MyBlocks>('get_my_blocks'),
+  blockContacts: (digests: string[]) => rpc('block_contacts', { p_digests: digests }),
+  unblockContacts: () => rpc('unblock_contacts'),
+  setPaused: (paused: boolean) => rpc('set_my_paused', { p_paused: paused }),
 
   registerPushToken: (token: string, platform: 'ios' | 'android' | 'web') =>
     rpc('register_push_token', { p_token: token, p_platform: platform }),

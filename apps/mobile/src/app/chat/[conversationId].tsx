@@ -23,7 +23,7 @@ export default function ChatScreen() {
   const [match, setMatch] = useState<MatchSummary | null>(null);
   const [closed, setClosed] = useState(false);
   const [draft, setDraft] = useState('');
-  const [confirmUnmatch, setConfirmUnmatch] = useState(false);
+  const [menu, setMenu] = useState<'closed' | 'open' | 'unmatch' | 'block'>('closed');
   const { busy, error, run } = useSubmit();
 
   const refreshMatch = useCallback(async () => {
@@ -83,6 +83,19 @@ export default function ChatScreen() {
       router.back();
     });
 
+  const block = () =>
+    run(async () => {
+      if (match) await api.blockProfile(match.other.id);
+      router.back();
+    });
+
+  const report = () => {
+    setMenu('closed');
+    if (match) {
+      router.push({ pathname: '/report/[userId]', params: { userId: match.other.id, name: match.other.first_name, conversationId } });
+    }
+  };
+
   const left = match?.first_message_deadline ? timeLeft(match.first_message_deadline) : null;
 
   return (
@@ -94,16 +107,26 @@ export default function ChatScreen() {
         <Pressable accessibilityRole="button" onPress={() => router.push({ pathname: '/match/[matchId]', params: { matchId } })}>
           <Text style={font.label}>{match?.other.first_name ?? ''}</Text>
         </Pressable>
-        <Pressable accessibilityRole="button" onPress={() => setConfirmUnmatch(true)} hitSlop={8}>
+        <Pressable accessibilityRole="button" onPress={() => setMenu(menu === 'closed' ? 'open' : 'closed')} hitSlop={8}>
           <Text style={styles.headerLink}>⋯</Text>
         </Pressable>
       </View>
 
-      {confirmUnmatch ? (
+      {menu === 'open' ? (
         <View style={styles.banner}>
-          <Note>{t('chat.unmatchConfirm')}</Note>
-          <Button label={t('chat.unmatch')} variant="danger" onPress={unmatch} loading={busy} />
-          <Button label={t('chat.cancel')} variant="ghost" onPress={() => setConfirmUnmatch(false)} />
+          <Button label={t('chat.menuProfile')} variant="secondary" onPress={() => { setMenu('closed'); router.push({ pathname: '/match/[matchId]', params: { matchId } }); }} />
+          <Button label={t('chat.menuReport')} variant="secondary" onPress={report} />
+          <Button label={t('chat.menuBlock')} variant="secondary" onPress={() => setMenu('block')} />
+          <Button label={t('chat.menuUnmatch')} variant="secondary" onPress={() => setMenu('unmatch')} />
+          <Button label={t('chat.menuClose')} variant="ghost" onPress={() => setMenu('closed')} />
+        </View>
+      ) : null}
+
+      {menu === 'unmatch' || menu === 'block' ? (
+        <View style={styles.banner}>
+          <Note>{t(menu === 'unmatch' ? 'chat.unmatchConfirm' : 'safety.blockConfirm')}</Note>
+          <Button label={t(menu === 'unmatch' ? 'chat.unmatch' : 'safety.block')} variant="danger" onPress={menu === 'unmatch' ? unmatch : block} loading={busy} />
+          <Button label={t('chat.cancel')} variant="ghost" onPress={() => setMenu('closed')} />
         </View>
       ) : null}
 
@@ -123,6 +146,7 @@ export default function ChatScreen() {
           keyExtractor={(m) => String(m.id)}
           contentContainerStyle={styles.list}
           ListEmptyComponent={<Text style={[font.small, styles.empty]}>{t('chat.empty')}</Text>}
+          ListFooterComponent={<Text style={[font.small, styles.tip]}>{t('chat.scamTip')}</Text>}
           renderItem={({ item }) => {
             const mine = item.sender_id === profile?.id;
             return (
@@ -162,6 +186,7 @@ const styles = StyleSheet.create({
   banner: { margin: spacing.md, padding: spacing.md, borderRadius: radius.md, backgroundColor: colors.coralSoft, gap: spacing.sm },
   list: { padding: spacing.md, gap: spacing.sm },
   empty: { textAlign: 'center', marginTop: spacing.xl, transform: [{ scaleY: -1 }] },
+  tip: { textAlign: 'center', marginBottom: spacing.md },
   bubble: { maxWidth: '80%', paddingHorizontal: spacing.md, paddingVertical: spacing.sm, borderRadius: radius.lg },
   mine: { alignSelf: 'flex-end', backgroundColor: colors.coral },
   theirs: { alignSelf: 'flex-start', backgroundColor: colors.white },

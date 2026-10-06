@@ -1,7 +1,11 @@
-// Settings: search preferences, compliance actions (withdraw sensitive-data consent,
-// delete account), sign out, and development tools in dev builds.
+// Settings: search preferences, pause mode, blocking (contacts, blocked list),
+// compliance actions (withdraw sensitive-data consent, delete account), sign out,
+// and development tools in dev builds.
 
-import { router } from 'expo-router';
+import { contactDigestInput } from '@attractr/shared';
+import { Contact, ContactField, requestPermissionsAsync } from 'expo-contacts';
+import { CryptoDigestAlgorithm, digestStringAsync } from 'expo-crypto';
+import { type Href, router } from 'expo-router';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, ErrorText, Note, Screen, Section } from '../components/ui';
@@ -13,11 +17,28 @@ import { useSubmit } from '../lib/useSubmit';
 
 type Pending = 'withdraw' | 'delete' | null;
 
+/** SHA-256 of each contact number (E.164 digits), computed on the device (Q23). */
+async function contactDigests(): Promise<string[] | null> {
+  const permission = await requestPermissionsAsync();
+  if (!permission.granted) return null;
+  const contacts = await Contact.getAllDetails([ContactField.PHONES]);
+  const inputs = new Set<string>();
+  for (const c of contacts) {
+    for (const phone of c.phones ?? []) {
+      const input = phone.number ? contactDigestInput(phone.number) : null;
+      if (input) inputs.add(input);
+    }
+  }
+  return Promise.all([...inputs].slice(0, 5000).map((s) => digestStringAsync(CryptoDigestAlgorithm.SHA256, s)));
+}
+
 export default function SettingsScreen() {
   const { t } = useTranslation();
   const { profile, refreshProfile, signOut } = useSession();
   const [confirming, setConfirming] = useState<Pending>(null);
+  const [note, setNote] = useState<string | null>(null);
   const { busy, error, run } = useSubmit();
+  const paused = profile?.status === 'paused';
 
   const confirm = () =>
     run(async () => {
@@ -32,6 +53,23 @@ export default function SettingsScreen() {
       setConfirming(null);
     });
 
+  const togglePause = () =>
+    run(async () => {
+      await api.setPaused(!paused);
+      await refreshProfile();
+    });
+
+  const blockContacts = () =>
+    run(async () => {
+      const digests = await contactDigests();
+      if (!digests) {
+        setNote(t('settings.contactsPermission'));
+        return;
+      }
+      await api.blockContacts(digests);
+      setNote(t('settings.contactsDone'));
+    });
+
   const leave = () =>
     run(async () => {
       await signOut();
@@ -40,9 +78,23 @@ export default function SettingsScreen() {
 
   return (
     <Screen title={t('settings.title')} footer={<Button label={t('common.back')} variant="ghost" onPress={() => router.back()} />}>
+      {profile?.warnings ? <Note>{t('settings.warning')}</Note> : null}
       {profile?.verification_status === 'pending' ? <Note>{t('settings.pendingVerification')}</Note> : null}
 
       <Button label={t('settings.searchPreferences')} variant="secondary" onPress={() => router.push('/search')} />
+
+      <Section title={t('settings.pause')}>
+        <Note>{paused ? t('settings.paused') : t('settings.pauseHint')}</Note>
+        <Button label={paused ? t('settings.pauseOff') : t('settings.pauseOn')} variant="secondary" onPress={togglePause} disabled={busy} />
+      </Section>
+
+      <Section title={t('settings.contacts')}>
+        <Note>{t('settings.contactsHint')}</Note>
+        <Button label={t('settings.contactsBlock')} variant="secondary" onPress={blockContacts} disabled={busy} />
+        <Button label={t('settings.contactsUnblock')} variant="ghost" onPress={() => run(api.unblockContacts)} disabled={busy} />
+        <Button label={t('settings.blockedList')} variant="ghost" onPress={() => router.push('/blocked')} />
+        {note ? <Note>{note}</Note> : null}
+      </Section>
 
       <Section title={t('settings.title')}>
         {confirming ? (
@@ -64,7 +116,7 @@ export default function SettingsScreen() {
 
       {DEV_TOOLS_ENABLED ? (
         <Section title={t('settings.devTools')}>
-          <Button label={t('dev.title')} variant="secondary" onPress={() => router.push('/dev/impersonate')} />
+          <Button label={t('dev.title')} variant="secondary" onPress={() => router.push('/dev/impersonate' as Href)} />
         </Section>
       ) : null}
 
