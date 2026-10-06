@@ -1,7 +1,7 @@
 // Guards the French translation file against backend drift: every error code the
 // database or Edge Functions can return, and every list value, must have a text.
 
-import { COMPOSITIONS, DRINKS, GENDERS, SITUATIONS, STRUCTURES } from '@attractr/shared';
+import { COMPOSITIONS, DISTANCE_BUCKETS, DRINKS, GENDERS, SITUATIONS, STRUCTURES } from '@attractr/shared';
 import { readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
@@ -52,6 +52,7 @@ describe('fr.json', () => {
     for (const s of SITUATIONS) expect(fr.situation).toHaveProperty([s]);
     for (const s of STRUCTURES) expect(fr.structure).toHaveProperty([s]);
     for (const c of COMPOSITIONS) expect(fr.composition).toHaveProperty([c]);
+    for (const b of DISTANCE_BUCKETS) expect(fr.card.distance).toHaveProperty([b]);
   });
 });
 

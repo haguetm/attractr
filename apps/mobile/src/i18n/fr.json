@@ -193,18 +193,6 @@
       "other": "Autre"
     }
   },
-  "home": {
-    "title": "Ton profil est prêt",
-    "subtitle": "Les profils compatibles arrivent bientôt.",
-    "pendingVerification": "Ton selfie est en cours de vérification.",
-    "settings": "Réglages",
-    "withdrawSensitive": "Retirer mon consentement aux données sensibles",
-    "withdrawSensitiveConfirm": "Tes données sensibles seront effacées et tu ne verras plus de profils tant que tu n'auras pas redonné ton accord. Continuer ?",
-    "deleteAccount": "Supprimer mon compte",
-    "deleteAccountConfirm": "Ton compte et toutes tes données seront définitivement effacés. Continuer ?",
-    "confirm": "Confirmer",
-    "signOut": "Se déconnecter"
-  },
   "errors": {
     "generic": "Une erreur est survenue. Réessaie dans un instant.",
     "network": "Connexion impossible. Vérifie ton réseau.",
@@ -262,6 +250,82 @@
     "onboarding_incomplete_selfie": "Prends ton selfie de vérification.",
     "onboarding_incomplete_location": "Indique où tu es.",
     "storage_cleanup_failed": "La suppression a échoué. Réessaie dans un instant.",
-    "deletion_failed": "La suppression a échoué. Réessaie dans un instant."
+    "deletion_failed": "La suppression a échoué. Réessaie dans un instant.",
+    "profile_not_active": "Termine ton inscription pour voir des profils.",
+    "location_required": "Indique ta position pour voir des profils.",
+    "cannot_swipe_self": "Action impossible.",
+    "invalid_radius": "Choisis une distance valide.",
+    "area_unknown": "Ton département ou ta région est inconnu. Mets à jour ta position.",
+    "invalid_age_range": "L'âge minimum doit être inférieur à l'âge maximum.",
+    "invalid_drink_filter": "Choisis au moins une boisson, ou aucune pour toutes.",
+    "invalid_request": "Requête invalide.",
+    "not_found": "Fonction indisponible.",
+    "not_a_seed_profile": "Ce profil n'est pas un profil de test.",
+    "seed_user_without_email": "Ce profil de test est incomplet. Relance npm run db:reset.",
+    "link_failed": "Connexion impossible.",
+    "list_failed": "Chargement impossible."
+  },
+  "settings": {
+    "title": "Réglages",
+    "pendingVerification": "Ton selfie est en cours de vérification.",
+    "searchPreferences": "Préférences de recherche",
+    "withdrawSensitive": "Retirer mon consentement aux données sensibles",
+    "withdrawSensitiveConfirm": "Tes données sensibles seront effacées et tu ne verras plus de profils tant que tu n'auras pas redonné ton accord. Continuer ?",
+    "deleteAccount": "Supprimer mon compte",
+    "deleteAccountConfirm": "Ton compte et toutes tes données seront définitivement effacés. Continuer ?",
+    "confirm": "Confirmer",
+    "signOut": "Se déconnecter",
+    "devTools": "Outils de développement"
+  },
+  "feed": {
+    "search": "Recherche",
+    "settings": "Réglages",
+    "pass": "Passer",
+    "like": "J'aime",
+    "likeSoon": "Les likes arrivent bientôt.",
+    "widened": "Peu de profils près de toi : on a élargi la recherche à {{km}} km.",
+    "waitingTitle": "On cherche pour toi",
+    "waitingBody": "Pas encore de profil compatible autour de toi. De nouvelles personnes s'inscrivent chaque jour : reviens un peu plus tard.",
+    "refresh": "Actualiser",
+    "disclaimer": "Les boissons sont des symboles, pas des invitations à boire.",
+    "testBanner": "Mode test : connecté·e en tant que {{name}}",
+    "switchProfile": "Changer"
+  },
+  "card": {
+    "age": "{{age}} ans",
+    "verified": "Vérifié",
+    "recentlyActive": "Répond en ce moment",
+    "matchedOnlyBeer": "Compatible en Bière (amitié)",
+    "photo": "Photo {{current}} sur {{total}}",
+    "distance": {
+      "lt5": "À moins de 5 km",
+      "lt10": "À moins de 10 km",
+      "lt25": "À moins de 25 km",
+      "lt50": "À moins de 50 km",
+      "lt100": "À moins de 100 km",
+      "gte100": "À plus de 100 km"
+    }
+  },
+  "search": {
+    "title": "Préférences de recherche",
+    "area": "Où chercher",
+    "radius": "Autour de moi",
+    "department": "Dans mon département",
+    "region": "Dans ma région",
+    "radiusValue": "{{km}} km",
+    "age": "Âge",
+    "ageRange": "De {{min}} à {{max}} ans",
+    "drinks": "Boissons",
+    "drinksHint": "Aucune sélection : toutes les boissons compatibles.",
+    "passportSoon": "Chercher ailleurs (passeport) : bientôt avec Premium.",
+    "save": "Enregistrer",
+    "saved": "Préférences enregistrées."
+  },
+  "dev": {
+    "title": "Tester en tant que",
+    "subtitle": "Connecte-toi comme un profil fictif pour voir son feed. Disponible uniquement en développement.",
+    "unavailable": "Outil indisponible : il faut le Supabase local, APP_ENV=development et le drapeau dev.impersonation_enabled.",
+    "verified": "vérifié",
+    "pending": "en attente"
   }
 }

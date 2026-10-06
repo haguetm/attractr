@@ -78,7 +78,7 @@ export function OnboardingProvider({ children }: { children: ReactNode }) {
       if (next === null) {
         await api.completeOnboarding();
         await refreshProfile();
-        router.replace('/home');
+        router.replace('/feed');
         return;
       }
       router.push(stepPath(next));

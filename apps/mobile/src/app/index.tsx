@@ -26,7 +26,7 @@ export default function Index() {
       if (!p || cancelled) return;
       const minPhotos = await api.configInt('photos.min_count').catch(() => 2);
       const step = resumeStep(progressFromProfile(p, minPhotos));
-      if (!cancelled) setTarget(step === 'done' ? '/home' : (stepPath(step) as Href));
+      if (!cancelled) setTarget(step === 'done' ? '/feed' : (stepPath(step) as Href));
     })().catch(() => setTarget('/phone'));
     return () => {
       cancelled = true;

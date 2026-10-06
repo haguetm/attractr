@@ -4,6 +4,7 @@
 import type {
   CompositionChoice,
   ConsentType,
+  DistanceBucket,
   Drink,
   Gender,
   Situation,
@@ -32,13 +33,17 @@ async function invoke<T>(fn: string, body: Record<string, unknown>): Promise<T> 
 export interface MyProfile {
   id: string;
   status: 'onboarding' | 'active' | 'paused' | 'suspended' | 'closed';
+  is_seed: boolean;
   first_name: string | null;
   birth_date: string | null;
   gender: Gender | null;
   gender_detail: string | null;
   verification_status: 'unverified' | 'pending' | 'verified' | 'rejected';
   country_code: string | null;
+  department_code: string | null;
+  region_code: string | null;
   has_location: boolean;
+  search: SearchPreferences;
   drinks: Drink[];
   alcohol_free_icons: boolean;
   prompts: { position: number; question_code: string; answer: string }[];
@@ -51,6 +56,51 @@ export interface MyProfile {
     orientation?: string;
     orientation_visible?: boolean;
   };
+}
+
+export type SearchMode = 'radius' | 'department' | 'region';
+
+export interface SearchPreferences {
+  mode: SearchMode;
+  radius_km: number;
+  age_min: number;
+  age_max: number;
+  drinks: Drink[] | null;
+}
+
+/** What the feed shows of another profile: public fields only, distance as a range. */
+export interface ProfileCard {
+  id: string;
+  first_name: string;
+  age: number;
+  gender: Gender;
+  gender_detail: string | null;
+  bio: string | null;
+  verified: boolean;
+  recently_active: boolean;
+  distance: DistanceBucket;
+  drinks: Drink[];
+  matched_drinks: Drink[];
+  orientation: string | null;
+  prompts: { question_code: string; answer: string }[];
+  photos: { id: string; storage_path: string }[];
+}
+
+export interface Feed {
+  cards: ProfileCard[];
+  mode: SearchMode;
+  radius_km: number | null;
+  widened: boolean;
+}
+
+export interface SeedProfileSummary {
+  id: string;
+  firstName: string;
+  birthDate: string;
+  gender: Gender;
+  departmentCode: string | null;
+  verified: boolean;
+  drinks: Drink[];
 }
 
 export interface CountrySwitches {
@@ -131,6 +181,21 @@ export const api = {
   setOrientation: (label: string | null, visible: boolean) =>
     rpc('set_my_orientation', { p_label: label, p_visible: visible }),
   completeOnboarding: () => rpc('complete_onboarding'),
+
+  getFeed: (limit?: number) => rpc<Feed>('get_feed', limit ? { p_limit: limit } : {}),
+  passProfile: (targetId: string) => rpc('pass_profile', { p_target_id: targetId }),
+  setSearchPreferences: (p: SearchPreferences) =>
+    rpc('set_my_search_preferences', {
+      p_mode: p.mode,
+      p_radius_km: p.mode === 'radius' ? p.radius_km : null,
+      p_age_min: p.age_min,
+      p_age_max: p.age_max,
+      p_drinks: p.drinks,
+    }),
+
+  /** Development only ("tester en tant que"); the server refuses it anywhere else. */
+  devListSeedProfiles: () => invoke<{ profiles: SeedProfileSummary[] }>('dev-impersonate', { action: 'list' }),
+  devImpersonate: (userId: string) => invoke<{ tokenHash: string }>('dev-impersonate', { action: 'login', userId }),
 
   updateLocation: (body: { mode: 'device'; lat: number; lon: number } | { mode: 'home'; query: string }) =>
     invoke<{ label: string | null; countryCode: string | null }>('update-location', body),
