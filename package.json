@@ -16,7 +16,7 @@
     "test": "npm run test --workspaces --if-present",
     "typecheck": "npm run typecheck --workspaces --if-present",
     "functions:test": "cd supabase/functions && npx --yes deno@2 test --allow-env",
-    "functions:check": "cd supabase/functions && npx --yes deno@2 check update-location/index.ts delete-account/index.ts dev-impersonate/index.ts",
+    "functions:check": "cd supabase/functions && npx --yes deno@2 check update-location/index.ts delete-account/index.ts dev-impersonate/index.ts send-push/index.ts",
     "mobile": "npm run start --workspace @attractr/mobile",
     "functions:serve": "supabase functions serve --env-file supabase/functions/.env",
     "functions:deploy": "node scripts/deploy-functions.mjs",
