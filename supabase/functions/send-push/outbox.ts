@@ -4,7 +4,16 @@
 
 import type { PushMessage, PushResult } from '../_shared/providers/push/index.ts';
 
-export type NotificationKind = 'new_match' | 'new_message' | 'your_turn' | 'first_message_reminder' | 'moderation_notice';
+export type NotificationKind =
+  | 'new_match'
+  | 'new_message'
+  | 'your_turn'
+  | 'first_message_reminder'
+  | 'moderation_notice'
+  | 'friend_request'
+  | 'outing_invitation'
+  | 'outing_cancelled'
+  | 'outing_feedback';
 
 export interface OutboxRow {
   id: number;
@@ -20,10 +29,14 @@ export const TEXTS: Record<NotificationKind, { title: string; body: string }> = 
   your_turn: { title: 'À ton tour', body: 'Une conversation attend ta réponse.' },
   first_message_reminder: { title: 'Plus que quelques heures', body: 'Envoie ton premier message avant la fin du délai.' },
   moderation_notice: { title: 'Information sur ton compte', body: 'Ouvre Attractr pour en savoir plus.' },
+  friend_request: { title: "Demande d'ami", body: "Quelqu'un veut t'ajouter en ami." },
+  outing_invitation: { title: 'Invitation à une sortie', body: "Un ami t'invite à une sortie. Tu viens ?" },
+  outing_cancelled: { title: 'Sortie annulée', body: 'Une sortie à laquelle tu étais invité·e est annulée.' },
+  outing_feedback: { title: "Comment c'était ?", body: 'Donne ton avis sur la sortie, il reste privé.' },
 };
 
 /** Only ids travel in the payload. */
-const ALLOWED_DATA = ['match_id', 'conversation_id'];
+const ALLOWED_DATA = ['match_id', 'conversation_id', 'outing_id'];
 
 export interface Planned {
   messages: PushMessage[];
