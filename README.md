@@ -133,11 +133,11 @@ Le projet se construit en 11 phases. La V1 est testée en France.
 
 | Phase | Contenu | État |
 |---|---|---|
-| 1 | Base de données, authentification, consentements, règles d'accès, données de test, configuration | ✅ Écrite, tests de la base à exécuter |
-| 2 | Inscription complète | ✅ Écrite, tests de la base à exécuter |
-| 3 | Feed avec compatibilité, mode « tester en tant que » | ✅ Écrite, tests de la base à exécuter |
-| 4 | Likes, quota, matchs, chat, notifications | ⏳ Prochaine étape |
-| 5 | Vérification selfie, contrôle d'âge, modération, blocage, signalements | 🔜 |
+| 1 | Base de données, authentification, consentements, règles d'accès, données de test, configuration | ✅ Tests de la base validés sur PGlite |
+| 2 | Inscription complète | ✅ Tests de la base validés sur PGlite |
+| 3 | Feed avec compatibilité, mode « tester en tant que » | ✅ Tests de la base validés sur PGlite |
+| 4 | Likes, quota, matchs, chat, notifications | ✅ Écrite, tests de la base validés sur PGlite |
+| 5 | Vérification selfie, contrôle d'âge, modération, blocage, signalements | ⏳ Prochaine étape |
 | 6 | Amis et sorties à plusieurs | 🔜 |
 | 7 | Abonnement, filtres payants, boosts, parrainage | 🔜 |
 | 8 | Chats de groupe | 🔜 |

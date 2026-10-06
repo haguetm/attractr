@@ -44,6 +44,10 @@ Node 22 + npm workspaces. The local stack needs Docker (not available on the wor
 ## Dev tools
 - "Tester en tant que": Réglages > Outils de développement in the app. Needs local Supabase, `APP_ENV=development` (functions) and `EXPO_PUBLIC_APP_ENV=development` (app); the local seed enables `dev.impersonation_enabled`.
 
+## Push notifications
+- `send-push` Edge Function drains `private.notification_outbox`; pg_cron calls it every minute once two Vault secrets exist on the project: `project_url` and `service_role_key` (see migration 20261009100000). Locally, call it by hand with the service role key.
+- The app registers an Expo push token only in a development/production build with `extra.eas.projectId` (not in Expo Go).
+
 ## SQL conventions
 - `set search_path = ''` and fully qualified names in every function.
 - RPCs in `public` are `security definer`, revoked from `public, anon`, granted to `authenticated`.

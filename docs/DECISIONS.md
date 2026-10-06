@@ -90,3 +90,15 @@ Réponses aux ambiguïtés relevées lors du cadrage. Validées le 2026-10-05. E
 - **Blocages et signalements** : tables créées dès maintenant pour que le feed les exclue ; les actions et l'interface arrivent en phase 5.
 - **« Tester en tant que »** : uniquement sur le Supabase local, avec `APP_ENV=development` et le drapeau `dev.impersonation_enabled` (activé par le seed local). La fonction n'est jamais déployée sur un projet hébergé (`npm run functions:deploy` l'exclut). Les profils fictifs ont un e-mail en `.test` pour cette connexion.
 - **Environnement par défaut** : un projet hébergé sans `APP_ENV` est traité comme la production (versions factices refusées).
+
+## Phase 4 (proposées, en attente de validation)
+- **Un like vise toujours une photo ou une réponse** (le bouton principal « J'aime » vise la première photo, ou la première réponse s'il n'y a pas de photo).
+- **On ne peut liker qu'un profil que le feed nous a montré**, ou quelqu'un qui nous a déjà liké (empêche de liker un identifiant au hasard).
+- **« Réponses hors quota »** : liker en retour quelqu'un qui nous a déjà liké ne consomme pas le quota.
+- **Quota glissant** : l'appli affiche les likes restants et l'heure à laquelle le prochain revient.
+- **Premium** : table `private.entitlements` créée dès maintenant (likes illimités) ; elle sera alimentée par RevenueCat en phase 7.
+- **Match expiré** (pas de premier message dans le délai) ou **annulé** (« Ne plus matcher ») : la conversation se ferme pour les deux et le profil ne revient pas dans le feed.
+- **Relances** : rappel quand il reste 3 h pour le premier message, « À ton tour » après 24 h sans réponse (une seule fois par message). Valeurs dans `app_config`.
+- **Notifications génériques** : aucun prénom ni contenu de message sur l'écran verrouillé (« Nouveau message — Ouvre Attractr pour le lire »).
+- **Likes reçus en gratuit** : on indique seulement que des personnes ont liké, sans le nombre exact ni les profils (la liste est Premium, phase 7).
+- **Badge d'activité** : il signifie désormais « a répondu dans le chat dans les 72 h » (Q16).

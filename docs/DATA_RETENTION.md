@@ -13,7 +13,10 @@
 | Selfie de vérification | Storage `selfies` | Supprimé après vérification, résultat seul conservé | Proposé (phase 5) |
 | Photos envoyées à l'analyse IA | prestataire IA | Supprimées après analyse, sans entraînement | Spec §11 |
 | Résultat d'analyse IA | `ai_analyses` | Cache d'une semaine ; effacé au retrait du consentement | Spec §11 (phase 10) |
-| Messages | `messages` | À définir en phase 4 | À décider |
+| Messages | `messages` | Tant que le match existe ; effacés avec le compte de l'un ou l'autre (cascade). Durée après un match expiré ou annulé : proposé 12 mois pour les besoins de modération, à valider | Proposé |
+| Likes et « passer » | `swipes` | Durée du compte ; les « passer » ne sont plus utilisés après `feed.pass_recycle_days` | Proposé |
+| Notifications envoyées | `private.notification_outbox` | Proposé : 30 jours puis purge | Proposé |
+| Jetons de notification | `push_tokens` | Supprimés à la déconnexion, quand Expo les déclare invalides, ou avec le compte | Proposé |
 | Signalements et décisions de modération | `reports`, `moderation_queue` | À définir en phase 5 | À décider |
 
 ## Clé de chiffrement
