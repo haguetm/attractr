@@ -145,6 +145,7 @@ Le projet se construit en 11 phases. La V1 est testée en France.
 | 9 | Comptes de couple | ✅ Tests de la base validés sur PGlite |
 | 10 | Analyse IA du profil | ✅ Tests de la base validés sur PGlite |
 | 11 | Mesure de la rétention et tableaux de suivi | ✅ Tests de la base validés sur PGlite |
+| Bêta | Durcissement de sécurité, connexion par e-mail, géocodage réel, guide de mise en ligne gratuite | ✅ Tests validés sur la pile Supabase réelle et parcours complet testé de bout en bout |
 
 ---
 
