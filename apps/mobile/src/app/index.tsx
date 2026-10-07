@@ -8,6 +8,7 @@ import { ActivityIndicator, StyleSheet, View } from 'react-native';
 import { progressFromProfile, stepPath } from '../features/onboarding/routes';
 import { useSession } from '../features/session/SessionProvider';
 import { api } from '../lib/api';
+import { SIGN_IN_ROUTE } from '../lib/auth';
 import { colors } from '../theme';
 
 export default function Index() {
@@ -17,7 +18,7 @@ export default function Index() {
   useEffect(() => {
     if (loading) return;
     if (!session) {
-      setTarget('/phone');
+      setTarget(SIGN_IN_ROUTE);
       return;
     }
     let cancelled = false;
@@ -31,7 +32,7 @@ export default function Index() {
       const minPhotos = await api.configInt('photos.min_count').catch(() => 2);
       const step = resumeStep(progressFromProfile(p, minPhotos));
       if (!cancelled) setTarget(step === 'done' ? '/feed' : (stepPath(step) as Href));
-    })().catch(() => setTarget('/phone'));
+    })().catch(() => setTarget(SIGN_IN_ROUTE));
     return () => {
       cancelled = true;
     };

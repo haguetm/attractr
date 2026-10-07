@@ -16,12 +16,16 @@
     "phoneTitle": "Ton numéro de téléphone",
     "phoneSubtitle": "On t'envoie un code par SMS. Un numéro = un compte.",
     "phonePlaceholder": "06 12 34 56 78",
+    "emailTitle": "Ton adresse e-mail",
+    "emailSubtitle": "On t'envoie un code de connexion par e-mail.",
+    "emailPlaceholder": "prenom@exemple.fr",
     "sendCode": "Recevoir le code",
     "codeTitle": "Code de vérification",
-    "codeSubtitle": "Entre le code envoyé au {{phone}}.",
+    "codeSubtitle": "Entre le code envoyé à {{destination}}.",
     "codePlaceholder": "123456",
     "verify": "Valider",
-    "changeNumber": "Changer de numéro"
+    "changeNumber": "Changer de numéro",
+    "changeEmail": "Changer d'adresse"
   },
   "age": {
     "title": "Bienvenue sur Attractr",
@@ -343,7 +347,9 @@
     "ai_consent_required": "Donne ton accord à l'analyse IA pour continuer.",
     "ai_analysis_rate_limited": "Tu as déjà fait ton analyse cette semaine. Reviens à la date indiquée.",
     "ai_analysis_no_photo": "Ajoute au moins une photo validée avant de lancer l'analyse.",
-    "ai_analysis_failed": "L'analyse n'a pas pu aboutir. Réessaie un peu plus tard : elle ne t'a pas été décomptée."
+    "ai_analysis_failed": "L'analyse n'a pas pu aboutir. Réessaie un peu plus tard : elle ne t'a pas été décomptée.",
+    "invalid_email": "Cette adresse e-mail n'est pas valide.",
+    "contacts_block_cooldown": "Tu as déjà bloqué tes contacts récemment. Réessaie demain."
   },
   "settings": {
     "title": "Réglages",
