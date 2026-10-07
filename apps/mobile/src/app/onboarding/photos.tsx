@@ -87,12 +87,14 @@ export default function PhotosScreen() {
         {photos.map((p, i) => (
           <View key={p.id} style={styles.tile}>
             {urls[p.id] ? <Image source={{ uri: urls[p.id] }} style={styles.image} contentFit="cover" /> : null}
-            {i === 0 ? <Text style={styles.mainBadge}>{t('photos.main')}</Text> : null}
-            {p.moderation_status !== 'approved' ? (
-              <Text style={[styles.status, p.moderation_status === 'rejected' && styles.statusRejected]}>
-                {t(p.moderation_status === 'rejected' ? 'photos.statusRejected' : 'photos.statusPending')}
-              </Text>
-            ) : null}
+            <View style={styles.badges}>
+              {i === 0 ? <Text style={styles.mainBadge}>{t('photos.main')}</Text> : null}
+              {p.moderation_status !== 'approved' ? (
+                <Text style={[styles.status, p.moderation_status === 'rejected' && styles.statusRejected]}>
+                  {t(p.moderation_status === 'rejected' ? 'photos.statusRejected' : 'photos.statusPending')}
+                </Text>
+              ) : null}
+            </View>
             <View style={styles.actions}>
               {i > 0 ? (
                 <Pressable accessibilityRole="button" onPress={() => makeMain(p.id)}>
@@ -123,11 +125,13 @@ const styles = StyleSheet.create({
   grid: { flexDirection: 'row', flexWrap: 'wrap', gap: spacing.sm },
   tile: { width: '31%', aspectRatio: 4 / 5, borderRadius: radius.md, overflow: 'hidden', backgroundColor: colors.navySoft },
   image: StyleSheet.absoluteFill,
-  mainBadge: { position: 'absolute', top: 6, left: 6, backgroundColor: colors.coral, color: colors.white, fontSize: 11, fontWeight: '700', paddingHorizontal: 6, paddingVertical: 2, borderRadius: radius.pill, overflow: 'hidden' },
+  // Stacked so the "Principale" and moderation badges never overlap on a narrow tile.
+  badges: { position: 'absolute', top: 6, left: 6, right: 6, alignItems: 'flex-start', gap: 4 },
+  mainBadge: { backgroundColor: colors.coral, color: colors.white, fontSize: 11, fontWeight: '700', paddingHorizontal: 6, paddingVertical: 2, borderRadius: radius.pill, overflow: 'hidden' },
   actions: { position: 'absolute', bottom: 0, left: 0, right: 0, padding: 4, gap: 2, backgroundColor: 'rgba(31,42,74,0.7)' },
   action: { color: colors.white, fontSize: 11, fontWeight: '600', textAlign: 'center' },
   addTile: { alignItems: 'center', justifyContent: 'center', borderWidth: 1.5, borderStyle: 'dashed', borderColor: colors.navy, backgroundColor: colors.white },
   addLabel: { color: colors.navy, fontWeight: '700' },
-  status: { position: 'absolute', top: 6, right: 6, backgroundColor: colors.navy, color: colors.white, fontSize: 10, fontWeight: '700', paddingHorizontal: 6, paddingVertical: 2, borderRadius: radius.pill, overflow: 'hidden' },
+  status: { backgroundColor: colors.navy, color: colors.white, fontSize: 10, fontWeight: '700', paddingHorizontal: 6, paddingVertical: 2, borderRadius: radius.pill, overflow: 'hidden' },
   statusRejected: { backgroundColor: colors.error },
 });
