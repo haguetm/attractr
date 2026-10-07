@@ -41,11 +41,15 @@ Node 22 + npm workspaces. The local stack needs Docker (not available on the wor
 - `npm run functions:test` / `npm run functions:check` — Deno tests / type-check (Deno via npx, nothing to install)
 - `npm run mobile` — start Expo (needs `apps/mobile/.env`, see `.env.example` there)
 
+## Beta (free hosted test)
+- Setup guide: docs/BETA.md. `APP_ENV=beta` (functions) allows mock providers on a hosted project, but selfie and photo mocks always go to human review; `EXPO_PUBLIC_AUTH_METHOD=email` signs in with an email code (no SMS cost).
+- Geocoding: `providers.geocoding = "real"` uses geo.api.gouv.fr (free, no key).
+
 ## Dev tools
 - "Tester en tant que": Réglages > Outils de développement in the app. Needs local Supabase, `APP_ENV=development` (functions) and `EXPO_PUBLIC_APP_ENV=development` (app); the local seed enables `dev.impersonation_enabled`.
 
 ## Push notifications
-- `send-push` Edge Function drains `private.notification_outbox`; pg_cron calls it every minute once two Vault secrets exist on the project: `project_url` and `service_role_key` (see migration 20261009100000). Locally, call it by hand with the service role key.
+- `send-push` Edge Function drains `private.notification_outbox`; pg_cron calls it every minute once two Vault secrets exist on the project: `project_url` and `cron_secret` (same value as the `CRON_SECRET` function secret, see migration 20261018090000). Scheduled functions check the `X-Cron-Secret` header; locally, call them by hand with it.
 - The app registers an Expo push token only in a development/production build with `extra.eas.projectId` (not in Expo Go).
 
 ## Payments

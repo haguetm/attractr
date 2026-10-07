@@ -14,7 +14,7 @@ Priorité 1 = urgent (suspicion de mineur), à traiter en premier. Colonnes util
 
 | kind | reason possibles | Ce qu'il faut examiner |
 |---|---|---|
-| `selfie_review` | `possible_minor`, `duplicate_face`, `age_mismatch` | Le selfie (bucket `selfies`, chemin dans `private.selfie_submissions`) et l'âge déclaré |
+| `selfie_review` | `possible_minor`, `duplicate_face`, `age_mismatch`, `incomplete_result` (réponse du prestataire incomplète) | Le selfie (bucket `selfies`, chemin dans `private.selfie_submissions`) et l'âge déclaré |
 | `photo_review` | `nudity`, `violence` | La photo (`public.photos`, `ref_id` = id de la photo) |
 | `report` | motif du signalement | Le signalement (`public.reports`, `ref_id` = id) et, si besoin, la conversation |
 | `message_review` | `money_request` | Le message (`public.messages`, `ref_id` = id) |
@@ -72,4 +72,4 @@ update public.profiles set status = 'active' where id = '<user_id>' and status =
 
 ## Réglages utiles (`app_config`)
 
-`verification.*` (seuils d'âge et de confiance), `moderation.photo_*_score`, `moderation.misleading_*_threshold`, `reports.daily_limit`, `chat.scam_check_first_messages`. En développement : `providers.mock_selfie_outcome` et `providers.mock_photo_outcome` pour simuler chaque cas.
+`verification.*` (seuils d'âge et de confiance), `moderation.photo_*_score`, `moderation.misleading_*_threshold`, `reports.daily_limit`, `chat.scam_check_first_messages`, `contacts.block_cooldown_hours`. En développement : `providers.mock_selfie_outcome` et `providers.mock_photo_outcome` pour simuler chaque cas. En bêta (`APP_ENV=beta`), chaque selfie et chaque photo part en revue humaine, quel que soit ce réglage.

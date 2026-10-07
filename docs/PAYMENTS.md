@@ -31,6 +31,10 @@ Le même prix partout : pas de prix différencié par âge, sexe ou pays.
 
 Les offres promotionnelles (identifiants dans `app_config`) se créent dans App Store Connect (*Promotional Offers* / *Offer Codes*) et Google Play (*Offers*), puis se branchent dans RevenueCat. L'appli affiche déjà la réduction disponible ; l'achat avec l'offre est à brancher une fois les offres créées.
 
+## Environnements (bac à sable, Test Store)
+
+Chaque événement RevenueCat porte un `environment` (`PRODUCTION` ou `SANDBOX`). Seuls ceux listés dans `app_config` → `revenuecat.allowed_environments` changent les droits ; les autres sont enregistrés avec le résultat `ignored_environment`. Par défaut : `["PRODUCTION"]`, pour qu'un achat de test (gratuit) ne donne jamais Premium en production. La bêta gratuite ajoute `"SANDBOX"` pour les achats simulés du Test Store (docs/BETA.md).
+
 ## Tester sans store
 
 En développement, Réglages > Outils de développement, ou l'écran Premium : « Activer Premium (test, 30 jours) » et « Ajouter un Boost (test) » (fonction `dev-impersonate`, mêmes verrous que « tester en tant que »).

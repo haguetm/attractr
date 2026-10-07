@@ -31,6 +31,7 @@
 | Comptes de couple | `couples`, `couple_invitations`, `couple_like_approvals`, profil commun | Effacés dès qu'un partenaire quitte le couple ou supprime son compte | Proposé |
 | File de modération | `private.moderation_queue` | Proposé : 12 mois après résolution | Proposé |
 | Avertissements | `private.user_warnings` | Durée du compte | Proposé |
+| Demande « bloquer mes contacts » | `private.contact_block_requests` | Date de la dernière demande seulement (délai entre deux demandes) ; durée du compte | Proposé |
 
 ## Clé de chiffrement
 

@@ -19,3 +19,7 @@ android/
 
 # Working copies of logo drafts (the chosen one lives in docs/brand)
 /Logo*.jpg
+
+# Firebase config for Android push: an EAS file variable, never committed
+google-services.json
+GoogleService-Info.plist
