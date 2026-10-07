@@ -1,14 +1,17 @@
 import type { ReactNode } from 'react';
-import { Platform, StyleSheet, View } from 'react-native';
+import { Platform, StyleSheet, useWindowDimensions, View } from 'react-native';
 import { colors } from '../theme';
 
 // The app is mobile-only: on web (dev preview in a desktop browser), render it inside
-// a phone-sized frame instead of stretching it across the whole window.
+// a phone-sized frame instead of stretching it across the whole window. On a screen that
+// is already phone-sized (web opened on a phone), the app fills it without a frame.
 const PHONE_WIDTH = 390;
 const PHONE_HEIGHT = 844;
+const FRAME_MIN_WIDTH = 600;
 
 export function WebPhoneFrame({ children }: { children: ReactNode }) {
-  if (Platform.OS !== 'web') return <>{children}</>;
+  const { width } = useWindowDimensions();
+  if (Platform.OS !== 'web' || width < FRAME_MIN_WIDTH) return <>{children}</>;
   return (
     <View style={styles.backdrop}>
       <View style={styles.phone}>{children}</View>

@@ -21,13 +21,14 @@ export default function IdentityScreen() {
   const [firstName, setFirstName] = useState(profile?.first_name ?? '');
   const [gender, setGender] = useState<Gender | null>(profile?.gender ?? null);
   const [detail, setDetail] = useState(profile?.gender_detail ?? '');
-  const [couple, setCouple] = useState(false);
+  // null until the stored account type is read, so the title does not switch on screen.
+  const [couple, setCouple] = useState<boolean | null>(null);
   const { busy, error, run } = useSubmit();
 
   useEffect(() => {
     void AsyncStorage.getItem(WANTS_COUPLE_KEY)
       .then((v) => setCouple(v === '1'))
-      .catch(() => undefined);
+      .catch(() => setCouple(false));
   }, []);
 
   const toggleSeeking = (g: Gender) =>
@@ -41,6 +42,8 @@ export default function IdentityScreen() {
       await refreshProfile();
       await goNext('identity');
     });
+
+  if (couple === null) return null;
 
   return (
     <Screen
