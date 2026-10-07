@@ -1,7 +1,7 @@
 -- get_feed: compatibility, exclusions, reciprocity, widening, areas, card content.
 -- Seed profiles also live in the database: assertions target specific test users.
 begin;
-select plan(26);
+select plan(27);
 
 -- V (viewer): woman seeking men, wine, monogamous, Paris.
 select tests.create_onboarded_user('33639982701', 'c0000000-0000-4000-8000-00000000000f', 'woman', '{man}', '{wine}', 'monogamous');
@@ -54,9 +54,16 @@ select ok((select not (c ?| array['birth_date', 'location', 'phone', 'sensitive'
 select is((select c -> 'matched_drinks' from feed, jsonb_array_elements(f -> 'cards') c
            where c ->> 'id' = 'c0000000-0000-4000-8000-00000000000a'), '["wine"]'::jsonb, 'card tells which drink matched');
 
--- Photos become readable for profiles the feed served
-select ok(public.can_view_photos_of('c0000000-0000-4000-8000-00000000000a'), 'photos of a served profile are readable');
-select ok(not public.can_view_photos_of('c0000000-0000-4000-8000-00000000000b'), 'photos of other profiles are not');
+-- Approved photos become readable for profiles the feed served
+reset role;
+insert into public.photos (user_id, storage_path, position, moderation_status) values
+  ('c0000000-0000-4000-8000-00000000000a', 'c0000000-0000-4000-8000-00000000000a/1.jpg', 1, 'approved'),
+  ('c0000000-0000-4000-8000-00000000000a', 'c0000000-0000-4000-8000-00000000000a/2.jpg', 2, 'pending'),
+  ('c0000000-0000-4000-8000-00000000000b', 'c0000000-0000-4000-8000-00000000000b/1.jpg', 1, 'approved');
+select tests.authenticate_as('c0000000-0000-4000-8000-00000000000f');
+select ok(public.can_view_photo('c0000000-0000-4000-8000-00000000000a/1.jpg'), 'approved photos of a served profile are readable');
+select ok(not public.can_view_photo('c0000000-0000-4000-8000-00000000000a/2.jpg'), 'its photos awaiting moderation are not');
+select ok(not public.can_view_photo('c0000000-0000-4000-8000-00000000000b/1.jpg'), 'photos of other profiles are not');
 
 -- Pass and recycle (Q7)
 select lives_ok($$ select public.pass_profile('c0000000-0000-4000-8000-00000000000a') $$, 'pass a profile');

@@ -1,6 +1,6 @@
 -- Match chat: membership, 24 h window, extension, unmatch, reminders (spec §5).
 begin;
-select plan(25);
+select plan(26);
 
 select tests.create_onboarded_user('33639983001', 'f0000000-0000-4000-8000-00000000000a', 'woman', '{man}');
 select tests.create_onboarded_user('33639983002', 'f0000000-0000-4000-8000-00000000000b', 'man', '{woman}');
@@ -20,6 +20,8 @@ select pg_temp.match('f1000000-0000-4000-8000-0000000000ad', 'f2000000-0000-4000
   'f0000000-0000-4000-8000-00000000000a', 'f0000000-0000-4000-8000-00000000000d', now() - interval '1 minute');
 select pg_temp.match('f1000000-0000-4000-8000-0000000000ae', 'f2000000-0000-4000-8000-0000000000ae',
   'f0000000-0000-4000-8000-00000000000a', 'f0000000-0000-4000-8000-00000000000e', now() + interval '1 hour');
+insert into public.photos (user_id, storage_path, position, moderation_status)
+values ('f0000000-0000-4000-8000-00000000000e', 'f0000000-0000-4000-8000-00000000000e/1.jpg', 1, 'approved');
 
 -- Membership
 select tests.authenticate_as('f0000000-0000-4000-8000-00000000000c');
@@ -67,8 +69,9 @@ select throws_ok($$ select public.extend_match('f1000000-0000-4000-8000-00000000
   'P0001', 'match_extension_unavailable', 'only match.max_extensions extensions');
 
 -- Photos are visible between matches, not after unmatching
-select ok(public.can_view_photos_of('f0000000-0000-4000-8000-00000000000e'), 'match photos are readable');
+select ok(public.can_view_photo('f0000000-0000-4000-8000-00000000000e/1.jpg'), 'match photos are readable');
 select lives_ok($$ select public.unmatch('f1000000-0000-4000-8000-0000000000ae') $$, 'unmatch in one tap');
+select ok(not public.can_view_photo('f0000000-0000-4000-8000-00000000000e/1.jpg'), 'but not after unmatching');
 select throws_ok($$ select public.send_message('f2000000-0000-4000-8000-0000000000ae', 'Coucou') $$,
   'P0001', 'match_closed', 'no message after unmatching');
 
