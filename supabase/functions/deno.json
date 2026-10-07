@@ -1,1 +1,4 @@
-{ "nodeModulesDir": "none" }
+{
+  "nodeModulesDir": "none",
+  "lock": false
+}
