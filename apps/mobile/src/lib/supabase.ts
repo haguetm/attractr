@@ -18,6 +18,8 @@ export const supabase = createClient(url, anonKey, {
     autoRefreshToken: !isServerRender,
     persistSession: !isServerRender,
     detectSessionInUrl: false,
+    // PKCE: Google / Apple return a one-time code exchanged by the app (lib/auth.ts).
+    flowType: 'pkce',
   },
 });
 

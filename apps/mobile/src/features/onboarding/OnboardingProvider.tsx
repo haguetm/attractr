@@ -17,7 +17,7 @@ import { router } from 'expo-router';
 import { createContext, type ReactNode, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { track } from '../../lib/analytics';
-import { api } from '../../lib/api';
+import { api, type CountrySwitches } from '../../lib/api';
 import { WANTS_COUPLE_KEY } from '../../lib/referral';
 import { useSession } from '../session/SessionProvider';
 import { stepPath } from './routes';
@@ -38,7 +38,7 @@ interface OnboardingState {
   goNext: (step: OnboardingStep) => Promise<void>;
 }
 
-const ALL_ENABLED: OnboardingSwitches = { orientationEnabled: true, structureEnabled: true, compositionEnabled: true };
+const ALL_ENABLED: CountrySwitches = { orientationEnabled: true, structureEnabled: true, compositionEnabled: true };
 const OnboardingContext = createContext<OnboardingState | null>(null);
 
 export function OnboardingProvider({ children }: { children: ReactNode }) {
@@ -46,11 +46,14 @@ export function OnboardingProvider({ children }: { children: ReactNode }) {
   const { profile, refreshProfile } = useSession();
   const [intent, setIntent] = useState<IntentDraft>(EMPTY_INTENT);
   const [seeking, setSeeking] = useState<Gender[]>([]);
-  const [switches, setSwitches] = useState<OnboardingSwitches>(ALL_ENABLED);
+  const [countrySwitches, setCountrySwitches] = useState<CountrySwitches>(ALL_ENABLED);
+  // Fixed for the session, so the step count does not change once the number is saved.
+  const [phoneNeeded] = useState(() => !profile?.has_phone);
+  const switches = useMemo<OnboardingSwitches>(() => ({ ...countrySwitches, phoneNeeded }), [countrySwitches, phoneNeeded]);
   const [photoLimits, setPhotoLimits] = useState({ min: 2, max: 6 });
 
   const refreshSwitches = useCallback(async (countryCode: string | null) => {
-    setSwitches(await api.countrySwitches(countryCode));
+    setCountrySwitches(await api.countrySwitches(countryCode));
   }, []);
 
   useEffect(() => {

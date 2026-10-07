@@ -14,6 +14,7 @@ import type { IntentFieldSwitches } from './intent';
 export const ONBOARDING_STEPS = [
   'account_type',   // 4. individual or couple, asked first (DECISIONS: the first name screen depends on it)
   'age',            // 1. age, 18+, terms, referral code
+  'phone',          //    key of contact blocking; skipped when the sign-in already verified one
   'location',       //    position or home: the country decides which sensitive fields exist (Q21)
   'identity',       // 2. first name, gender, sought genders
   'sensitive_consent', // 3. separate GDPR consent; sought genders are saved after it
@@ -39,6 +40,8 @@ export interface IntentDraft {
 
 export interface OnboardingSwitches extends IntentFieldSwitches {
   orientationEnabled: boolean;
+  /** False when the account already has a phone (signed in by SMS). */
+  phoneNeeded: boolean;
 }
 
 export const EMPTY_INTENT: IntentDraft = {
@@ -57,6 +60,7 @@ export function applicableSteps(draft: IntentDraft, switches: OnboardingSwitches
       case 'composition': return romantic && switches.compositionEnabled && draft.structure === 'polyamorous';
       case 'open_to_couples': return romantic;
       case 'orientation': return switches.orientationEnabled;
+      case 'phone': return switches.phoneNeeded;
       default: return true;
     }
   });
@@ -138,6 +142,7 @@ export interface OnboardingProgress {
   status: 'onboarding' | 'active' | 'paused' | 'suspended' | 'closed';
   hasTermsConsent: boolean;
   birthDate: string | null;
+  hasPhone: boolean;
   hasLocation: boolean;
   firstName: string | null;
   hasSensitiveConsent: boolean;
@@ -155,6 +160,7 @@ export function resumeStep(p: OnboardingProgress): OnboardingStep | 'done' {
   // Nothing saved yet: start over with the account type (kept on the device, not on the server).
   if (!p.hasTermsConsent && !p.birthDate) return 'account_type';
   if (!p.hasTermsConsent || !p.birthDate) return 'age';
+  if (!p.hasPhone) return 'phone';
   if (!p.hasLocation) return 'location';
   if (!p.firstName) return 'identity';
   if (!p.hasSensitiveConsent) return 'sensitive_consent';

@@ -13,6 +13,13 @@
     "tagline": "Dis ce que tu cherches, en une boisson."
   },
   "auth": {
+    "signInTitle": "Bienvenue sur Attractr",
+    "signInSubtitle": "Dis ce que tu cherches, en une boisson.",
+    "withApple": "Continuer avec Apple",
+    "withGoogle": "Continuer avec Google",
+    "withEmail": "Continuer avec mon e-mail",
+    "withPhone": "Continuer avec mon numéro",
+    "phoneNote": "Quelle que soit la méthode, on te demandera ton numéro : il sert à bloquer tes contacts si tu le souhaites.",
     "phoneTitle": "Ton numéro de téléphone",
     "phoneSubtitle": "On t'envoie un code par SMS. Un numéro = un compte.",
     "phonePlaceholder": "06 12 34 56 78",
@@ -41,6 +48,12 @@
     "referralCode": "Code de parrainage",
     "referralPlaceholder": "Ex. LEA-2026",
     "befriendReferrer": "Devenir ami·e avec la personne qui m'a invité·e"
+  },
+  "phoneStep": {
+    "title": "Ton numéro de téléphone",
+    "subtitle": "Il n'est jamais affiché. Il permet à tes contacts de te bloquer, et à toi de bloquer les tiens.",
+    "verifiedHint": "On t'envoie un code par SMS pour le vérifier.",
+    "declaredHint": "Version de test : ton numéro n'est pas vérifié par SMS."
   },
   "location": {
     "title": "Où es-tu ?",
@@ -349,7 +362,11 @@
     "ai_analysis_no_photo": "Ajoute au moins une photo validée avant de lancer l'analyse.",
     "ai_analysis_failed": "L'analyse n'a pas pu aboutir. Réessaie un peu plus tard : elle ne t'a pas été décomptée.",
     "invalid_email": "Cette adresse e-mail n'est pas valide.",
-    "contacts_block_cooldown": "Tu as déjà bloqué tes contacts récemment. Réessaie demain."
+    "contacts_block_cooldown": "Tu as déjà bloqué tes contacts récemment. Réessaie demain.",
+    "phone_verification_required": "Ton numéro doit être vérifié par SMS.",
+    "phone_already_verified": "Ton numéro est déjà vérifié.",
+    "onboarding_incomplete_phone": "Indique ton numéro de téléphone.",
+    "oauth_failed": "La connexion n'a pas abouti. Réessaie."
   },
   "settings": {
     "title": "Réglages",

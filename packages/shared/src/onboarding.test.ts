@@ -18,13 +18,13 @@ import {
   withStructure,
 } from './onboarding';
 
-const ALL_ON: OnboardingSwitches = { structureEnabled: true, compositionEnabled: true, orientationEnabled: true };
+const ALL_ON: OnboardingSwitches = { structureEnabled: true, compositionEnabled: true, orientationEnabled: true, phoneNeeded: true };
 const draft = (patch: Partial<IntentDraft>): IntentDraft => ({ ...EMPTY_INTENT, situation: 'single', ...patch });
 
 describe('applicable steps', () => {
   it('follows the spec order for a polyamorous romantic profile', () => {
     expect(applicableSteps(draft({ drinks: ['wine'], structure: 'polyamorous' }), ALL_ON)).toEqual([
-      'account_type', 'age', 'location', 'identity', 'sensitive_consent', 'situation', 'drinks',
+      'account_type', 'age', 'phone', 'location', 'identity', 'sensitive_consent', 'situation', 'drinks',
       'structure', 'composition', 'open_to_couples', 'prompts', 'photos', 'selfie', 'orientation',
     ]);
   });
@@ -41,12 +41,18 @@ describe('applicable steps', () => {
   });
 
   it('hides fields disabled in the country', () => {
-    const off = { structureEnabled: false, compositionEnabled: false, orientationEnabled: false };
+    const off = { structureEnabled: false, compositionEnabled: false, orientationEnabled: false, phoneNeeded: true };
     const steps = applicableSteps(draft({ drinks: ['wine'], structure: 'polyamorous' }), off);
     expect(steps).not.toContain('structure');
     expect(steps).not.toContain('composition');
     expect(steps).not.toContain('orientation');
     expect(steps).toContain('open_to_couples');
+  });
+
+  it('skips the phone when the sign-in already verified one (SMS)', () => {
+    const steps = applicableSteps(draft({ drinks: ['wine'] }), { ...ALL_ON, phoneNeeded: false });
+    expect(steps).not.toContain('phone');
+    expect(nextStep('age', draft({ drinks: ['wine'] }), { ...ALL_ON, phoneNeeded: false })).toBe('location');
   });
 
   it('navigates around skipped steps', () => {
@@ -121,7 +127,7 @@ describe('age', () => {
 
 describe('resumeStep', () => {
   const base = {
-    status: 'onboarding' as const, hasTermsConsent: true, birthDate: '1995-01-01', hasLocation: true,
+    status: 'onboarding' as const, hasTermsConsent: true, birthDate: '1995-01-01', hasPhone: true, hasLocation: true,
     firstName: 'Léa', hasSensitiveConsent: true, hasSeekingGenders: true, hasIntent: true,
     promptsCount: 3, photosCount: 2, minPhotos: 2, verificationStatus: 'pending' as const,
   };
@@ -129,6 +135,7 @@ describe('resumeStep', () => {
   it('walks the steps in order', () => {
     expect(resumeStep({ ...base, hasTermsConsent: false, birthDate: null })).toBe('account_type');
     expect(resumeStep({ ...base, hasTermsConsent: false })).toBe('age');
+    expect(resumeStep({ ...base, hasPhone: false })).toBe('phone');
     expect(resumeStep({ ...base, hasLocation: false })).toBe('location');
     expect(resumeStep({ ...base, firstName: null })).toBe('identity');
     expect(resumeStep({ ...base, hasSensitiveConsent: false })).toBe('sensitive_consent');

@@ -8,6 +8,7 @@ export function progressFromProfile(p: MyProfile, minPhotos: number): Onboarding
     status: p.status,
     hasTermsConsent: !!p.consents.terms && !!p.consents.privacy,
     birthDate: p.birth_date,
+    hasPhone: p.has_phone,
     hasLocation: p.has_location,
     firstName: p.first_name,
     hasSensitiveConsent: !!p.consents.sensitive_data,

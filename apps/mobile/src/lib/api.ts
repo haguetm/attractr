@@ -43,6 +43,7 @@ export interface MyProfile {
   verification_in_review: boolean;
   warnings: number;
   username: string | null;
+  has_phone: boolean;
   premium: { active: boolean; until: string | null; paying: boolean };
   incognito: boolean;
   education_level: EducationLevel | null;
@@ -388,6 +389,12 @@ export const api = {
     return Number(data.value);
   },
 
+  async configBool(key: string): Promise<boolean> {
+    const { data, error } = await supabase.from('app_config').select('value').eq('key', key).single();
+    if (error) throw new AppError(errorCode(error));
+    return data.value === true;
+  },
+
   async countrySwitches(countryCode: string | null): Promise<CountrySwitches> {
     const codes = countryCode ? [countryCode, '*'] : ['*'];
     const { data, error } = await supabase
@@ -403,6 +410,8 @@ export const api = {
     };
   },
 
+  /** Declared number (beta); production verifies it by SMS through Supabase Auth instead. */
+  setPhone: (phone: string) => rpc('set_my_phone', { p_phone: phone }),
   setBirthDate: (birthDate: string) => rpc('set_my_birth_date', { p_birth_date: birthDate }),
   setReferralCode: (code: string, befriend: boolean) =>
     rpc('set_my_referral_code', { p_code: code, p_befriend_referrer: befriend }),

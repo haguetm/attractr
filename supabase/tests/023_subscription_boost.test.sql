@@ -12,7 +12,8 @@ select public.service_set_location(id, 48.8566, 2.3522, 'device', 'FR', '75', '1
 create function pg_temp.event(p_id text, p_type text, p_user text, p_product text default 'premium_monthly', p_expires interval default interval '30 days')
 returns jsonb language sql as $$
   select jsonb_build_object('id', p_id, 'type', p_type, 'app_user_id', p_user, 'product_id', p_product,
-    'purchased_at_ms', (extract(epoch from now()) * 1000)::bigint,
+    -- floor: a rounded-up millisecond would put the purchase a little in the future.
+    'purchased_at_ms', floor(extract(epoch from now()) * 1000)::bigint,
     'expiration_at_ms', (extract(epoch from now() + p_expires) * 1000)::bigint)
 $$;
 
