@@ -1,10 +1,11 @@
 // Moderates photos through the PhotoModerationProvider; thresholds are applied in SQL
 // (private.apply_photo_result). Two callers:
 //   - the app, right after adding a photo: { photoId } for one of its own photos;
-//   - pg_cron with the service role key: {} processes pending photos in batch.
+//   - pg_cron with the cron secret: {} processes pending photos in batch.
 
 import { moderationProvider, type PhotoModerationProvider } from '../_shared/providers/moderation/index.ts';
-import { download, isServiceCall } from '../_shared/storage.ts';
+import { isCronCall } from '../_shared/secrets.ts';
+import { download } from '../_shared/storage.ts';
 import { adminClient, configReader, json, requestUserId } from '../_shared/supabase.ts';
 import type { SupabaseClient } from 'jsr:@supabase/supabase-js@2';
 
@@ -28,7 +29,7 @@ Deno.serve(async (req) => {
   try {
     const provider = await moderationProvider(configReader(admin));
 
-    if (isServiceCall(req)) {
+    if (isCronCall(req)) {
       const { data: pending, error } = await admin.rpc('service_pending_photos', { p_limit: 50 });
       if (error) throw new Error(error.code);
       let done = 0;

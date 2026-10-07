@@ -1,15 +1,13 @@
 // Drains the notification outbox. Called every minute by pg_cron (see migration
-// 20261009100000_push_schedule.sql) with the service role key; refuses anyone else.
+// 20261018090000_beta_hardening.sql) with the cron secret; refuses anyone else.
 
 import { pushSender } from '../_shared/providers/push/index.ts';
+import { isCronCall } from '../_shared/secrets.ts';
 import { adminClient, configReader, json } from '../_shared/supabase.ts';
 import { type OutboxRow, planPushes, settle } from './outbox.ts';
 
 Deno.serve(async (req) => {
-  const serviceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
-  if (!serviceKey || req.headers.get('Authorization') !== `Bearer ${serviceKey}`) {
-    return json(401, { error: 'not_authenticated' });
-  }
+  if (!isCronCall(req)) return json(401, { error: 'not_authenticated' });
 
   const admin = adminClient();
   const { data, error } = await admin.rpc('service_pending_notifications', { p_limit: 500 });

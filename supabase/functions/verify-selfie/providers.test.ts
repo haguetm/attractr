@@ -1,4 +1,6 @@
 import { assertEquals } from 'jsr:@std/assert@1';
+import { appEnv } from '../_shared/providers/config.ts';
+import { moderationProvider } from '../_shared/providers/moderation/index.ts';
 import { MockModerationProvider } from '../_shared/providers/moderation/mock.ts';
 import { selfieProvider } from '../_shared/providers/selfie/index.ts';
 import { MockSelfieProvider } from '../_shared/providers/selfie/mock.ts';
@@ -39,4 +41,27 @@ Deno.test('without APP_ENV on a hosted project, mocks are refused', async () => 
     () => { throw new Error('should refuse'); },
     (e: Error) => assertEquals(e.message.includes('refused in production'), true),
   );
+});
+
+Deno.test('beta: mocks are allowed but the selfie and the photos always go to human review', async () => {
+  Deno.env.set('APP_ENV', 'beta');
+  const config = {
+    get: (key: string) =>
+      Promise.resolve(({
+        'providers.mode': 'mock',
+        'providers.mock_selfie_outcome': 'pass',
+        'providers.mock_photo_outcome': 'approve',
+      } as Record<string, unknown>)[key] ?? null),
+  };
+  const selfie = await selfieProvider(config);
+  assertEquals((await selfie.verify(input)).confidence, 0.4);
+  const photos = await moderationProvider(config);
+  assertEquals((await photos.moderate({ image: new Uint8Array(), contentType: 'image/jpeg' })).nudity, 0.6);
+  Deno.env.delete('APP_ENV');
+});
+
+Deno.test('an unknown APP_ENV on a hosted project counts as production', () => {
+  assertEquals(appEnv('staging', 'https://abcdefghijklmnop.supabase.co'), 'production');
+  assertEquals(appEnv(undefined, 'http://127.0.0.1:54321'), 'development');
+  assertEquals(appEnv('beta', 'https://abcdefghijklmnop.supabase.co'), 'beta');
 });

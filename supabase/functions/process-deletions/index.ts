@@ -1,12 +1,13 @@
-// Called by pg_cron with the service role key. Erases queued accounts (closed minor
+// Called by pg_cron with the cron secret. Erases queued accounts (closed minor
 // accounts, moderation closures): Storage files then the auth user, whose deletion
 // cascades to every row. Also removes Storage files queued for cleanup (selfies).
 
-import { isServiceCall, removeUserFolder, USER_BUCKETS } from '../_shared/storage.ts';
+import { isCronCall } from '../_shared/secrets.ts';
+import { removeUserFolder, USER_BUCKETS } from '../_shared/storage.ts';
 import { adminClient, json } from '../_shared/supabase.ts';
 
 Deno.serve(async (req) => {
-  if (!isServiceCall(req)) return json(401, { error: 'not_authenticated' });
+  if (!isCronCall(req)) return json(401, { error: 'not_authenticated' });
   const admin = adminClient();
 
   let erased = 0;

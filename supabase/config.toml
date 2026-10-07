@@ -418,12 +418,17 @@ enabled = true
 # and column/key alignment. Set to "null" to emit raw, unformatted SQL.
 # format_options = "{\"keywordCase\":\"upper\",\"indent\":2,\"maxWidth\":180,\"commaStyle\":\"trailing\"}"
 
-# send-push checks the service role key itself (called by pg_cron, not by users).
+# Called by pg_cron with the cron secret (X-Cron-Secret, checked in the function).
 [functions.send-push]
 verify_jwt = false
 
-# Called by pg_cron with the service role key (checked in the function).
+# Called by pg_cron with the cron secret (checked in the function).
 [functions.process-deletions]
+verify_jwt = false
+
+# Two callers: the app (user JWT, checked in the function with auth.getUser) and
+# pg_cron (cron secret), so the gateway must let both through.
+[functions.moderate-photo]
 verify_jwt = false
 
 # Authenticated with REVENUECAT_WEBHOOK_SECRET (checked in the function).

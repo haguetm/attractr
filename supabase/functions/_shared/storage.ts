@@ -21,8 +21,3 @@ export async function download(admin: SupabaseClient, bucket: string, path: stri
   if (error || !data) return null;
   return { bytes: new Uint8Array(await data.arrayBuffer()), contentType: data.type || 'image/jpeg' };
 }
-
-export const isServiceCall = (req: Request) => {
-  const key = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
-  return !!key && req.headers.get('Authorization') === `Bearer ${key}`;
-};

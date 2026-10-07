@@ -1,4 +1,4 @@
-// Geocoding provider contract. The real implementation comes later, behind the
+// Geocoding provider contract. Real implementation: geoapigouv.ts (geo.api.gouv.fr), behind the
 // `providers.geocoding` flag in app_config; development uses MockGeocodingProvider.
 
 export interface GeoPoint {

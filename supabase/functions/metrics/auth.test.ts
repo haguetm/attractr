@@ -1,5 +1,5 @@
 import { assertEquals } from 'jsr:@std/assert@1';
-import { authorized, parseDays, safeEqual } from './auth.ts';
+import { authorized, parseDays } from './auth.ts';
 
 const secret = 'a'.repeat(40);
 const req = (auth?: string) => new Request('http://x/metrics', { headers: auth ? { Authorization: auth } : {} });
@@ -14,12 +14,6 @@ Deno.test('only the configured token opens the dashboard', () => {
 Deno.test('a missing or weak secret refuses everyone', () => {
   assertEquals(authorized(req('Bearer '), ''), false);
   assertEquals(authorized(req('Bearer short'), 'short'), false);
-});
-
-Deno.test('constant-time comparison', () => {
-  assertEquals(safeEqual('abc', 'abc'), true);
-  assertEquals(safeEqual('abc', 'abd'), false);
-  assertEquals(safeEqual('abc', 'abcd'), false);
 });
 
 Deno.test('the range is bounded', () => {
