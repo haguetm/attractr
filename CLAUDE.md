@@ -42,7 +42,7 @@ Node 22 + npm workspaces. The local stack needs Docker (not available on the wor
 - `npm run mobile` — start Expo (needs `apps/mobile/.env`, see `.env.example` there)
 
 ## Beta (free hosted test)
-- Setup guide: docs/BETA.md. `APP_ENV=beta` (functions) allows mock providers on a hosted project, but selfie and photo mocks always go to human review; `EXPO_PUBLIC_AUTH_METHOD=email` signs in with an email code (no SMS cost).
+- Setup guide: docs/BETA.md. `APP_ENV=beta` (functions) allows mock providers on a hosted project, but selfie and photo mocks always go to human review; sign-in methods come from `EXPO_PUBLIC_AUTH_METHODS` (phone, email, google, apple; beta: email,google); onboarding always asks for a phone, declared without SMS in the beta (`auth.phone_verification_required = false`).
 - Geocoding: `providers.geocoding = "real"` uses geo.api.gouv.fr (free, no key).
 
 ## Dev tools

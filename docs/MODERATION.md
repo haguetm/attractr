@@ -14,7 +14,7 @@ Priorité 1 = urgent (suspicion de mineur), à traiter en premier. Colonnes util
 
 | kind | reason possibles | Ce qu'il faut examiner |
 |---|---|---|
-| `selfie_review` | `possible_minor`, `duplicate_face`, `age_mismatch`, `incomplete_result` (réponse du prestataire incomplète) | Le selfie (bucket `selfies`, chemin dans `private.selfie_submissions`) et l'âge déclaré |
+| `selfie_review` | `possible_minor`, `returning_account` (visage ou numéro d'un compte fermé pour minorité ou supprimé pendant une suspension, priorité 1), `duplicate_face`, `age_mismatch`, `incomplete_result` (réponse du prestataire incomplète) | Le selfie (bucket `selfies`, chemin dans `private.selfie_submissions`) et l'âge déclaré |
 | `photo_review` | `nudity`, `violence` | La photo (`public.photos`, `ref_id` = id de la photo) |
 | `report` | motif du signalement | Le signalement (`public.reports`, `ref_id` = id) et, si besoin, la conversation |
 | `message_review` | `money_request` | Le message (`public.messages`, `ref_id` = id) |
@@ -64,11 +64,12 @@ La raison est obligatoire et journalisée.
 
 ## 4. Lever une suspension
 
-Pas de fonction dédiée en V1 :
 ```sql
-select private.log_access('moderateur:camille', '<user_id>', 'account', 'levée de suspension : <raison>');
-update public.profiles set status = 'active' where id = '<user_id>' and status = 'suspended';
+select private.mod_lift_suspension('moderateur:camille', '<user_id>', 'sanction purgée, signalement réexaminé');
 ```
+La raison est obligatoire et journalisée ; la personne reçoit une notification générique. Ses matchs, mis en attente pendant la suspension, rouvrent (sauf si l'autre personne est elle-même suspendue ou bloquée). Pour une suspension due à une suspicion de minorité, utiliser `mod_resolve_selfie` à la place.
+
+Pendant une suspension, la personne peut supprimer son compte. Dans ce cas, l'empreinte de son numéro et sa référence de visage sont gardées `compliance.suspended_trace_retention_days` jours : si elle revient, son selfie arrive dans la file avec le motif `returning_account`, en priorité 1.
 
 ## Réglages utiles (`app_config`)
 

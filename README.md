@@ -189,7 +189,7 @@ Tableau de suivi : ouvre `tools/dashboard/index.html` (mode démo disponible) ; 
 Pour se connecter en local, utilise le numéro fictif **06 39 98 00 00** avec le code **123456** (aucun SMS n'est envoyé).
 
 ### Bêta gratuite
-Mise en ligne d'une version de test sans aucun coût (Supabase gratuit, APK Android, iPhone via Expo Go, connexion par code e-mail) : [docs/BETA.md](docs/BETA.md).
+Mise en ligne d'une version de test sans aucun coût (Supabase gratuit, APK Android, iPhone via Expo Go, connexion par e-mail ou Google) : [docs/BETA.md](docs/BETA.md).
 
 ### Documentation
 - [Spécification produit](docs/SPEC.md)

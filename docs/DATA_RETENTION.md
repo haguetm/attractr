@@ -31,6 +31,8 @@
 | Comptes de couple | `couples`, `couple_invitations`, `couple_like_approvals`, profil commun | Effacés dès qu'un partenaire quitte le couple ou supprime son compte | Proposé |
 | File de modération | `private.moderation_queue` | Proposé : 12 mois après résolution | Proposé |
 | Avertissements | `private.user_warnings` | Durée du compte | Proposé |
+| Numéro de téléphone | `private.phone_digests` (empreintes SHA-256 et HMAC, jamais le numéro) ; `auth.users` pour un numéro vérifié par SMS | Durée du compte | Proposé |
+| Compte supprimé pendant une suspension | empreinte HMAC du numéro + référence de visage (`private.blocked_identities`) | `compliance.suspended_trace_retention_days` (365 j) ; un retour part en revue humaine | Proposé, à valider juridiquement |
 | Demande « bloquer mes contacts » | `private.contact_block_requests` | Date de la dernière demande seulement (délai entre deux demandes) ; durée du compte | Proposé |
 
 ## Clé de chiffrement

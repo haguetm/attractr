@@ -51,6 +51,9 @@ insert into public.app_config (key, value, description) values
   ('providers.push', '"real"', 'Push: Expo.')
 on conflict (key) do update set value = excluded.value, updated_at = now();
 
+-- Numéro déclaré sans SMS pendant la bêta (en production il est vérifié par SMS).
+update public.app_config set value = 'false', updated_at = now() where key = 'auth.phone_verification_required';
+
 -- Achats simulés du Test Store RevenueCat (bêta uniquement).
 update public.app_config set value = '["PRODUCTION", "SANDBOX"]', updated_at = now()
  where key = 'revenuecat.allowed_environments';
@@ -69,10 +72,16 @@ npm run functions:deploy -- --project-ref <ref>
 ```
 `functions:deploy` ne déploie jamais les fonctions `dev-*` (« tester en tant que » reste impossible sur un projet hébergé). `APP_ENV=beta` autorise les versions factices, mais envoie chaque selfie et chaque photo en revue humaine.
 
-### 2.5 Connexion par code e-mail
+### 2.5 Connexion : e-mail et Google
+L'appli propose les méthodes listées dans `EXPO_PUBLIC_AUTH_METHODS` (étape 5.1). En bêta : `email,google`. Le SMS (payant) et Apple (compte développeur à 99 $/an) s'ajoutent à la publication. Quelle que soit la méthode, l'onboarding demande le numéro de téléphone (blocage des contacts) ; en bêta il est déclaré sans SMS (étape 2.3).
+
 Dans Authentication :
 1. **Sign In / Providers** : Email activé, Phone désactivé. Longueur du code e-mail (Email OTP length) : **6**.
 2. **Email Templates** : dans « Confirm signup » **et** « Magic Link », sujet `Ton code Attractr` et corps copié depuis `supabase/templates/otp_code.html` (il affiche le code `{{ .Token }}` au lieu d'un lien).
+3. **URL Configuration > Redirect URLs** : ajoute `attractr://auth-callback` (APK) et `exp://**` (Expo Go).
+4. **Google** :
+   - Google Cloud Console (gratuit) : nouveau projet, écran de consentement OAuth en mode « Test » (tu y ajoutes les adresses Gmail autorisées, 100 au maximum), puis Identifiants > ID client OAuth, type « Application Web », URI de redirection autorisée `https://<ref>.supabase.co/auth/v1/callback`.
+   - Supabase, Sign In / Providers > Google : active-le et colle l'ID client et le code secret.
 
 ### 2.6 Facultatif : e-mails pour d'autres testeurs (Brevo)
 Le service e-mail intégré n'écrit qu'aux membres de ton organisation Supabase. Pour inviter quelqu'un d'autre : crée un compte Brevo, valide une adresse d'expéditeur, génère une clé SMTP, puis Authentication > Emails > SMTP Settings : hôte `smtp-relay.brevo.com`, port `587`, identifiant et clé SMTP de Brevo.
@@ -112,7 +121,7 @@ Variables de l'environnement EAS `preview` (utilisé par le build bêta) :
 npx eas-cli@latest env:create --environment preview --visibility plaintext --name EXPO_PUBLIC_SUPABASE_URL --value https://<ref>.supabase.co
 npx eas-cli@latest env:create --environment preview --visibility plaintext --name EXPO_PUBLIC_SUPABASE_ANON_KEY --value <clé publique>
 npx eas-cli@latest env:create --environment preview --visibility plaintext --name EXPO_PUBLIC_APP_ENV --value beta
-npx eas-cli@latest env:create --environment preview --visibility plaintext --name EXPO_PUBLIC_AUTH_METHOD --value email
+npx eas-cli@latest env:create --environment preview --visibility plaintext --name EXPO_PUBLIC_AUTH_METHODS --value email,google
 npx eas-cli@latest env:create --environment preview --visibility plaintext --name EXPO_PUBLIC_REVENUECAT_ANDROID_KEY --value test_...
 npx eas-cli@latest env:create --environment preview --visibility plaintext --name EXPO_PUBLIC_REVENUECAT_IOS_KEY --value test_...
 ```
@@ -132,7 +141,7 @@ npx eas-cli@latest build --profile beta --platform android
 
 ### 5.4 iPhone : Expo Go
 1. Installe **Expo Go** depuis l'App Store.
-2. Crée `apps/mobile/.env` (jamais committé) avec les mêmes valeurs que l'étape 5.1 (`EXPO_PUBLIC_APP_ENV=beta`, `EXPO_PUBLIC_AUTH_METHOD=email`, etc.).
+2. Crée `apps/mobile/.env` (jamais committé) avec les mêmes valeurs que l'étape 5.1 (`EXPO_PUBLIC_APP_ENV=beta`, `EXPO_PUBLIC_AUTH_METHODS=email,google`, etc.).
 3. `npm run mobile` à la racine, puis scanne le QR code avec l'appareil photo de l'iPhone. Le téléphone et le PC doivent être sur le même Wi-Fi (sinon : `npx expo start --tunnel` dans `apps/mobile`).
 
 Limites d'Expo Go : l'appli ne tourne que pendant que ton PC la sert, sans notifications ; les achats y sont simulés par le SDK RevenueCat sans passer par le serveur. Teste donc Premium et les Boosts sur Android.
@@ -160,4 +169,4 @@ Limites d'Expo Go : l'appli ne tourne que pendant que ton PC la sert, sans notif
 
 ## 8. Passage aux stores (payant)
 
-Google Play (25 $ une fois ; un compte personnel récent doit d'abord faire tester l'appli 14 jours par 12 personnes), Apple (99 $ par an), fournisseur de SMS (retour à `EXPO_PUBLIC_AUTH_METHOD=phone`), prestataires selfie et âge, modération des photos, API Claude, nom de domaine. Côté réglages : `APP_ENV=production`, `revenuecat.allowed_environments` remis à `["PRODUCTION"]`, profils fictifs supprimés.
+Google Play (25 $ une fois ; un compte personnel récent doit d'abord faire tester l'appli 14 jours par 12 personnes), Apple (99 $ par an), fournisseur de SMS et connexion Apple (`EXPO_PUBLIC_AUTH_METHODS=phone,email,google,apple`, `auth.phone_verification_required` remis à `true`), prestataires selfie et âge, modération des photos, API Claude, nom de domaine. Côté réglages : `APP_ENV=production`, `revenuecat.allowed_environments` remis à `["PRODUCTION"]`, profils fictifs supprimés.
