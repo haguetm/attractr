@@ -71,6 +71,14 @@ La raison est obligatoire et journalisée ; la personne reçoit une notification
 
 Pendant une suspension, la personne peut supprimer son compte. Dans ce cas, l'empreinte de son numéro et sa référence de visage sont gardées `compliance.suspended_trace_retention_days` jours : si elle revient, son selfie arrive dans la file avec le motif `returning_account`, en priorité 1.
 
+## 5. Bannir un compte
+
+Pour les cas graves (arnaque confirmée, harcèlement répété, récidive) :
+```sql
+select private.mod_ban_account('moderateur:camille', '<user_id>', 'arnaque confirmée, signalement #42');
+```
+Le compte est fermé puis effacé (`process-deletions`). Son numéro, son adresse e-mail (alias Gmail compris : points et `+tag` ignorés) et ses comptes Google / Apple sont refusés à l'inscription pendant `compliance.ban_retention_days` jours. Son visage envoie tout nouveau selfie en revue (`returning_account`). Seules des empreintes HMAC sont gardées, jamais les identifiants eux-mêmes.
+
 ## Réglages utiles (`app_config`)
 
 `verification.*` (seuils d'âge et de confiance), `moderation.photo_*_score`, `moderation.misleading_*_threshold`, `reports.daily_limit`, `chat.scam_check_first_messages`, `contacts.block_cooldown_hours`. En développement : `providers.mock_selfie_outcome` et `providers.mock_photo_outcome` pour simuler chaque cas. En bêta (`APP_ENV=beta`), chaque selfie et chaque photo part en revue humaine, quel que soit ce réglage.

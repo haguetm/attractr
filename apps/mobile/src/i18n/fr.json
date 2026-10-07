@@ -300,7 +300,7 @@
     "match_closed": "Cette conversation est fermée.",
     "queue_read_failed": "Erreur interne.",
     "settle_failed": "Erreur interne.",
-    "identity_blocked": "Impossible de créer un compte avec ce numéro.",
+    "identity_blocked": "Ce compte ne peut plus être utilisé sur Attractr.",
     "selfie_not_found": "Selfie introuvable. Reprends-en un.",
     "verification_failed": "La vérification n'a pas abouti. Réessaie dans un instant.",
     "moderation_failed": "La vérification de la photo n'a pas abouti. Elle sera vérifiée plus tard.",
